@@ -74,6 +74,9 @@ Lasts **3** turns."""
         checker = Effect_checker(self.target)
 
         # get the damage
+        
+        #damageTrue = 0, damagePhysical = 0, damageKi = (current formula)
+        
         damage = randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
         damage = int(damage * 0.25)  # the ability inflicts only 25 % of the ki damage
         damage = await calculator.ki_damage(
