@@ -56,6 +56,8 @@ class Ability:
 
     :coro:`use()` : Triggers the ability.
     """
+    
+    # can we initiate damageTrue, damagePhysical, and damageKi here?
 
     # attribute
     def __init__(self, client, ctx, caster, target, team_a, team_b):
