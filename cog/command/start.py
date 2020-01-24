@@ -90,6 +90,8 @@ class Cmd_start(commands.Cog):
         # welcome message
         welcome = f"<@{player.id}> Hello and welcome to **Discord Ball Z III** - *Open Beta* !\nWe're hoping you to enjoy your adventure !\n\nHere are **25**{game_icon['dragonstone']}, they will help you to **summon** your first heroes that will fight for you !\n\nIf you have any question, do not hesitate to consult the `d!help` command or join the **Official Server** : https://discord.gg/eZf2p7h"
 
+                # this is where we would begin a tutorial structure.
+                
         await ctx.send(welcome)
 
 def setup(client):
