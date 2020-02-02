@@ -29,8 +29,18 @@ class Mission():
     `team_xp` (`int`)
 
     - Attribute :
+    
+    # REWARD
 
-    `reward` (`dict`) : [dragonstone, zenis, player_xp, team_xp] Represents the reward the player can gain at the end of the mission
+    `dragonstone` (`int`)
+    
+    `zenis` (`int`)
+
+    `player_xp` (`int`)
+    
+    `team_xp` (`int`) 
+
+    # info
 
     `opponent` (`list`) : List of `Character()` in the opponent team
 
@@ -46,13 +56,9 @@ class Mission():
     """
 
     # attribute
-    def __init__(self, dragonstone = 0, zenis = 0, player_xp = 0, team_xp = 0):
-        self.reward = {
-            "dragonstone" : dragonstone,
-            "zenis" : zenis,
-            "player_xp" : player_xp,
-            "team_xp" : team_xp
-        }
+    def __init__(self):
+        # info
+        self.name = ""
 
         self.opponent = []
         self.star = 1  # difficulty
@@ -60,6 +66,12 @@ class Mission():
             "min" : 0,
             "max" : 1
         }
+
+        # reward
+        self.dragonstone = 0
+        self.zenis = 0
+        self.player_xp = 0
+        self.team_xp = 0
     
     # method
     async def init(self):

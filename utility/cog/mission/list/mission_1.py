@@ -38,10 +38,19 @@ class Mission_1(Mission):
     # attribute
     def __init__(self):
         Mission.__init__(self)
+        self.name = "Saibaiman attack"
+        self.star = 5
+
         self.level_range = {
             "min" : 5,
             "max" : 10
         }
+
+        # reward
+        self.dragonstone = 666
+        self.zenis = 42
+        self.player_xp = 69
+        self.team_xp = 420
 
     async def set_opponent(self):
         
