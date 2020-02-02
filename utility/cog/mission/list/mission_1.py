@@ -38,6 +38,9 @@ class Mission_1(Mission):
     # attribute
     def __init__(self):
         Mission.__init__(self)
+        self.name = "Saibaiman attack"
+        self.star = 5
+
         self.level_range = {
             "min" : 5,
             "max" : 10

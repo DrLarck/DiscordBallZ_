@@ -47,6 +47,8 @@ class Mission():
 
     # attribute
     def __init__(self, dragonstone = 0, zenis = 0, player_xp = 0, team_xp = 0):
+        self.name = ""
+        
         self.reward = {
             "dragonstone" : dragonstone,
             "zenis" : zenis,

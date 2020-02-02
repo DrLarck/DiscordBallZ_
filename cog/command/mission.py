@@ -46,7 +46,7 @@ class Cmd_mission(commands.Cog):
         player = Player(ctx, self.client, ctx.message.author)
         mission = Mission_manager()
         embed = await Custom_embed(
-            self.client, title = "Missions", description = "Welcome to the Missions panel"
+            self.client, title = "Missions", description = "Welcome to the Missions panel\nUse `d!mission [index]` to start a mission"
         ).setup_embed()    
         
         # start mission
@@ -57,8 +57,32 @@ class Cmd_mission(commands.Cog):
 
         else:
             # display the missions panel
-            pass
-        
+            panel = ""
+            mission_star = ""   
+            mission_index = 1
+
+            # manage the mission displaying
+            for _mission in mission.missions:
+                await asyncio.sleep(0)
+
+                panel += f"`{mission_index}.` {_mission.name}"
+
+                for a in range(_mission.star):
+                    await asyncio.sleep(0)
+
+                    mission_star += ":star:"
+                
+                panel += f" {mission_star}\n"
+
+                mission_index += 1
+            
+            # set the embed
+            embed.add_field(
+                name = "Available missions",
+                value = panel
+            )
+
+            await ctx.send(embed = embed)
 
 def setup(client):
     client.add_cog(Cmd_mission(client))
