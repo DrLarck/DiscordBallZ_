@@ -5,7 +5,7 @@ Fighter help pannel
 
 Author : DrLarck
 
-Last update : 08/01/2020 (DrLarck)
+Last update : 02/02/2020 (DrLarck)
 """
 
 # dependancies
@@ -27,15 +27,15 @@ class Help_fighter(Help_command):
         
         self.fields = [
             {
-                "name" : "d!team",
+                "name" : "d!fighter team",
                 "value" : "Display your team"
             },
             {
-                "name" : "d!set [a/b/c] [unique id]",
+                "name" : "d!fighter set [a/b/c] [unique id]",
                 "value" : "Set the fighter with the `unique id` at the slot `a`, `b` or `c`"
             },
             {
-                "name" : "d!remove [a/b/c]",
+                "name" : "d!fighter remove [a/b/c]",
                 "value" : "Remove the fighter at the specified slot"
             }
         ]
