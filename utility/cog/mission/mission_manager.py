@@ -27,7 +27,7 @@ class Mission_manager():
 
     - Attribute
 
-    `mission` (`list`) : List the `Mission()` objects (list of missions)
+    `missions` (`list`) : List the `Mission()` objects (list of missions)
     """
 
     # attribute
@@ -89,14 +89,14 @@ class Mission_manager():
                         player_team_id["a"], player_team_id["b"], player_team_id["c"]
                     ]
 
-                    await leveller.team_add_xp(player, player_team_id, mission.reward["team_xp"])
+                    await leveller.team_add_xp(player, player_team_id, mission.team_xp)
 
                     # give player the resources he has won
-                    await player.resource.add_dragonstone(mission.reward["dragonstone"])
-                    await player.resource.add_zenis(mission.reward["zenis"])
+                    await player.resource.add_dragonstone(mission.dragonstone)
+                    await player.resource.add_zenis(mission.zenis)
 
                     # message
-                    await ctx.send(f"Congratulations ! You have earned **{mission.reward['dragonstone']:,}**{game_icon['dragonstone']} as well as **{mission.reward['zenis']:,}**{game_icon['zenis']}")
+                    await ctx.send(f"Congratulations ! You have earned **{mission.dragonstone:,}**{game_icon['dragonstone']} as well as **{mission.zenis:,}**{game_icon['zenis']}")
 
         else:
             return

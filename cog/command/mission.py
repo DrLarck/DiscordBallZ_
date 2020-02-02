@@ -117,7 +117,7 @@ class Cmd_mission(commands.Cog):
                     opponent += f"{char.image.icon}**{char.info.name}** - lv.{_mission.level_range['min']:,} - {_mission.level_range['max']:,}{char.rarity.icon}\n"
 
                 # set the reward
-                reward = f"{game_icon['dragonstone']} : **{_mission.reward['dragonstone']:,}**\n{game_icon['zenis']} : **{_mission.reward['zenis']:,}**\nPlayer xp : **{_mission.reward['player_xp']:,}**\nTeam xp : **{_mission.reward['team_xp']:,}**"
+                reward = f"{game_icon['dragonstone']} : **{_mission.dragonstone:,}**\n{game_icon['zenis']} : **{_mission.zenis:,}**\nPlayer xp : **{_mission.player_xp:,}**\nTeam xp : **{_mission.team_xp:,}**"
                 
                 # get the difficulty
                 for a in range(_mission.star):

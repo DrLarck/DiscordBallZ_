@@ -46,6 +46,12 @@ class Mission_1(Mission):
             "max" : 10
         }
 
+        # reward
+        self.dragonstone = 666
+        self.zenis = 42
+        self.player_xp = 69
+        self.team_xp = 420
+
     async def set_opponent(self):
         
         # init
