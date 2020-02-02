@@ -1,5 +1,5 @@
 """
-Manages the rolling special beam canon ability
+Manages the special beam canon ability
 
 --
 
@@ -43,7 +43,7 @@ class Special_beam_cannon(Ability):
         self.name = "Special Beam Cannon"
         self.description = f"""Inflicts **50 %** of your  {self.game_icon['ki_ability']} damage as true damage"""
         
-        #self.icon = self.game_icon['ability']['specual_beam_cannon']
+        #self.icon = self.game_icon['ability']['special_beam_cannon']
 
         self.cost = 40
 
