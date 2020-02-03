@@ -43,7 +43,7 @@ class Kamekameha(Ability):
         self.name = "Kamekameha"
         self.description = f"""Inflicts **200 %** of your  {self.game_icon['ki_ability']} damage as ki damage"""
         
-        #self.icon = self.game_icon['ability']['kamekameha']
+        # self.icon = self.game_icon['ability']['kamekameha']
 
         self.cost = 50
 
