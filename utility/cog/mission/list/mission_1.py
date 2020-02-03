@@ -5,7 +5,7 @@ Represents the mission n°1
 
 Author : DrLarck
 
-Last update : 02/02/20 (DrLarck)
+Last update : 03/02/20 (DrLarck)
 """
 
 # dependancies
@@ -68,5 +68,6 @@ class Mission_1(Mission):
             rand_level = random.randint(self.level_range["min"], self.level_range["max"])
 
             character.level = rand_level
+            character.is_npc = True
 
         return(self.opponent)
