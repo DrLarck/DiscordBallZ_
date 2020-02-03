@@ -14,3 +14,8 @@ Here is the characters list with their id :
 - 008 **Goten**
 - 009 **Turles**
 - 010 **Launch**
+- 011 **Red Ribbon Soldier**
+- 012 **Zarbon**
+- 013 **Android 18**
+- 014 **Chiaotzu**
+- 015 **Killa**

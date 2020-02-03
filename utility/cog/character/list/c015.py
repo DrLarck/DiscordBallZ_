@@ -14,7 +14,7 @@ import asyncio
 # util
 from utility.cog.character.character import Character
 
-class Character_014(Character):
+class Character_015(Character):
     """
     Represents the Killa unit from the Majin Buu saga.
     """
@@ -24,7 +24,7 @@ class Character_014(Character):
 
         # info
         self.info.name = "Killa"
-        self.info.id = 14
+        self.info.id = 15
         self.info.saga = "Buu"
 
         # stat

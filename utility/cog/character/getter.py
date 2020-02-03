@@ -114,7 +114,32 @@ class Character_getter:
             from utility.cog.character.list.c010 import Character_010
 
             character = Character_010()
+
+        if(character_id == 11):
+            from utility.cog.character.list.c011 import Character_011
+
+            character = Character_011()
+
+        if(character_id == 12):
+            from utility.cog.character.list.c012 import Character_012
                     
+            character = Character_012()
+
+        if(character_id == 13):
+            from utility.cog.character.list.c013 import Character_013
+                    
+            character = Character_013()
+
+        if(character_id == 14):
+            from utility.cog.character.list.c014 import Character_014
+                    
+            character = Character_014()
+
+        if(character_id == 15):
+            from utility.cog.character.list.c015 import Character_015
+                    
+            character = Character_015()
+
         return(character)
     
     async def get_summonable(self):
