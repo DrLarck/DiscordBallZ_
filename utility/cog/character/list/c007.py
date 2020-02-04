@@ -23,7 +23,7 @@ class Character_007(Character):
         Character.__init__(self)
 
         # info
-        self.info.name = "Buu"
+        self.info.name = "Super Buu"
         self.info.id = 7
         self.info.saga = "Buu"
 
