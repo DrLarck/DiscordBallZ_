@@ -1,0 +1,17 @@
+"""
+Manages the ability.
+
+--
+
+Author : 
+
+Last update : 00/00/00 
+"""
+
+variables that need to be established for every ability (default value)
+- ki_damage (0)
+- physical_damage (0)
+- true_damage (0)
+- keywords
+- momentum (0)
+- delayed (false)
