@@ -38,4 +38,7 @@ class Character_015(Character):
         self.defense.dodge = 10
 
         self.critical_chance = 20
+
+        # this unit does not have ki
+        self.ki.maximum = 0
         self.regeneration.ki = 0
