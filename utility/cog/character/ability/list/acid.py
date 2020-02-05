@@ -22,6 +22,22 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 
 # ability
 class Acid(Ability):
+
+# update
+#
+# keyword = ki blast
+#
+# true_damage = 0
+# physical_damage = 0
+# ki_damage = 0.25 × ki_power
+#
+# target = standard
+# 
+# special - adds 1 stack of acid to target (max 3 stacks)
+# - acid deals damage based on the highest ki_power of sabimen on the team
+# - acid damage is (((1.5 + ((highest_ki / 250) * 0.05)) * target.health.maximum) / 100) 
+
+
     """
     This ability applies a DOT on the target. This DOT inflicts damage
     at each turn.
