@@ -61,19 +61,19 @@ class Character_getter:
 
         # Green Saibaiman
         if(character_id == 1):
-            from utility.cog.character.list.c001 import Character_001
+            from utility.cog.character.list.c001_sabimen import Character_001
 
             character = Character_001()
         
         # Blue Saibaiman
         if(character_id == 2):
-            from utility.cog.character.list.c002 import Character_002
+            from utility.cog.character.list.c002_sabimen import Character_002
 
             character = Character_002()
         
         # Red Saibaiman
         if(character_id == 3):
-            from utility.cog.character.list.c003 import Character_003
+            from utility.cog.character.list.c003_sabimen import Character_003
 
             character = Character_003()
         
