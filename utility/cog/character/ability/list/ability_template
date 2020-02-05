@@ -1,0 +1,40 @@
+"""
+Manages the ability.
+
+--
+
+Author : 
+
+Last update : 00/00/00 
+"""
+
+variables that need to be established for every ability (default value)
+- ki_damage (0)
+- physical_damage (0)
+- true_damage (0)
+- keywords
+-- sequence 
+-- ki blast
+-- penetrating
+-- charge
+-- defender 
+-- form
+-- utility
+- momentum (0)
+- delayed (false)
+-- abilities that are delayed perform at the end of player turn
+-- abilities that are not delayed perform immediately
+- targeting system
+-- targeting system should search for criteria then return those that fit the criteria
+--- ie. criteria (standard)
+---- searches for characters that are defending
+---- returns enemies that are defending as targetable characters
+---- if no defending characters found, returns all enemies as targetable
+--- criteria (defending only)
+---- searches for characters that are defending
+---- returns enemies that are defending as targetable characters
+---- if no defending characters found, returns no available targets
+--- criteria (acid [3])
+---- searches for characters that have 3 stacks of acid on them
+---- returns characters that have 3 stacks of acid
+---- if no characters have 3 stacks of acid, returns no available targets
