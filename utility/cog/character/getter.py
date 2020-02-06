@@ -164,6 +164,56 @@ class Character_getter:
             from utility.cog.character.list.c020_dende import Character_020
                     
             character = Character_020()
+                        
+        if(character_id == 21):
+            from utility.cog.character.list.c021_jiren import Character_021
+                    
+            character = Character_021()
+                        
+        if(character_id == 22):
+            from utility.cog.character.list.Character_022 import Character_022
+                    
+            character = Character_022()
+                        
+        if(character_id == 23):
+            from utility.cog.character.list.c023_android17 import Character_023
+                    
+            character = Character_023()
+                        
+        if(character_id == 24):
+            from utility.cog.character.list.c024_android18 import Character_024
+                    
+            character = Character_024()
+                        
+        if(character_id == 25):
+            from utility.cog.character.list.c025_android19 import Character_025
+                    
+            character = Character_025()
+                        
+        if(character_id == 26):
+            from utility.cog.character.list.c026_bardock import Character_026
+                    
+            character = Character_026()
+                        
+        if(character_id == 27):
+            from utility.cog.character.list.c027_fasha import Character_027
+                    
+            character = Character_027()
+                        
+        if(character_id == 28):
+            from utility.cog.character.list.c028_shugesh import Character_028
+                    
+            character = Character_028()
+                        
+        if(character_id == 29):
+            from utility.cog.character.list.c029_borgos import Character_029
+                    
+            character = Character_029()
+                        
+        if(character_id == 30):
+            from utility.cog.character.list.c030_tora import Character_030
+                    
+            character = Character_030()
 
         return(character)
     
