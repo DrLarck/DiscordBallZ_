@@ -79,66 +79,91 @@ class Character_getter:
         
         # Pilaf Machine
         if(character_id == 4):
-            from utility.cog.character.list.c004 import Character_004
+            from utility.cog.character.list.c004_pilafmachine import Character_004
 
             character = Character_004()
         
         # Piccolo
         if(character_id == 5):
-            from utility.cog.character.list.c005 import Character_005
+            from utility.cog.character.list.c005_piccolo import Character_005
 
             character = Character_005()
 
         # Bardock
         if(character_id == 6):
-            from utility.cog.character.list.c006 import Character_006
+            from utility.cog.character.list.c006_broly import Character_006
 
             character = Character_006()
         
         if(character_id == 7):
-            from utility.cog.character.list.c007 import Character_007
+            from utility.cog.character.list.c007__superbuu import Character_007
 
             character = Character_007()
         
         if(character_id == 8):
-            from utility.cog.character.list.c008 import Character_008
+            from utility.cog.character.list.c008_goten import Character_008
 
             character = Character_008()
         
         if(character_id == 9):
-            from utility.cog.character.list.c009 import Character_009
+            from utility.cog.character.list.c009_turles import Character_009
 
             character = Character_009()
         
         if(character_id == 10):
-            from utility.cog.character.list.c010 import Character_010
+            from utility.cog.character.list.c010_launch import Character_010
 
             character = Character_010()
 
         if(character_id == 11):
-            from utility.cog.character.list.c011 import Character_011
+            from utility.cog.character.list.c011_redribbonsoldier import Character_011
 
             character = Character_011()
 
         if(character_id == 12):
-            from utility.cog.character.list.c012 import Character_012
+            from utility.cog.character.list.c012_zarbon import Character_012
                     
             character = Character_012()
 
         if(character_id == 13):
-            from utility.cog.character.list.c013 import Character_013
+            from utility.cog.character.list.c013_hercule import Character_013
                     
             character = Character_013()
 
         if(character_id == 14):
-            from utility.cog.character.list.c014 import Character_014
+            from utility.cog.character.list.c014_chiaotzu import Character_014
                     
             character = Character_014()
 
         if(character_id == 15):
-            from utility.cog.character.list.c015 import Character_015
+            from utility.cog.character.list.c015_killa import Character_015
                     
             character = Character_015()
+            
+        if(character_id == 16):
+            from utility.cog.character.list.c016_yamcha import Character_016
+                    
+            character = Character_016()
+            
+        if(character_id == 17):
+            from utility.cog.character.list.c017_tien import Character_017
+                    
+            character = Character_017()
+            
+        if(character_id == 18):
+            from utility.cog.character.list.c018_hit import Character_018
+                    
+            character = Character_018()
+            
+        if(character_id == 19):
+            from utility.cog.character.list.c019_cumber import Character_019
+                    
+            character = Character_019()
+            
+        if(character_id == 20):
+            from utility.cog.character.list.c020_dende import Character_020
+                    
+            character = Character_020()
 
         return(character)
     

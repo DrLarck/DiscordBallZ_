@@ -1,5 +1,5 @@
 """
-Represents Android 18
+Represents Killa
 
 --
 
