@@ -171,7 +171,7 @@ class Character_getter:
             character = Character_021()
                         
         if(character_id == 22):
-            from utility.cog.character.list.Character_022 import Character_022
+            from utility.cog.character.list.c022_android16 import Character_022
                     
             character = Character_022()
                         
