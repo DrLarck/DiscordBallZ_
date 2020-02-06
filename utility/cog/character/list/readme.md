@@ -9,7 +9,7 @@ Here is the characters list with their id :
 - 003 **Red Saibaiman**
 - 004 **Pilaf Machine**
 - 005 **Piccolo**
-- 006 **Bardock**
+- 006 
 - 007 **Super Buu**
 - 008 **Goten**
 - 009 **Turles**
@@ -19,3 +19,8 @@ Here is the characters list with their id :
 - 013 **Android 18**
 - 014 **Chiaotzu**
 - 015 **Killa**
+- 026 **Bardock**
+- 027 **Fasha**
+- 028 **Shugesh**
+- 029 **Borgos**
+- 030 **Tora**
