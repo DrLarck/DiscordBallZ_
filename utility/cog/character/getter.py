@@ -96,7 +96,7 @@ class Character_getter:
             character = Character_006()
         
         if(character_id == 7):
-            from utility.cog.character.list.c007__superbuu import Character_007
+            from utility.cog.character.list.c007_superbuu import Character_007
 
             character = Character_007()
         
