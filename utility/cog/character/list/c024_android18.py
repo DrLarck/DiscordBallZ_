@@ -14,7 +14,7 @@ import asyncio
 # util
 from utility.cog.character.character import Character
 
-class Character_013(Character):
+class Character_024(Character):
     """
     Represents the Android 18 unit from the Android saga.
     """
@@ -24,7 +24,7 @@ class Character_013(Character):
 
         # info
         self.info.name = "Android 18"
-        self.info.id = 13
+        self.info.id = 24
         self.info.saga = "Android"
 
         # stat
