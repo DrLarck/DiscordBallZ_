@@ -214,7 +214,82 @@ class Character_getter:
             from utility.cog.character.list.c030_tora import Character_030
                     
             character = Character_030()
-
+                                    
+        if(character_id == 31):
+            from utility.cog.character.list.c031_guldo import Character_031
+                    
+            character = Character_031()
+                                    
+        if(character_id == 32):
+            from utility.cog.character.list.c032_burter import Character_032
+                    
+            character = Character_032()
+                                    
+        if(character_id == 33):
+            from utility.cog.character.list.c033_jeice import Character_033
+                    
+            character = Character_033()
+                                    
+        if(character_id == 34):
+            from utility.cog.character.list.c034_recoome import Character_034
+                    
+            character = Character_034()
+                                    
+        if(character_id == 35):
+            from utility.cog.character.list.c035_ginyu import Character_035
+                    
+            character = Character_035()
+                                    
+        if(character_id == 36):
+            from utility.cog.character.list.c036_frieza import Character_036
+                    
+            character = Character_036()
+                                    
+        if(character_id == 37):
+            from utility.cog.character.list.c037_yemma import Character_037
+                
+            character = Character_037()
+                                    
+        if(character_id == 38):
+            from utility.cog.character.list.c038_cell import Character_038
+                    
+            character = Character_038()
+                                    
+        if(character_id == 39):
+            from utility.cog.character.list.c039_goku import Character_039
+                    
+            character = Character_039()
+                                    
+        if(character_id == 40):
+            from utility.cog.character.list.c040_gohan import Character_040
+                    
+            character = Character_040()
+                                    
+        if(character_id == 41):
+            from utility.cog.character.list.c041_pan import Character_041
+                    
+            character = Character_041()
+                                    
+        if(character_id == 42):
+            from utility.cog.character.list.c042_janemba import Character_042
+                    
+            character = Character_042()
+                                    
+        if(character_id == 43):
+            from utility.cog.character.list.c043_krillin import Character_043
+                    
+            character = Character_043()
+                                    
+        if(character_id == 44):
+            from utility.cog.character.list.c044_vegeta import Character_044
+                    
+            character = Character_044()
+                                    
+        if(character_id == 45):
+            from utility.cog.character.list.c045_trunks import Character_045
+                    
+            character = Character_045()
+                                    
         return(character)
     
     async def get_summonable(self):
