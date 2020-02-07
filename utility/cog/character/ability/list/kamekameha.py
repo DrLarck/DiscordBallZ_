@@ -1,11 +1,11 @@
 """
-Manages the special beam canon ability
+Manages the kamekameha ability
 
 --
 
 Author : Zyorhist
 
-Last update : 30/01/20 (DrLarck)
+Last update : 02/02/20 (DrLarck)
 """
 
 # dependancies
@@ -20,9 +20,9 @@ from utility.cog.fight_system.calculator.damage import Damage_calculator
 from utility.cog.displayer.move import Move_displayer
 
 # ability
-class Special_beam_cannon(Ability):
+class Kamekameha(Ability):
     """
-    Deal true damage to opponent
+    Deals a ki attack to the opponent
     
     """
 
@@ -40,12 +40,12 @@ class Special_beam_cannon(Ability):
         )
 
         # stat
-        self.name = "Special Beam Cannon"
-        self.description = f"""Inflicts **50 %** of your  {self.game_icon['ki_ability']} damage as true damage"""
+        self.name = "Kamekameha"
+        self.description = f"""Inflicts **200 %** of your  {self.game_icon['ki_ability']} damage as ki damage"""
         
-        # self.icon = self.game_icon['ability']['special_beam_cannon']
+        # self.icon = self.game_icon['ability']['kamekameha']
 
-        self.cost = 40
+        self.cost = 50
 
         # targetting
         self.need_target = True
@@ -53,7 +53,7 @@ class Special_beam_cannon(Ability):
     
     # method
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 0.5):,}** - **{int(self.caster.damage.ki_max * 0.5):,}** true damage."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 2):,}** - **{int(self.caster.damage.ki_max * 2):,}** ki damage."
 
         return
         
@@ -61,7 +61,7 @@ class Special_beam_cannon(Ability):
         """
         `coroutine`
 
-        Inflicts 50% of users ki as true damage 
+        Inflicts 200% of users ki as ki damage 
 
         --
 
@@ -72,12 +72,12 @@ class Special_beam_cannon(Ability):
         move = Move_displayer()
         damage_calculator = Damage_calculator(self.caster, self.target)
 
-        roll_damage = int((randint(self.caster.damage.ki_min, self.caster.damage.ki_max)) * 0.5)
+        roll_damage = int((randint(self.caster.damage.ki_min, self.caster.damage.ki_max)) * 2)
         damage_done = await damage_calculator.physical_damage(
             roll_damage,
             dodgable = True,
             critable = False,
-            ignore_defense = True
+            ignore_defense = False
         )
         
         # inflict the damage to the target
@@ -92,7 +92,7 @@ class Special_beam_cannon(Ability):
         _move["dodge"] = damage_done["dodge"]
         _move["critical"] = damage_done["critical"]
         _move["physical"] = False
-        _move["ki"] = False
+        _move["ki"] = True
 
         _move = await move.offensive_move(_move)
 
