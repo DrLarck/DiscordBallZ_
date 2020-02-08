@@ -33,6 +33,10 @@ class Combat():
 
     - Method :
 
+    :coro:`get_play_order()` : `None` - Defines the play order (player a and player b)
+
+    :coro:`init_teams()` : `list`, `list` - Init the characters of both teams
+
     :coro:`display_teams()` : `None` - Display both teams as a single embed
     """
 
