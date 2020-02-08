@@ -400,15 +400,12 @@ class Combat():
                     )
 
                     if(ability.need_target):
-                        target_ally = ability.target_ally
-                        target_enemy = ability.target_enemy
-                        
                         self.move.target = await self.get_target(
                             player, team_a, team_b,
-                            target_ally = target_ally,
-                            target_enemy = target_enemy
+                            target_ally = ability.target_ally,
+                            target_enemy = ability.target_enemy,
+                            ignore_defenders = ability.ignore_defenders
                         )
-                    
 
         return
 
