@@ -479,12 +479,23 @@ class Combat():
 
         # get the fighter
         await self.get_player_fighter(order)
-        player_input = await _input.wait_for_input(possible_fighter, self.player_a)
+        fighter_ok = False
 
-        if(player_input != None):
-            player_input = int(player_input) - 1
+        while not fighter_ok:
+            await asyncio.sleep(0)
 
-            player_fighter = self.team_a[player_input]
+            player_input = await _input.wait_for_input(possible_fighter, self.player_a)
+
+            if(player_input != None):
+                player_input = int(player_input) - 1
+
+                player_fighter = self.team_a[player_input]
+
+                if(player_fighter.health.current > 0):
+                    fighter_ok = True
+                
+                else:
+                    await self.ctx.send("Please select a fighter that is not **K.O**")
             
             # wait for an action
             action_index = 4
@@ -514,39 +525,57 @@ class Combat():
             possible_move.append("3")
             possible_move.append("flee")
 
-            player_move = await _input.wait_for_input(possible_move, self.player_a)
-            
-            if(player_move != "flee"):
-                player_move = int(player_move) - 1
+            action_ok = False
 
-                if(player_move < 3):
-                    # sequence
-                    if(player_move == 0):
-                        self.move.index = 0
-                        self.move.target = await self.get_target(
-                            player, team_a, team_b,
-                            target_enemy = True
-                        )
-                    
+            while not action_ok:
+                await asyncio.sleep(0)
+
+                player_move = await _input.wait_for_input(possible_move, self.player_a)
+                
+                if(player_move != "flee"):
+                    player_move = int(player_move) - 1
+
+                    if(player_move < 3):
+                        # sequence
+                        if(player_move == 0):
+                            self.move.index = 0
+                            self.move.target = await self.get_target(
+                                player, team_a, team_b,
+                                target_enemy = True
+                            )
+
+                            action_ok = True
+                        
+                        else:
+                            self.move.index = player_move
+
+                            action_ok = True
+
                     else:
                         self.move.index = player_move
 
-                else:
-                    self.move.index = player_move
-
-                    ability = await player_fighter.get_ability(
-                        self.client, self.ctx, player_fighter, player_fighter, 
-                        self.team_a, self.team_b, player_move - 3
-                    )
-
-                    if(ability.need_target):
-                        self.move.target = await self.get_target(
-                            player, team_a, team_b,
-                            target_ally = ability.target_ally,
-                            target_enemy = ability.target_enemy,
-                            ignore_defenders = ability.ignore_defenders
+                        ability = await player_fighter.get_ability(
+                            self.client, self.ctx, player_fighter, player_fighter, 
+                            self.team_a, self.team_b, player_move - 3
                         )
+                        
+                        if(player_fighter.ki.current > ability.cost):
+                            if(ability.need_target):
+                                self.move.target = await self.get_target(
+                                    player, team_a, team_b,
+                                    target_ally = ability.target_ally,
+                                    target_enemy = ability.target_enemy,
+                                    ignore_defenders = ability.ignore_defenders
+                                ) 
 
+                                action_ok = True
+                        
+                        else:
+                            await self.ctx.send("You do not have enough **Ki** to use this ability")
+
+                        
+                            
+                            
             # execute the action
             await self.battle(player_fighter, order)
           
