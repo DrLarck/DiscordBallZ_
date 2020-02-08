@@ -357,7 +357,6 @@ class Combat():
             ).setup_embed()
 
         # sequence move
-        print(self.move.index)
         if(self.move.index == 0):
             damage = await damager.physical_damage(
                 random.randint(fighter.damage.physical_min, fighter.damage.physical_max),
@@ -379,7 +378,7 @@ class Combat():
         
         # display
         embed.add_field(
-            name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move to {_circle}**{self.move.target.info.name}**{self.move.target.type.icon} :",
+            name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move to {_circle}{self.move.target.image.icon}**{self.move.target.info.name}**{self.move.target.type.icon} :",
             value = move,
             inline = False
         )
