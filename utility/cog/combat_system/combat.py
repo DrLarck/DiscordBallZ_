@@ -341,6 +341,7 @@ class Combat():
         if(order == 0):
             player = self.player_a
             circle = ":blue_circle:"
+            _circle = ":red_circle:"
 
             embed = await Custom_embed(
                 self.client, title = "Battle phase", colour = 0x009dff
@@ -349,6 +350,7 @@ class Combat():
         else:
             player = self.player_b
             circle = ":red_circle"
+            _circle = ":blue_circle:"
 
             embed = await Custom_embed(
                 self.client, title = "Battle phase", colour = 0xff0000
@@ -377,7 +379,7 @@ class Combat():
         
         # display
         embed.add_field(
-            name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move",
+            name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move to {_circle}**{self.move.target.info.name}**{self.move.target.type.icon} :",
             value = move,
             inline = False
         )
