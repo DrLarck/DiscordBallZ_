@@ -230,6 +230,80 @@ class Combat():
         await self.ctx.send("Please select a fighter : Type its **index** number.")
         await self.ctx.send(embed = embed)
     
+    async def get_target(self, player, team_a, team_b, target_ally = False, target_defenders = False, ignore_defenders = True):
+        """
+        `coroutine`
+
+        Allows the player to get a target
+
+        - Parameter :
+
+        `player` (`Player()`)
+
+        `team_a` (`list`) : The player's allied team
+
+        `team_b` (`list`) : The player's enemy team
+
+        `target_ally` (`bool`)
+
+        `target_enemy` (`bool`)
+
+        `ignore_defenders` (`bool`) : If it's set to `False` the defenders are ignored
+
+        --
+
+        Return : `Character()`
+        """
+
+        # init
+        target = None
+        targetable = []
+        targetable_display = ""
+        _input = Combat_input(self.client)
+
+        # get the targetable characters
+        if(target_ally):
+            # add the allies 
+            targetable += team_a
+        
+        if(target):
+            # add the enemies
+            if(ignore_defenders == False):  # ignore the defenders
+                targetable += team_b
+            
+            else:  # get the defenders
+                for enemy in team_b:
+                    await asyncio.sleep(0)
+
+                    if(enemy.posture.defending):
+                        targetable.append(enemy)
+        
+        # set display
+        target_index = 1
+
+        for targetable_ in targetable:
+            await asyncio.sleep(0)
+
+            targetable_display += f"`{target_index}`. {targetable_.image.icon}**{targetable_.info.name}**{targetable_.type.icon} - **{targetable_.health.current:,}**:hearts: *({int((targetable_.health.current * 100) / targetable_.health.maximum)} %)*"
+
+            targetable_display += "\n"
+        
+        embed = await Custom_embed(
+            client = self.client,
+            title = "Targets"
+        ).setup_embed()
+
+        await self.ctx.send("Please select a target among the following by typing its **index**")
+        await self.ctx.send(embed = embed)
+
+        # get the input
+        possible_input = await _input.get_possible(targetable)
+        player_input = int(await _input.wait_for_input(possible_input, player)) - 1
+        
+        target = targetable[player_input]
+
+        return(target)
+    
     async def player_turn(self, player):
         """
         `coroutine`
