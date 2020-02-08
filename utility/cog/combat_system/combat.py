@@ -59,6 +59,7 @@ class Combat():
         # players
         self.player_a, self.player_b = None, None
         self.team_a, self.team_b = None, None
+        self.removed_a, self.removed_b = [], []
         self.move = Move()
 
     # method
@@ -188,7 +189,7 @@ class Combat():
         
         --
 
-        Return : `Character()`
+        Return : `None`
         """
 
         # init
@@ -201,11 +202,13 @@ class Combat():
         if(order == 0):
             team = self.team_a
             player = self.player_a
+            removed = self.removed_a
             circle = "🔵"
         
         else:
             team = self.team_b
             player = self.player_b
+            removed = self.removed_b
             circle = "🔴"
         
         # set embed
@@ -219,11 +222,12 @@ class Combat():
         for char in team:
             await asyncio.sleep(0)
 
-            posture, posture_icon = await char.posture.get_posture()
-            team_display += f"`{index}`. {char.image.icon}**{char.info.name}** - **{char.health.current:,}**:hearts: *({int((char.health.current * 100) / char.health.maximum)} %)* {posture_icon}"
+            if not (char in removed):
+                posture, posture_icon = await char.posture.get_posture()
+                team_display += f"`{index}`. {char.image.icon}**{char.info.name}** - **{char.health.current:,}**:hearts: *({int((char.health.current * 100) / char.health.maximum)} %)* {posture_icon}"
 
-            team_display += "\n"
-            index += 1
+                team_display += "\n"
+                index += 1
         
         embed.add_field(
             name = f"{circle}**{player.name}**'s team",
@@ -334,7 +338,9 @@ class Combat():
         """
 
         # init
-        damager = Damage_calculator(fighter, self.move.target)
+        if(self.move.target):
+            damager = Damage_calculator(fighter, self.move.target)
+            
         display = ""
         move = Move_displayer()
 
@@ -352,7 +358,7 @@ class Combat():
         
         else:
             player = self.player_b
-            circle = ":red_circle"
+            circle = ":red_circle:"
             _circle = ":blue_circle:"
 
             embed = await Custom_embed(
@@ -460,7 +466,7 @@ class Combat():
 
         --
 
-        Return : `None`
+        Return : `Character()`
         """
 
         # init
@@ -470,10 +476,12 @@ class Combat():
 
         # get the team order
         if(order == 0):
+            player = self.player_a
             team_a = self.team_a
             team_b = self.team_b
         
         else:
+            player = self.player_b
             team_a = self.team_b
             team_b = self.team_a
 
@@ -484,12 +492,12 @@ class Combat():
         while not fighter_ok:
             await asyncio.sleep(0)
 
-            player_input = await _input.wait_for_input(possible_fighter, self.player_a)
+            player_input = await _input.wait_for_input(possible_fighter, player)
 
             if(player_input != None):
                 player_input = int(player_input) - 1
 
-                player_fighter = self.team_a[player_input]
+                player_fighter = team_a[player_input]
 
                 if(player_fighter.health.current > 0):
                     fighter_ok = True
@@ -530,7 +538,7 @@ class Combat():
             while not action_ok:
                 await asyncio.sleep(0)
 
-                player_move = await _input.wait_for_input(possible_move, self.player_a)
+                player_move = await _input.wait_for_input(possible_move, player)
                 
                 if(player_move != "flee"):
                     player_move = int(player_move) - 1
@@ -572,14 +580,11 @@ class Combat():
                         
                         else:
                             await self.ctx.send("You do not have enough **Ki** to use this ability")
-
-                        
-                            
                             
             # execute the action
             await self.battle(player_fighter, order)
           
-        return
+        return(player_fighter)
 
     # combat
     async def run(self):
@@ -610,9 +615,17 @@ class Combat():
                 await asyncio.sleep(1)
             
             # player a turn
-            await self.player_turn(self.player_a, 0)
+            a_character_used = await self.player_turn(self.player_a, 0)
+            self.removed_a.append(a_character_used)
+            
+            # player b turn
+            b_character_used = await self.player_turn(self.player_b, 1)
+            self.removed_b.append(b_character_used)
             
             # END OF THE TURN
+            self.removed_a = []
+            self.removed_b = []
+            
             turn += 1
 
         return

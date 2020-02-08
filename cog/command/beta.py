@@ -4,6 +4,7 @@ BETA test commands
 
 # dependancies
 import asyncio
+import discord
 from discord.ext import commands
 
 # util
@@ -24,7 +25,7 @@ class Cmd_beta(commands.Cog):
         return
     
     @beta.command()
-    async def combat(self, ctx):
+    async def combat(self, ctx, user : discord.Member = None):
         """
         new combat system
         """
@@ -32,16 +33,20 @@ class Cmd_beta(commands.Cog):
         from utility.cog.combat_system.combat import Combat
 
         # init
-        player = Player(ctx, self.client, ctx.message.author)
+        caller = Player(ctx, self.client, ctx.message.author)
+        opponent = Player(ctx, self.client, user)
+
+        if(opponent == None):
+            opponent = caller
 
         teams = [
             {
-                "owner" : player,
-                "team" : await player.team.character()
+                "owner" : caller,
+                "team" : await caller.team.character()
             },
             {
-                "owner" : player,
-                "team" : await player.team.character()
+                "owner" : opponent,
+                "team" : await opponent.team.character()
             }
         ]
 
