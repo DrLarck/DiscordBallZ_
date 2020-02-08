@@ -35,7 +35,7 @@ class Combat():
 
     :coro:`get_play_order()` : `None` - Defines the play order (player a and player b)
 
-    :coro:`init_teams()` : `list`, `list` - Init the characters of both teams
+    :coro:`get_teams()` : `list`, `list` - Init the characters of both teams
 
     :coro:`display_teams()` : `None` - Display both teams as a single embed
     """
@@ -76,7 +76,7 @@ class Combat():
 
         return
 
-    async def init_teams(self):
+    async def get_teams(self):
         """
         `coroutine`
 
