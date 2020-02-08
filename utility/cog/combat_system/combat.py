@@ -76,7 +76,7 @@ class Combat():
         """
         `coroutine`
 
-        Sort the teams
+        Init the characters of both teams
 
         --
 
@@ -101,10 +101,10 @@ class Combat():
             await asyncio.sleep(0)
 
             await char_b.init()
-            
+
         return(team_a, team_b)
 
-    async def display_teams(self, sorted_team):
+    async def display_teams(self, team_a, team_b):
         """
         `coroutine`
 
@@ -120,7 +120,6 @@ class Combat():
         """
 
         # init
-        team_a, team_b = sorted_team[0], sorted_team[1]
         team_a_display, team_b_display = "", ""
 
         embed = await Custom_embed(

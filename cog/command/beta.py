@@ -50,9 +50,8 @@ class Cmd_beta(commands.Cog):
         await combat.get_play_order()
 
         team_a, team_b = await combat.sort_teams()
-        sorted_team = [team_a, team_b]
 
-        await combat.display_teams(sorted_team)
+        await combat.display_teams(team_a, team_b)
 
 def setup(client):
     client.add_cog(Cmd_beta(client))
