@@ -24,6 +24,32 @@ class Combat_input():
         self.client = client
         self.timeout = 120
     
+    async def get_possible(self, options):
+        """
+        `coroutine`
+
+        Generate a `list` of `str digits` for the possible choices the player can make from an `option` list
+
+        - Parameter :
+
+        `options` (`list`) : List of possible actions, inputs, etc.
+
+        --
+
+        Return : `list` of `str digits`
+        """
+
+        # init
+        possible = []
+
+        for a in range(len(options)):
+            await asyncio.sleep(0)
+
+            possible.append(str(a))
+
+        return(possible)
+
+
     async def wait_for_input(self, possible_choice, player):
         """
         `coroutine`

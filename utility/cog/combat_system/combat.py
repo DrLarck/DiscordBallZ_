@@ -15,6 +15,9 @@ import random
 # graphic
 from utility.graphic.embed import Custom_embed
 
+# util
+from utility.cog.combat_system.input.input import Combat_input
+
 class Combat():
     """
     Manages a combat
@@ -224,8 +227,8 @@ class Combat():
             inline = False
         )
 
-        await self.ctx.send(embed = embed)
         await self.ctx.send("Please select a fighter : Type its **index** number.")
+        await self.ctx.send(embed = embed)
     
     # combat
     async def run(self):
@@ -243,12 +246,36 @@ class Combat():
         await self.get_play_order()
         self.team_a, self.team_b = await self.get_teams()
 
+        _input = Combat_input(self.client)
+
+        combat_end = False
         turn = 1
 
-        if(turn == 1):
-            await self.display_teams()
-        
-        # get player fighter
-        await self.get_player_fighter(0)
+        # start the fight
+        await self.ctx.send(f":blue_circle:**{self.player_a.name}** VS :red_circle:**{self.player_b.name}**")
+        await asyncio.sleep(1)
+
+        while not combat_end:
+            if(turn == 1):
+                await self.display_teams()
+                await asyncio.sleep(1)
+            
+            # get player fighter
+            possible_fighter = ["1", "2", "3"]
+
+            await self.get_player_fighter(0)
+            player_input = await _input.wait_for_input(possible_fighter, self.player_a)
+
+            if(player_input != None):
+                player_input = int(player_input) - 1
+
+                player_a_fighter = self.team_a[player_input]
+                
+                # wait for an action
+                
+                await self.ctx.send(f"You have chosen {player_a_fighter.image.icon}{player_a_fighter.info.name}")
+
+            # END OF THE TURN
+            turn += 1
 
         return
