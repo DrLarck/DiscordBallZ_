@@ -49,7 +49,7 @@ class Cmd_beta(commands.Cog):
 
         await combat.get_play_order()
 
-        team_a, team_b = await combat.sort_teams()
+        team_a, team_b = await combat.init_teams()
 
         await combat.display_teams(team_a, team_b)
 

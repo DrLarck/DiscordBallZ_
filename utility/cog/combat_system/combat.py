@@ -72,7 +72,7 @@ class Combat():
 
         return
 
-    async def sort_teams(self):
+    async def init_teams(self):
         """
         `coroutine`
 
