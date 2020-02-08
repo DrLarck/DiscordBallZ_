@@ -289,11 +289,19 @@ class Combat():
             targetable_display += f"`{target_index}`. {targetable_.image.icon}**{targetable_.info.name}**{targetable_.type.icon} - **{targetable_.health.current:,}**:hearts: *({int((targetable_.health.current * 100) / targetable_.health.maximum)} %)*"
 
             targetable_display += "\n"
+
+            target_index += 1
         
         embed = await Custom_embed(
             client = self.client,
             title = "Targets"
         ).setup_embed()
+
+        embed.add_field(
+            name = "Available targets",
+            value = targetable_display,
+            inline = False
+        )
 
         await self.ctx.send("Please select a target among the following by typing its **index**")
         await self.ctx.send(embed = embed)
