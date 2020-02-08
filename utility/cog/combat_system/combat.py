@@ -421,7 +421,7 @@ class Combat():
             team_b = self.team_a
 
         # get the fighter
-        await self.get_player_fighter(0)
+        await self.get_player_fighter(order)
         player_input = await _input.wait_for_input(possible_fighter, self.player_a)
 
         if(player_input != None):
