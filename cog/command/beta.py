@@ -48,7 +48,11 @@ class Cmd_beta(commands.Cog):
         combat = Combat(self.client, ctx, teams)
 
         await combat.get_play_order()
-        await combat.display_teams()
+
+        team_a, team_b = await combat.sort_teams()
+        sorted_team = [team_a, team_b]
+
+        await combat.display_teams(sorted_team)
 
 def setup(client):
     client.add_cog(Cmd_beta(client))
