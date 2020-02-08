@@ -10,6 +10,7 @@ Last update : 08/02/20 (DrLarck)
 
 # dependancies
 import asyncio
+import random
 
 # graphic
 from utility.graphic.embed import Custom_embed
@@ -46,6 +47,30 @@ class Combat():
         self.player_a, self.player_b = None, None
 
     # method
+    async def get_play_order(self):
+        """
+        `coroutine`
+
+        Defines the play order (player a and player b)
+
+        --
+
+        Return : `None`
+        """
+
+        # init 
+        first = random.randint(0, 1)
+
+        self.player_a = self.teams[first]["owner"]
+
+        if(first == 0):
+            self.player_b = self.teams[1]["owner"]
+        
+        else:
+            self.player_b = self.teams[0]["owner"]
+
+        return
+
     async def display_teams(self, sorted_team):
         """
         `coroutine`
