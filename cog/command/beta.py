@@ -24,7 +24,7 @@ class Cmd_beta(commands.Cog):
         return
     
     @beta.command()
-    async def new_combat(self, ctx):
+    async def combat(self, ctx):
         """
         new combat system
         """
