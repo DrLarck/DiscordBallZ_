@@ -91,9 +91,6 @@ class Combat_input():
             # init
             content = message.content
             content = content.lower()
-
-            print(possible_choice)
-            print(content)
             
             if(message.author.id == player.id):
                 if(content in possible_choice):
