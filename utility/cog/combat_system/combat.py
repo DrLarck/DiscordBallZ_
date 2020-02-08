@@ -230,6 +230,81 @@ class Combat():
         await self.ctx.send("Please select a fighter : Type its **index** number.")
         await self.ctx.send(embed = embed)
     
+    async def player_turn(self, player):
+        """
+        `coroutine`
+
+        Gets thes input and throw the outputs for the current player
+
+        - Parameter
+
+        `player` (`Player()`)
+
+        --
+
+        Return : `None`
+        """
+
+        # init
+        _input = Combat_input(self.client)
+        fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
+        possible_fighter = ["1", "2", "3"]
+
+        # get the fighter
+        await self.get_player_fighter(0)
+        player_input = await _input.wait_for_input(possible_fighter, self.player_a)
+
+        if(player_input != None):
+            player_input = int(player_input) - 1
+
+            player_fighter = self.team_a[player_input]
+            
+            # wait for an action
+            action_index = 4
+
+            for action in player_fighter.ability:
+                await asyncio.sleep(0)
+
+                ability = action(
+                    self.client, self.ctx, player_fighter,
+                    None, self.team_a, self.team_b
+                )
+
+                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}**"
+
+                fighter_action += "\n"
+
+                action_index += 1
+
+            await self.ctx.send(
+                f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** :\n{fighter_action}"
+            )
+
+            # get the move
+            possible_move = await _input.get_possible(player_fighter.ability)
+            possible_move.append("1")
+            possible_move.append("2")
+            possible_move.append("3")
+            possible_move.append("flee")
+
+            player_move = await _input.wait_for_input(possible_move, self.player_a)
+            
+            if(player_move != "flee"):
+                player_move = int(player_move) - 1
+
+                if(player_move < 3):
+                    pass
+
+                else:
+                    ability = await player_fighter.get_ability(
+                        self.client, self.ctx, player_fighter, player_fighter, 
+                        self.team_a, self.team_b, player_move - 3
+                    )
+
+                    await self.ctx.send(ability.name)
+
+        return
+
     # combat
     async def run(self):
         """
@@ -245,9 +320,7 @@ class Combat():
         # init
         await self.get_play_order()
         self.team_a, self.team_b = await self.get_teams()
-
-        _input = Combat_input(self.client)
-
+        
         combat_end = False
         turn = 1
 
@@ -260,21 +333,9 @@ class Combat():
                 await self.display_teams()
                 await asyncio.sleep(1)
             
-            # get player fighter
-            possible_fighter = ["1", "2", "3"]
-
-            await self.get_player_fighter(0)
-            player_input = await _input.wait_for_input(possible_fighter, self.player_a)
-
-            if(player_input != None):
-                player_input = int(player_input) - 1
-
-                player_a_fighter = self.team_a[player_input]
-                
-                # wait for an action
-                
-                await self.ctx.send(f"You have chosen {player_a_fighter.image.icon}{player_a_fighter.info.name}")
-
+            # player a turn
+            await self.player_turn(self.player_a)
+            
             # END OF THE TURN
             turn += 1
 

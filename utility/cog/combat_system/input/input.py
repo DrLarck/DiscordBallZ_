@@ -42,10 +42,11 @@ class Combat_input():
         # init
         possible = []
 
-        for a in range(len(options)):
-            await asyncio.sleep(0)
+        if(len(options) > 0):
+            for a in range(4, len(options) + 4):
+                await asyncio.sleep(0)
 
-            possible.append(str(a))
+                possible.append(str(a))
 
         return(possible)
 
