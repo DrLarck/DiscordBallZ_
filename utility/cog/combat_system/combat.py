@@ -374,6 +374,8 @@ class Combat():
                 "ki" : False
             }
 
+            # inflict damage
+            await self.move.target.receive_damage(damage["calculated"])
             move = await move.offensive_move(move_info)
         
         # display
