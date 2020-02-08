@@ -68,7 +68,6 @@ class Arm_stretch(Ability):
 
         move = Move_displayer()
         calculator = Damage_calculator(self.caster, self.target)
-        checker = Effect_checker(self.target)
 
         # get the damage
         damage = randint(self.caster.damage.physical_min, self.caster.damage.physical_max)

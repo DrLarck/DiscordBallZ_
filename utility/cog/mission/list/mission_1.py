@@ -16,9 +16,9 @@ import random
 from utility.cog.mission.mission import Mission
 
 # opponent
-from utility.cog.character.list.c001 import Character_001
-from utility.cog.character.list.c002 import Character_002
-from utility.cog.character.list.c003 import Character_003
+from utility.cog.character.list.c001_sabimen import Character_001
+from utility.cog.character.list.c002_sabimen import Character_002
+from utility.cog.character.list.c003_sabimen import Character_003
 
 class Mission_1(Mission):
     """

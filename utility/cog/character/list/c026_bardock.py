@@ -1,5 +1,5 @@
 """
-Represents the character 6
+Represents Bardock
 
 --
 
@@ -18,7 +18,7 @@ from utility.cog.character.character import Character
 from utility.cog.character.ability.list.acid import Acid
 
 # Bardock
-class Character_006(Character):
+class Character_026(Character):
     """
     Represents Bardock
     """
@@ -28,7 +28,7 @@ class Character_006(Character):
         Character.__init__(self)
 
         # info
-        self.info.id = 6
+        self.info.id = 26
         self.info.name = "Bardock"
         self.info.saga = "Bardock"
         self.rarity.value = 0

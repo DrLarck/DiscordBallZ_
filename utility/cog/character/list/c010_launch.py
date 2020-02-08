@@ -35,7 +35,7 @@ class Character_010(Character):
 
         self.defense.armor = 475
         self.defense.spirit = 400
-        self.defense.dodge = 3
+        self.defense.dodge = 10
 
         self.critical_chance = 35
         self.regeneration.ki = 3
