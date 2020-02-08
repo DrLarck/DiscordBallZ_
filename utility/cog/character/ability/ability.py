@@ -5,7 +5,7 @@ Ability super class.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 08/02/20 (DrLarck)
 """
 
 # dependance
@@ -82,6 +82,7 @@ class Ability:
         self.need_target = False
         self.target_ally = False
         self.target_enemy = False
+        self.ignore_defenders = False
     
     # method
     async def set_tooltip(self):
