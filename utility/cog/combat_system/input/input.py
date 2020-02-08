@@ -24,7 +24,7 @@ class Combat_input():
         self.client = client
         self.timeout = 120
     
-    async def get_possible(self, options):
+    async def get_possible(self, options, ability = False):
         """
         `coroutine`
 
@@ -42,8 +42,16 @@ class Combat_input():
         # init
         possible = []
 
+        if(ability):
+            start = 4
+            end = len(options) + 4
+        
+        else:
+            start = 1
+            end = len(options) + 1
+
         if(len(options) > 0):
-            for a in range(4, len(options) + 4):
+            for a in range(start, end):
                 await asyncio.sleep(0)
 
                 possible.append(str(a))
@@ -83,6 +91,9 @@ class Combat_input():
             # init
             content = message.content
             content = content.lower()
+
+            print(possible_choice)
+            print(content)
             
             if(message.author.id == player.id):
                 if(content in possible_choice):

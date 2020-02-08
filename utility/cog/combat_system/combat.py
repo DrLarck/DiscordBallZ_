@@ -14,10 +14,12 @@ import random
 
 # graphic
 from utility.graphic.embed import Custom_embed
+from utility.cog.displayer.move import Move_displayer
 
 # util
 from utility.cog.combat_system.input.input import Combat_input
 from utility.cog.combat_system.attribute.move import Move
+from utility.cog.fight_system.calculator.damage import Damage_calculator
 
 class Combat():
     """
@@ -314,6 +316,76 @@ class Combat():
 
         return(target)
     
+    async def battle(self, fighter, order):
+        """
+        `coroutine`
+
+        Battle phase
+
+        - Parameter 
+
+        `fighter` (`Character()`)
+
+        `order` (`int`)
+
+        --
+
+        Return : `None`
+        """
+
+        # init
+        damager = Damage_calculator(fighter, self.move.target)
+        display = ""
+        move = Move_displayer()
+
+        if(order == 0):
+            player = self.player_a
+            circle = ":blue_circle:"
+
+            embed = await Custom_embed(
+                self.client, title = "Battle phase", colour = 0x009dff
+            ).setup_embed()
+        
+        else:
+            player = self.player_b
+            circle = ":red_circle"
+
+            embed = await Custom_embed(
+                self.client, title = "Battle phase", colour = 0xff0000
+            ).setup_embed()
+
+        # sequence move
+        print(self.move.index)
+        if(self.move.index == 0):
+            damage = await damager.physical_damage(
+                random.randint(fighter.damage.physical_min, fighter.damage.physical_max),
+                dodgable = True,
+                critable = True
+            )
+
+            move_info = {
+                "name" : "Sequence",
+                "icon" : "👊",
+                "damage" : damage["calculated"],
+                "critical" : damage["critical"],
+                "dodge" : damage["dodge"],
+                "physical" : True,
+                "ki" : False
+            }
+
+            move = await move.offensive_move(move_info)
+        
+        # display
+        embed.add_field(
+            name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move",
+            value = move,
+            inline = False
+        )
+
+        await self.ctx.send(embed = embed)
+
+        return
+    
     async def player_turn(self, player, order):
         """
         `coroutine`
@@ -376,7 +448,7 @@ class Combat():
             )
 
             # get the move
-            possible_move = await _input.get_possible(player_fighter.ability)
+            possible_move = await _input.get_possible(player_fighter.ability, ability = True)
             possible_move.append("1")
             possible_move.append("2")
             possible_move.append("3")
@@ -391,7 +463,7 @@ class Combat():
                     # sequence
                     if(player_move == 0):
                         self.move.index = 0
-                        self.target = await self.get_target(
+                        self.move.target = await self.get_target(
                             player, team_a, team_b,
                             target_enemy = True
                         )
@@ -415,6 +487,9 @@ class Combat():
                             ignore_defenders = ability.ignore_defenders
                         )
 
+            # execute the action
+            await self.battle(player_fighter, order)
+          
         return
 
     # combat
