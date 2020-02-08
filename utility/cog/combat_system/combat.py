@@ -440,14 +440,14 @@ class Combat():
                     None, self.team_a, self.team_b
                 )
 
-                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}**"
+                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:)"
 
                 fighter_action += "\n"
 
                 action_index += 1
 
             await self.ctx.send(
-                f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** :\n{fighter_action}"
+                f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:) :\n{fighter_action}"
             )
 
             # get the move
@@ -489,6 +489,9 @@ class Combat():
                             target_enemy = ability.target_enemy,
                             ignore_defenders = ability.ignore_defenders
                         )
+                    
+                    player_fighter.ki.current -= ability.cost
+                    await player.ki.limit()
 
             # execute the action
             await self.battle(player_fighter, order)
