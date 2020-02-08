@@ -17,6 +17,7 @@ from utility.graphic.embed import Custom_embed
 
 # util
 from utility.cog.combat_system.input.input import Combat_input
+from utility.cog.combat_system.attribute.move import Move
 
 class Combat():
     """
@@ -56,6 +57,7 @@ class Combat():
         # players
         self.player_a, self.player_b = None, None
         self.team_a, self.team_b = None, None
+        self.move = Move()
 
     # method
         # init
@@ -230,7 +232,7 @@ class Combat():
         await self.ctx.send("Please select a fighter : Type its **index** number.")
         await self.ctx.send(embed = embed)
     
-    async def get_target(self, player, team_a, team_b, target_ally = False, target_defenders = False, ignore_defenders = True):
+    async def get_target(self, player, team_a, team_b, target_ally = False, target_enemy = False, ignore_defenders = False):
         """
         `coroutine`
 
@@ -266,7 +268,7 @@ class Combat():
             # add the allies 
             targetable += team_a
         
-        if(target):
+        if(target_enemy):
             # add the enemies
             if(ignore_defenders == False):  # ignore the defenders
                 targetable += team_b
@@ -304,7 +306,7 @@ class Combat():
 
         return(target)
     
-    async def player_turn(self, player):
+    async def player_turn(self, player, order):
         """
         `coroutine`
 
@@ -313,6 +315,8 @@ class Combat():
         - Parameter
 
         `player` (`Player()`)
+
+        `order` (`int`) : Tells who's playing
 
         --
 
@@ -323,6 +327,15 @@ class Combat():
         _input = Combat_input(self.client)
         fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
         possible_fighter = ["1", "2", "3"]
+
+        # get the team order
+        if(order == 0):
+            team_a = self.team_a
+            team_b = self.team_b
+        
+        else:
+            team_a = self.team_b
+            team_b = self.team_a
 
         # get the fighter
         await self.get_player_fighter(0)
@@ -367,15 +380,35 @@ class Combat():
                 player_move = int(player_move) - 1
 
                 if(player_move < 3):
-                    pass
+                    # sequence
+                    if(player_move == 0):
+                        self.move.index = 0
+                        self.target = await self.get_target(
+                            player, team_a, team_b,
+                            target_enemy = True
+                        )
+                    
+                    else:
+                        self.move.index = player_move
 
                 else:
+                    self.move.index = player_move
+
                     ability = await player_fighter.get_ability(
                         self.client, self.ctx, player_fighter, player_fighter, 
                         self.team_a, self.team_b, player_move - 3
                     )
 
-                    await self.ctx.send(ability.name)
+                    if(ability.need_target):
+                        target_ally = ability.target_ally
+                        target_enemy = ability.target_enemy
+                        
+                        self.move.target = await self.get_target(
+                            player, team_a, team_b,
+                            target_ally = target_ally,
+                            target_enemy = target_enemy
+                        )
+                    
 
         return
 
@@ -408,7 +441,7 @@ class Combat():
                 await asyncio.sleep(1)
             
             # player a turn
-            await self.player_turn(self.player_a)
+            await self.player_turn(self.player_a, 0)
             
             # END OF THE TURN
             turn += 1
