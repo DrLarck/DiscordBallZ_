@@ -52,7 +52,7 @@ class Bot_config:
     is_ready = False
 
     # info
-    version = "3.0.2.69"
+    version = "3.0.3"
     phase = "BETA"
 
     # droprate

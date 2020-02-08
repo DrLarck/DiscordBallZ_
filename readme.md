@@ -1,4 +1,4 @@
-![version](https://img.shields.io/badge/version-3.0.2-orange.svg)
+![version](https://img.shields.io/badge/version-3.0.3-orange.svg)
 
 ![MIT](https://img.shields.io/github/license/DrLarck/discordballz)
 [![discordguild](https://discordapp.com/api/guilds/531560539638202368/widget.png)](https://discord.gg/gwpJgtS)
