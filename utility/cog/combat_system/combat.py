@@ -47,6 +47,7 @@ class Combat():
         self.player_a, self.player_b = None, None
 
     # method
+        # init
     async def get_play_order(self):
         """
         `coroutine`
@@ -70,6 +71,38 @@ class Combat():
             self.player_b = self.teams[0]["owner"]
 
         return
+
+    async def sort_teams(self):
+        """
+        `coroutine`
+
+        Sort the teams
+
+        --
+
+        Return : `list` team a, `list` team b
+        """
+
+        # init
+        team_a, team_b = [], []
+
+        # get team a 
+        team_a = await self.player_a.team.character()
+
+        for char_a in team_a:
+            await asyncio.sleep(0)
+
+            await char_a.init()
+
+        # get team b 
+        team_b = await self.player_b.team.character()
+
+        for char_b in team_b:
+            await asyncio.sleep(0)
+
+            await char_b.init()
+            
+        return(team_a, team_b)
 
     async def display_teams(self, sorted_team):
         """
