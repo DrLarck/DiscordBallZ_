@@ -346,6 +346,9 @@ class Combat():
             embed = await Custom_embed(
                 self.client, title = "Battle phase", colour = 0x009dff
             ).setup_embed()
+
+            team_a = self.team_a
+            team_b = self.team_b
         
         else:
             player = self.player_b
@@ -356,8 +359,13 @@ class Combat():
                 self.client, title = "Battle phase", colour = 0xff0000, thumb = player.avatar
             ).setup_embed()
 
+            team_a = self.team_b
+            team_b = self.team_a
+
         # sequence move
         if(self.move.index == 0):
+            await fighter.posture.change_posture("attacking")
+
             damage = await damager.physical_damage(
                 random.randint(fighter.damage.physical_min, fighter.damage.physical_max),
                 dodgable = True,
@@ -377,6 +385,55 @@ class Combat():
             # inflict damage
             await self.move.target.receive_damage(damage["calculated"])
             move = await move.offensive_move(move_info)
+        
+        # ki gain
+        elif(self.move.index == 1):
+            await fighter.posture.change_posture("charging")
+
+            missing_ki = fighter.ki.maximum - fighter.ki.current
+            missing_ki *= 0.1  # 10 % of missing
+
+            gain = int(random.randint(1, 5) + fighter.rarity.value + missing_ki)
+
+            fighter.ki.current += gain
+            await fighter.ki.ki_limit()
+
+            move_info = {
+                "name" : "Ki charge",
+                "icon" : "🔥",
+                "damage" : gain,
+                "critical" : False,
+                "dodge" : False,
+                "physical" : False,
+                "ki" : False
+            }
+
+            move = await move.ki_move(move_info)
+        
+        # defending
+        elif(self.move.index == 2):
+            await fighter.posture.change_posture("defending")
+
+            move = await move.defense_move()
+
+        # ability
+        elif(self.move.index > 2):
+            await fighter.posture.change_posture("attacking")
+
+            ability = await fighter.get_ability(
+                self.client,
+                self.ctx,
+                fighter,
+                self.move.target,
+                team_a,
+                team_b,
+                self.move.index - 3
+            )
+
+            move = await ability.use()
+
+            fighter.ki.current -= ability.cost
+            await fighter.ki.ki_limit()
         
         # display
         embed.add_field(
@@ -489,9 +546,6 @@ class Combat():
                             target_enemy = ability.target_enemy,
                             ignore_defenders = ability.ignore_defenders
                         )
-                    
-                    player_fighter.ki.current -= ability.cost
-                    await player.ki.limit()
 
             # execute the action
             await self.battle(player_fighter, order)
