@@ -279,7 +279,7 @@ class Combat():
                 for enemy in team_b:
                     await asyncio.sleep(0)
 
-                    if(enemy.posture.defending):
+                    if(enemy.posture.defending and enemy.health.current > 0):
                         targetable.append(enemy)
         
         # set display
