@@ -353,7 +353,7 @@ class Combat():
             _circle = ":blue_circle:"
 
             embed = await Custom_embed(
-                self.client, title = "Battle phase", colour = 0xff0000
+                self.client, title = "Battle phase", colour = 0xff0000, thumb = player.avatar
             ).setup_embed()
 
         # sequence move
