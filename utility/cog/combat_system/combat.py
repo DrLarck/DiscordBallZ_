@@ -203,19 +203,22 @@ class Combat():
             team = self.team_a
             player = self.player_a
             removed = self.removed_a
+            color = 0x009dff
             circle = "🔵"
         
         else:
             team = self.team_b
             player = self.player_b
             removed = self.removed_b
+            color = 0xff0000
             circle = "🔴"
         
         # set embed
         embed = await Custom_embed(
             self.client,
             title = "Fighters",
-            thumb = player.avatar
+            thumb = player.avatar,
+            colour = color
         ).setup_embed()
         
         # set player team display
@@ -238,7 +241,7 @@ class Combat():
         await self.ctx.send("Please select a fighter : Type its **index** number.")
         await self.ctx.send(embed = embed)
     
-    async def get_target(self, player, team_a, team_b, target_ally = False, target_enemy = False, ignore_defenders = False):
+    async def get_target(self, player, team_a, team_b, order, target_ally = False, target_enemy = False, ignore_defenders = False):
         """
         `coroutine`
 
@@ -257,6 +260,8 @@ class Combat():
         `target_enemy` (`bool`)
 
         `ignore_defenders` (`bool`) : If it's set to `False` the defenders are ignored
+
+        `order` (`int`) : Turn order
 
         --
 
@@ -298,9 +303,17 @@ class Combat():
 
             target_index += 1
         
+        # define the color of the embed
+        if(order == 0):
+            color = 0x009dff
+        
+        else:
+            color = 0xff0000
+
         embed = await Custom_embed(
             client = self.client,
-            title = "Targets"
+            title = "Targets",
+            colour = color
         ).setup_embed()
 
         embed.add_field(
@@ -350,7 +363,7 @@ class Combat():
             _circle = ":red_circle:"
 
             embed = await Custom_embed(
-                self.client, title = "Battle phase", colour = 0x009dff
+                self.client, title = "Battle phase", colour = 0x009dff, thumb = player.avatar
             ).setup_embed()
 
             team_a = self.team_a
@@ -517,7 +530,7 @@ class Combat():
                 )
 
                 await ability.set_tooltip()
-                
+
                 fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:) : {ability.tooltip}"
 
                 fighter_action += "\n"
@@ -525,7 +538,7 @@ class Combat():
                 action_index += 1
 
             await self.ctx.send(
-                f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:) :\n{fighter_action}"
+                f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
             )
 
             # get the move
@@ -550,7 +563,7 @@ class Combat():
                         if(player_move == 0):
                             self.move.index = 0
                             self.move.target = await self.get_target(
-                                player, team_a, team_b,
+                                player, team_a, team_b, order,
                                 target_enemy = True
                             )
 
@@ -572,7 +585,7 @@ class Combat():
                         if(player_fighter.ki.current > ability.cost):
                             if(ability.need_target):
                                 self.move.target = await self.get_target(
-                                    player, team_a, team_b,
+                                    player, team_a, team_b, order,
                                     target_ally = ability.target_ally,
                                     target_enemy = ability.target_enemy,
                                     ignore_defenders = ability.ignore_defenders
