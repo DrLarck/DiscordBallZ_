@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 08/02/20 (DrLarck)
+Last update : 09/02/20 (DrLarck)
 """
 
 # dependancies
@@ -516,7 +516,9 @@ class Combat():
                     None, self.team_a, self.team_b
                 )
 
-                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:)"
+                await ability.set_tooltip()
+                
+                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:) : {ability.tooltip}"
 
                 fighter_action += "\n"
 
