@@ -58,8 +58,8 @@ class Combat():
 
         # players
         self.player_a, self.player_b = None, None
-        self.team_a, self.team_b = None, None
-        self.team_a_, self.team_b_ = None, None  # copies of the team a and b to allow the player to target the removed fighters
+        self.team_a, self.team_b = [], []
+        self.team_a_, self.team_b_ = [], []  # copies of the team a and b to allow the player to target the removed fighters
         self.removed_a, self.removed_b = [], []
         self.move = Move()
 
@@ -124,8 +124,15 @@ class Combat():
         self.team_b = team_b
 
         # set the copies
-        self.team_a_ = self.team_a
-        self.team_b_ = self.team_b
+        for character_a in self.team_a:
+            await asyncio.sleep(0)
+
+            self.team_a_.append(character_a)
+
+        for character_b in self.team_b:
+            await asyncio.sleep(0)
+
+            self.team_b_.append(character_b)
 
         return(team_a, team_b)
 
@@ -299,6 +306,9 @@ class Combat():
 
                     if(enemy.posture.defending and enemy.health.current > 0):
                         targetable.append(enemy)
+                
+                if(len(targetable) <= 0):  # if there is no defenders
+                    targetable += team_b
         
         # set display
         target_index = 1
@@ -335,7 +345,7 @@ class Combat():
 
         await self.ctx.send(embed = embed)
         await self.ctx.send(f"Please {circle}**{player.name}** select a target among the following by typing its **index**")
-        
+
         # get the input
         possible_input = await _input.get_possible(targetable)
         player_input = int(await _input.wait_for_input(possible_input, player)) - 1
@@ -657,17 +667,22 @@ class Combat():
             self.removed_b.append(b_character_used)
             self.team_b.remove(b_character_used)
 
+
             # END OF TURN
-            if(len(self.removed_a) >= 2 and len(self.removed_b) >= 2):
-                for char_a in self.removed_a:
+            if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
+                for char_a in self.team_a_:
                     await asyncio.sleep(0)
 
                     char_a.played = False
+
+                    self.team_a.append(char_a)
                 
-                for char_b in self.removed_b:
+                for char_b in self.team_b_:
                     await asyncio.sleep(0)
 
                     char_b.played = False
+
+                    self.team_b.append(char_b)
                     
                 self.removed_a = []
                 self.removed_b = []
