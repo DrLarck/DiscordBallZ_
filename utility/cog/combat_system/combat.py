@@ -189,7 +189,7 @@ class Combat():
         
         --
 
-        Return : `None`
+        Return : `list`
         """
 
         # init
@@ -197,6 +197,7 @@ class Combat():
         index = 1
 
         team = None
+        playable = []
 
         # if player a
         if(order == 0):
@@ -225,12 +226,13 @@ class Combat():
         for char in team:
             await asyncio.sleep(0)
 
-            if not (char in removed):
+            if not char.played:
                 posture, posture_icon = await char.posture.get_posture()
-                team_display += f"`{index}`. {char.image.icon}**{char.info.name}** - **{char.health.current:,}**:hearts: *({int((char.health.current * 100) / char.health.maximum)} %)* {posture_icon}"
+                team_display += f"`{index}`. {char.image.icon}**{char.info.name}**{char.type.icon} - **{char.health.current:,}**:hearts: *({int((char.health.current * 100) / char.health.maximum)} %)* {posture_icon}"
 
                 team_display += "\n"
                 index += 1
+                playable.append(char)
         
         embed.add_field(
             name = f"{circle}**{player.name}**'s team",
@@ -240,6 +242,8 @@ class Combat():
 
         await self.ctx.send("Please select a fighter : Type its **index** number.")
         await self.ctx.send(embed = embed)
+
+        return(playable)
     
     async def get_target(self, player, team_a, team_b, order, target_ally = False, target_enemy = False, ignore_defenders = False):
         """
@@ -485,7 +489,6 @@ class Combat():
         # init
         _input = Combat_input(self.client)
         fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
-        possible_fighter = ["1", "2", "3"]
 
         # get the team order
         if(order == 0):
@@ -499,7 +502,9 @@ class Combat():
             team_b = self.team_a
 
         # get the fighter
-        await self.get_player_fighter(order)
+        possible_fighter = await self.get_player_fighter(order)
+        possible_fighter = await _input.get_possible(possible_fighter)
+
         fighter_ok = False
 
         while not fighter_ok:
@@ -631,15 +636,28 @@ class Combat():
             
             # player a turn
             a_character_used = await self.player_turn(self.player_a, 0)
+            a_character_used.played = True
             self.removed_a.append(a_character_used)
             
             # player b turn
             b_character_used = await self.player_turn(self.player_b, 1)
+            b_character_used.played = True
             self.removed_b.append(b_character_used)
-            
-            # END OF THE TURN
-            self.removed_a = []
-            self.removed_b = []
+
+            # END OF TURN
+            if(len(self.removed_a) >= 2 and len(self.removed_b) >= 2):
+                for char_a in self.removed_a:
+                    await asyncio.sleep(0)
+
+                    char_a.played = False
+                
+                for char_b in self.removed_b:
+                    await asyncio.sleep(0)
+
+                    char_b.played = False
+                    
+                self.removed_a = []
+                self.removed_b = []
             
             turn += 1
 

@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 07/02/20 (DrLarck)
+Last update : 09/02/20 (DrLarck)
 """
 
 # dependancies
@@ -118,6 +118,7 @@ class Character:
     def __init__(self):
         # bot
         self.is_npc = False  # if true, the action will automatically be managed by the AI
+        self.played = False  # if true, the character cannot be played this turn
         self.is_minion = False  # a minion is a character supporter such as Cell Jr.
         
         # basic info
