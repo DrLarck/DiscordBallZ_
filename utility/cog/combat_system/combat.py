@@ -651,41 +651,53 @@ class Combat():
         await asyncio.sleep(1)
 
         while not combat_end:
+            await asyncio.sleep(0)
+
+            turn_end = False
+
+            await self.ctx.send(f"📣 Round {turn} 📣")
+            await asyncio.sleep(1)
+
             if(turn == 1):
                 await self.display_teams()
                 await asyncio.sleep(1)
             
-            # player a turn
-            a_character_used = await self.player_turn(self.player_a, 0)
-            a_character_used.played = True
-            self.removed_a.append(a_character_used)
-            self.team_a.remove(a_character_used)
-            
-            # player b turn
-            b_character_used = await self.player_turn(self.player_b, 1)
-            b_character_used.played = True
-            self.removed_b.append(b_character_used)
-            self.team_b.remove(b_character_used)
+            while not turn_end:
+                await asyncio.sleep(0)
 
-
-            # END OF TURN
-            if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
-                for char_a in self.team_a_:
-                    await asyncio.sleep(0)
-
-                    char_a.played = False
-
-                    self.team_a.append(char_a)
+                # player a turn
+                a_character_used = await self.player_turn(self.player_a, 0)
+                a_character_used.played = True
+                self.removed_a.append(a_character_used)
+                self.team_a.remove(a_character_used)
                 
-                for char_b in self.team_b_:
-                    await asyncio.sleep(0)
+                # player b turn
+                b_character_used = await self.player_turn(self.player_b, 1)
+                b_character_used.played = True
+                self.removed_b.append(b_character_used)
+                self.team_b.remove(b_character_used)
 
-                    char_b.played = False
 
-                    self.team_b.append(char_b)
+                # END OF TURN
+                if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
+                    for char_a in self.team_a_:
+                        await asyncio.sleep(0)
+
+                        char_a.played = False
+
+                        self.team_a.append(char_a)
                     
-                self.removed_a = []
-                self.removed_b = []
+                    for char_b in self.team_b_:
+                        await asyncio.sleep(0)
+
+                        char_b.played = False
+
+                        self.team_b.append(char_b)
+                        
+                    self.removed_a = []
+                    self.removed_b = []
+
+                    turn_end = True
             
             turn += 1
 
