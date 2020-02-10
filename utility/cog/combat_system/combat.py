@@ -665,18 +665,21 @@ class Combat():
             while not turn_end:
                 await asyncio.sleep(0)
 
-                # player a turn
-                a_character_used = await self.player_turn(self.player_a, 0)
-                a_character_used.played = True
-                self.removed_a.append(a_character_used)
-                self.team_a.remove(a_character_used)
-                
-                # player b turn
-                b_character_used = await self.player_turn(self.player_b, 1)
-                b_character_used.played = True
-                self.removed_b.append(b_character_used)
-                self.team_b.remove(b_character_used)
+                play_time = 3  # {1, 3} tells how many characters the player can play before letting the opponent play
 
+                for a in range(play_time):
+                    # player a turn
+                    a_character_used = await self.player_turn(self.player_a, 0)
+                    a_character_used.played = True
+                    self.removed_a.append(a_character_used)
+                    self.team_a.remove(a_character_used)
+                
+                for b in range(play_time):
+                    # player b turn
+                    b_character_used = await self.player_turn(self.player_b, 1)
+                    b_character_used.played = True
+                    self.removed_b.append(b_character_used)
+                    self.team_b.remove(b_character_used)
 
                 # END OF TURN
                 if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
