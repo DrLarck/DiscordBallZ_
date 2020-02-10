@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 09/02/20 (DrLarck)
+Last update : 10/02/20 (DrLarck)
 """
 
 # dependancies
@@ -59,6 +59,7 @@ class Combat():
         # players
         self.player_a, self.player_b = None, None
         self.team_a, self.team_b = None, None
+        self.team_a_, self.team_b_ = None, None  # copies of the team a and b to allow the player to target the removed fighters
         self.removed_a, self.removed_b = [], []
         self.move = Move()
 
@@ -121,6 +122,10 @@ class Combat():
             await char_b.init()
         
         self.team_b = team_b
+
+        # set the copies
+        self.team_a_ = self.team_a
+        self.team_b_ = self.team_b
 
         return(team_a, team_b)
 
@@ -240,8 +245,8 @@ class Combat():
             inline = False
         )
 
-        await self.ctx.send("Please select a fighter : Type its **index** number.")
         await self.ctx.send(embed = embed)
+        await self.ctx.send(f"Please {circle}**{player.name}** select a fighter : Type its **index** number.")
 
         return(playable)
     
@@ -310,9 +315,11 @@ class Combat():
         # define the color of the embed
         if(order == 0):
             color = 0x009dff
+            circle = "🔵"
         
         else:
             color = 0xff0000
+            circle = "🔴"
 
         embed = await Custom_embed(
             client = self.client,
@@ -326,9 +333,9 @@ class Combat():
             inline = False
         )
 
-        await self.ctx.send("Please select a target among the following by typing its **index**")
         await self.ctx.send(embed = embed)
-
+        await self.ctx.send(f"Please {circle}**{player.name}** select a target among the following by typing its **index**")
+        
         # get the input
         possible_input = await _input.get_possible(targetable)
         player_input = int(await _input.wait_for_input(possible_input, player)) - 1
@@ -490,17 +497,6 @@ class Combat():
         _input = Combat_input(self.client)
         fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
 
-        # get the team order
-        if(order == 0):
-            player = self.player_a
-            team_a = self.team_a
-            team_b = self.team_b
-        
-        else:
-            player = self.player_b
-            team_a = self.team_b
-            team_b = self.team_a
-
         # get the fighter
         possible_fighter = await self.get_player_fighter(order)
         possible_fighter = await _input.get_possible(possible_fighter)
@@ -509,6 +505,21 @@ class Combat():
 
         while not fighter_ok:
             await asyncio.sleep(0)
+
+            # get the team order
+            if(order == 0):
+                player = self.player_a
+                team_a = self.team_a
+                team_a_ = self.team_a_
+                team_b = self.team_b
+                team_b_ = self.team_b_
+            
+            else:
+                player = self.player_b
+                team_a = self.team_b
+                team_a_ = self.team_b_
+                team_b = self.team_a
+                team_b_ = self.team_a_
 
             player_input = await _input.wait_for_input(possible_fighter, player)
 
@@ -531,7 +542,7 @@ class Combat():
 
                 ability = action(
                     self.client, self.ctx, player_fighter,
-                    None, self.team_a, self.team_b
+                    None, team_a, team_b
                 )
 
                 await ability.set_tooltip()
@@ -568,7 +579,7 @@ class Combat():
                         if(player_move == 0):
                             self.move.index = 0
                             self.move.target = await self.get_target(
-                                player, team_a, team_b, order,
+                                player, team_a_, team_b_, order,
                                 target_enemy = True
                             )
 
@@ -584,13 +595,13 @@ class Combat():
 
                         ability = await player_fighter.get_ability(
                             self.client, self.ctx, player_fighter, player_fighter, 
-                            self.team_a, self.team_b, player_move - 3
+                            team_a, self.team_b, player_move - 3
                         )
                         
                         if(player_fighter.ki.current > ability.cost):
                             if(ability.need_target):
                                 self.move.target = await self.get_target(
-                                    player, team_a, team_b, order,
+                                    player, team_a_, team_b_, order,
                                     target_ally = ability.target_ally,
                                     target_enemy = ability.target_enemy,
                                     ignore_defenders = ability.ignore_defenders
@@ -638,11 +649,13 @@ class Combat():
             a_character_used = await self.player_turn(self.player_a, 0)
             a_character_used.played = True
             self.removed_a.append(a_character_used)
+            self.team_a.remove(a_character_used)
             
             # player b turn
             b_character_used = await self.player_turn(self.player_b, 1)
             b_character_used.played = True
             self.removed_b.append(b_character_used)
+            self.team_b.remove(b_character_used)
 
             # END OF TURN
             if(len(self.removed_a) >= 2 and len(self.removed_b) >= 2):
