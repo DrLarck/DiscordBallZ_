@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 10/02/20 (DrLarck)
+Last update : 11/02/20 (DrLarck)
 """
 
 # dependancies
@@ -354,7 +354,7 @@ class Combat():
 
         return(target)
     
-    async def battle(self, fighter, order):
+    async def battle(self, fighter, order, turn):
         """
         `coroutine`
 
@@ -365,6 +365,8 @@ class Combat():
         `fighter` (`Character()`)
 
         `order` (`int`)
+
+        `turn` (`int`)
 
         --
 
@@ -402,82 +404,98 @@ class Combat():
             team_a = self.team_b
             team_b = self.team_a
 
-        # sequence move
-        if(self.move.index == 0):
-            await fighter.posture.change_posture("attacking")
+        if(turn == 1):
+            if(self.move.index == 0):
+                move = await move.skip_move()
+            
+            elif(self.move.index == 2):
+                move = await move.defense_move()
 
-            damage = await damager.physical_damage(
-                random.randint(fighter.damage.physical_min, fighter.damage.physical_max),
-                dodgable = True,
-                critable = True
-            )
+                await fighter.posture.change_posture("defending")
 
-            move_info = {
-                "name" : "Sequence",
-                "icon" : "👊",
-                "damage" : damage["calculated"],
-                "critical" : damage["critical"],
-                "dodge" : damage["dodge"],
-                "physical" : True,
-                "ki" : False
-            }
+        else:
+            # sequence move
+            if(self.move.index == 0):
+                await fighter.posture.change_posture("attacking")
 
-            # inflict damage
-            await self.move.target.receive_damage(damage["calculated"])
-            move = await move.offensive_move(move_info)
-        
-        # ki gain
-        elif(self.move.index == 1):
-            await fighter.posture.change_posture("charging")
+                damage = await damager.physical_damage(
+                    random.randint(fighter.damage.physical_min, fighter.damage.physical_max),
+                    dodgable = True,
+                    critable = True
+                )
 
-            missing_ki = fighter.ki.maximum - fighter.ki.current
-            missing_ki *= 0.1  # 10 % of missing
+                move_info = {
+                    "name" : "Sequence",
+                    "icon" : "👊",
+                    "damage" : damage["calculated"],
+                    "critical" : damage["critical"],
+                    "dodge" : damage["dodge"],
+                    "physical" : True,
+                    "ki" : False
+                }
 
-            gain = int(random.randint(1, 5) + fighter.rarity.value + missing_ki)
+                # inflict damage
+                await self.move.target.receive_damage(damage["calculated"])
+                move = await move.offensive_move(move_info)
+            
+            # ki gain
+            elif(self.move.index == 1):
+                await fighter.posture.change_posture("charging")
 
-            fighter.ki.current += gain
-            await fighter.ki.ki_limit()
+                missing_ki = fighter.ki.maximum - fighter.ki.current
+                missing_ki *= 0.1  # 10 % of missing
 
-            move_info = {
-                "name" : "Ki charge",
-                "icon" : "🔥",
-                "damage" : gain,
-                "critical" : False,
-                "dodge" : False,
-                "physical" : False,
-                "ki" : False
-            }
+                gain = int(random.randint(1, 5) + fighter.rarity.value + missing_ki)
 
-            move = await move.ki_move(move_info)
-        
-        # defending
-        elif(self.move.index == 2):
-            await fighter.posture.change_posture("defending")
+                fighter.ki.current += gain
+                await fighter.ki.ki_limit()
 
-            move = await move.defense_move()
+                move_info = {
+                    "name" : "Ki charge",
+                    "icon" : "🔥",
+                    "damage" : gain,
+                    "critical" : False,
+                    "dodge" : False,
+                    "physical" : False,
+                    "ki" : False
+                }
 
-        # ability
-        elif(self.move.index > 2):
-            await fighter.posture.change_posture("attacking")
+                move = await move.ki_move(move_info)
+            
+            # defending
+            elif(self.move.index == 2):
+                await fighter.posture.change_posture("defending")
 
-            ability = await fighter.get_ability(
-                self.client,
-                self.ctx,
-                fighter,
-                self.move.target,
-                team_a,
-                team_b,
-                self.move.index - 3
-            )
+                move = await move.defense_move()
 
-            move = await ability.use()
+            # ability
+            elif(self.move.index > 2):
+                await fighter.posture.change_posture("attacking")
 
-            fighter.ki.current -= ability.cost
-            await fighter.ki.ki_limit()
-        
+                ability = await fighter.get_ability(
+                    self.client,
+                    self.ctx,
+                    fighter,
+                    self.move.target,
+                    team_a,
+                    team_b,
+                    self.move.index - 3
+                )
+
+                move = await ability.use()
+
+                fighter.ki.current -= ability.cost
+                await fighter.ki.ki_limit()
+            
         # display
+        if(self.move.target == None):
+            field_name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move to **Himself** :"
+        
+        else:
+            field_name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move to {_circle}{self.move.target.image.icon}**{self.move.target.info.name}**{self.move.target.type.icon} :"
+
         embed.add_field(
-            name = f"{circle}{fighter.image.icon}**{fighter.info.name}**{fighter.type.icon}'s move to {_circle}{self.move.target.image.icon}**{self.move.target.info.name}**{self.move.target.type.icon} :",
+            name = field_name,
             value = move,
             inline = False
         )
@@ -486,7 +504,7 @@ class Combat():
 
         return
     
-    async def player_turn(self, player, order):
+    async def player_turn(self, player, order, turn):
         """
         `coroutine`
 
@@ -498,6 +516,8 @@ class Combat():
 
         `order` (`int`) : Tells who's playing
 
+        `turn` (`int`)
+
         --
 
         Return : `Character()`
@@ -505,7 +525,11 @@ class Combat():
 
         # init
         _input = Combat_input(self.client)
-        fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
+        if(turn == 1):
+            fighter_action = "`1.` :arrow_right: **Skip**\n`3.` :shield: **Defend**\n"
+        
+        else:
+            fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
 
         # get the fighter
         possible_fighter = await self.get_player_fighter(order)
@@ -545,32 +569,37 @@ class Combat():
                     await self.ctx.send("Please select a fighter that is not **K.O**")
             
             # wait for an action
-            action_index = 4
+            if(turn > 1):
+                action_index = 4
 
-            for action in player_fighter.ability:
-                await asyncio.sleep(0)
+                for action in player_fighter.ability:
+                    await asyncio.sleep(0)
 
-                ability = action(
-                    self.client, self.ctx, player_fighter,
-                    None, team_a, team_b
-                )
+                    ability = action(
+                        self.client, self.ctx, player_fighter,
+                        None, team_a, team_b
+                    )
 
-                await ability.set_tooltip()
+                    await ability.set_tooltip()
 
-                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:) : {ability.tooltip}"
+                    fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:) : {ability.tooltip}"
 
-                fighter_action += "\n"
+                    fighter_action += "\n"
 
-                action_index += 1
+                    action_index += 1
 
             await self.ctx.send(
                 f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
             )
 
             # get the move
-            possible_move = await _input.get_possible(player_fighter.ability, ability = True)
+            possible_move = []
+
+            if(turn > 1):
+                possible_move = await _input.get_possible(player_fighter.ability, ability = True)
+                possible_move.append("2")
+
             possible_move.append("1")
-            possible_move.append("2")
             possible_move.append("3")
             possible_move.append("flee")
 
@@ -584,46 +613,64 @@ class Combat():
                 if(player_move != "flee"):
                     player_move = int(player_move) - 1
 
-                    if(player_move < 3):
-                        # sequence
+                    # initial move
+                    if(turn == 1):
+                        # skip
                         if(player_move == 0):
                             self.move.index = 0
-                            self.move.target = await self.get_target(
-                                player, team_a_, team_b_, order,
-                                target_enemy = True
-                            )
 
                             action_ok = True
                         
+                        # defend
+                        elif(player_move == 2):
+                            self.move.index = 2
+
+                            action_ok = True
+
+                    # normal move
+                    else:
+                        if(player_move < 3):
+                            # sequence
+                            if(player_move == 0):
+                                self.move.index = 0
+                                self.move.target = await self.get_target(
+                                    player, team_a_, team_b_, order,
+                                    target_enemy = True
+                                )
+
+                                action_ok = True
+                            
+                            else:
+                                self.move.index = player_move
+
+                                action_ok = True
+
+                        # abilities
                         else:
                             self.move.index = player_move
 
-                            action_ok = True
+                            ability = await player_fighter.get_ability(
+                                self.client, self.ctx, player_fighter, player_fighter, 
+                                team_a, self.team_b, player_move - 3
+                            )
+                            
+                            # check the cost
+                            if(player_fighter.ki.current > ability.cost):
+                                if(ability.need_target):
+                                    self.move.target = await self.get_target(
+                                        player, team_a_, team_b_, order,
+                                        target_ally = ability.target_ally,
+                                        target_enemy = ability.target_enemy,
+                                        ignore_defenders = ability.ignore_defenders
+                                    ) 
 
-                    else:
-                        self.move.index = player_move
-
-                        ability = await player_fighter.get_ability(
-                            self.client, self.ctx, player_fighter, player_fighter, 
-                            team_a, self.team_b, player_move - 3
-                        )
-                        
-                        if(player_fighter.ki.current > ability.cost):
-                            if(ability.need_target):
-                                self.move.target = await self.get_target(
-                                    player, team_a_, team_b_, order,
-                                    target_ally = ability.target_ally,
-                                    target_enemy = ability.target_enemy,
-                                    ignore_defenders = ability.ignore_defenders
-                                ) 
-
-                                action_ok = True
-                        
-                        else:
-                            await self.ctx.send("You do not have enough **Ki** to use this ability")
+                                    action_ok = True
+                            
+                            else:
+                                await self.ctx.send("You do not have enough **Ki** to use this ability")
                             
             # execute the action
-            await self.battle(player_fighter, order)
+            await self.battle(player_fighter, order, turn)
           
         return(player_fighter)
 
@@ -669,14 +716,14 @@ class Combat():
 
                 for a in range(play_time):
                     # player a turn
-                    a_character_used = await self.player_turn(self.player_a, 0)
+                    a_character_used = await self.player_turn(self.player_a, 0, turn)
                     a_character_used.played = True
                     self.removed_a.append(a_character_used)
                     self.team_a.remove(a_character_used)
                 
                 for b in range(play_time):
                     # player b turn
-                    b_character_used = await self.player_turn(self.player_b, 1)
+                    b_character_used = await self.player_turn(self.player_b, 1, turn)
                     b_character_used.played = True
                     self.removed_b.append(b_character_used)
                     self.team_b.remove(b_character_used)
