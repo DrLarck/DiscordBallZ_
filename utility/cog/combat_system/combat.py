@@ -673,6 +673,62 @@ class Combat():
             await self.battle(player_fighter, order, turn)
           
         return(player_fighter)
+    
+    async def get_winner(self):
+        """
+        `coroutine`
+
+        Check the win condition and return the player who won the game
+
+        --
+
+        Return : `Player()` or `None` if not found and `0` in case of draw
+        """
+
+        # init
+        winner, loser = None, None
+        draw = False
+        circle, _circle = "", ""
+
+        health_a, health_b = 0, 0
+
+        # check the healf of the team_a
+        # we iterate the copy
+        for char_a in self.team_a_:  
+            await asyncio.sleep(0)
+
+            health_a += char_a.health.current
+        
+        # check the health of the team_b
+        for char_b in self.team_b_:
+            await asyncio.sleep(0)
+
+            health_b += char_b.health.current
+        
+        # check the winner
+        if(health_a <= 0):
+            winner = self.player_b
+            loser = self.player_a
+            circle = ":red_circle:"
+            _circle = ":blue_circle:"
+        
+        if(health_b <= 0):
+            winner = self.player_a
+            loser = self.player_b
+            circle = ":blue_circle:"
+            _circle = ":red_circle:"
+        
+        # check draw
+        if(health_a <= 0 and health_b <= 0):
+            winner = 0
+
+            await self.ctx.send(f":blue_circle:{self.player_a.name} VS :red_circle:{self.player_b.name} : **DRAW** !")
+        
+        # winner
+        if not draw:
+            await self.ctx.send(f"{circle}**{winner.name}** has won the fight against {_circle}**{loser.name}** !")
+
+        return(winner)
 
     # combat
     async def run(self):
@@ -690,6 +746,7 @@ class Combat():
         await self.get_play_order()
         self.team_a, self.team_b = await self.get_teams()
         
+        winner = None
         combat_end = False
         turn = 1
 
@@ -720,13 +777,21 @@ class Combat():
                     a_character_used.played = True
                     self.removed_a.append(a_character_used)
                     self.team_a.remove(a_character_used)
-                
+                    winner = await self.get_winner()
+
+                    if(winner != None):
+                        return(winner)
+   
                 for b in range(play_time):
                     # player b turn
                     b_character_used = await self.player_turn(self.player_b, 1, turn)
                     b_character_used.played = True
                     self.removed_b.append(b_character_used)
                     self.team_b.remove(b_character_used)
+                    winner = await self.get_winner()
+
+                    if(winner != None):
+                        return(winner)
 
                 # END OF TURN
                 if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
