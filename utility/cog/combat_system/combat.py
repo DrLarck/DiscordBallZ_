@@ -297,7 +297,7 @@ class Combat():
         
         if(target_enemy):
             # add the enemies
-            if(ignore_defenders == False):  # ignore the defenders
+            if(ignore_defenders == True):  # ignore the defenders
                 targetable += team_b
             
             else:  # get the defenders
