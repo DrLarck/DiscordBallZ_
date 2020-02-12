@@ -78,10 +78,27 @@ class Ability:
         self.cost = 0
         self.cooldown = 0
 
-        # targetting
+        # targeting
         self.need_target = False
         self.target_ally = False
         self.target_enemy = False
+
+        # classification
+        self.phy_dam = 0
+        self.ki_dam = 0 
+        self.true_dam = 0
+        self.momentum = 0
+        self.delayed = False
+
+        # type
+        self.type = 1
+            # 1 = sequence
+            # 2 = ki blast
+            # 3 = piercing
+            # 4 = ki charge
+            # 5 = defender
+            # 6 = transform
+            # 7 = utility
     
     # method
     async def set_tooltip(self):
