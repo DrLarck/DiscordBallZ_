@@ -89,7 +89,7 @@ class Move_displayer:
         - "physical" : Are the damage physical damage (bool)
         - "ki" : Are the damage ki damage (bool)
 
-        --
+        -- 
 
         Return : str (format the string for offensive display)
         """

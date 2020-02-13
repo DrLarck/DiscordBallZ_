@@ -42,10 +42,10 @@ class Arm_stretch(Ability):
         self.ki_dam = 0
         self.true_dam = 0
         self.momentum = 0
-        self.dodgable = True #might not be needed
         self.critable = True
         self.type = 1
         self.cost = 5
+
 
         #targeting changes possible
         self.target_enemy = True
@@ -67,11 +67,16 @@ class Arm_stretch(Ability):
 
         damage_calculator = Damage_calculator(self.caster, self.target)
 
+        _move["name"] = self.name
+        # _move["icon"] = self.icon
+        
+
         roll_dodge = uniform(0, 100)
 
         if(roll_dodge <= self.target.defense.dodge):
             # dodged, this ability does nothing
-            return
+            _move["dodge"] = True
+            return (_move)
 
         else:
             total_dam = await damage_calculator.total_dam(
@@ -81,8 +86,5 @@ class Arm_stretch(Ability):
                 momentum = self.momentum,
                 critable = self.critable,
             )
-        
 
         return(_move)
-
-        await self.target.receive_damage(total_dam["calculated"])

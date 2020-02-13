@@ -79,6 +79,7 @@ class Damage_calculator:
         --
 
         Return : directly modify the `type_bonus` value and return the multiplier bonus.
+        
         """
 
         # init
