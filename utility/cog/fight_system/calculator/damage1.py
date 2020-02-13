@@ -102,7 +102,7 @@ class Damage_calculator:
 
     async def total_dam(self, ki_dam, phy_dam, true_dam, momentum, critable):
         #get bonus damage
-            #get bonus damage from abilities
+            #get bonus damage from abilities (added not multiplied damage)
 
         #type advantage
         await self.get_type_advantage()
@@ -118,6 +118,12 @@ class Damage_calculator:
                 self.critical_bonus = 1.5 + (self.attacker.critical_bonus)/100
                 ki_dam = ki_dam * self.critical_bonus
                 phy_dam = phy_dam * self.critical_bonus
+
+        #amplifiers
+            #get multipliers from buffs
+
+        #reducers
+            #get damage multipliers from debuffs
 
         #defenses
         self.armor = (2500 + momentum)/(2500 + self.target.defense.armor)
