@@ -13,7 +13,7 @@ Here are some technical informations about the project :
 
 - Language : `english`
 - Programming language : ![python3](https://img.shields.io/badge/python-3.7-yellow.svg)
-- Libraries : ![discord.py](https://img.shields.io/badge/discord-py-blue.svg)
+- Libraries : ![discord.py](https://img.shields.io/badge/discord-py-blue.svg) ![asyncpg](https://img.shields.io/badge/async-pg-blue.svg?logo=postgresql)
 - Database : ![postgresql](https://img.shields.io/badge/postgre-sql-blue.svg?logo=postgresql)
 
 ## How to make it work ?
@@ -67,4 +67,4 @@ Once you've configured everything, open your **terminal** and type :
 $python3 -B main.py
 ```
 
-*Last update : 11/02/20 - 17:22 France by **DrLarck***
+*Last update : 14/02/20 - 13:16 France by **DrLarck***
