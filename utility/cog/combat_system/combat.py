@@ -111,9 +111,6 @@ class Combat():
 
             await char_a.init()
 
-            # test
-            char_a.health.current = 10
-
         self.team_a = team_a
 
         # get team b 
@@ -123,8 +120,6 @@ class Combat():
             await asyncio.sleep(0)
 
             await char_b.init()
-
-            char_b.health.current = 10
         
         self.team_b = team_b
 
@@ -579,8 +574,6 @@ class Combat():
 
             player_input = await _input.wait_for_input(possible_fighter, player)
 
-            print(player_input)
-            print(possible_fighter)
             if(player_input == "flee"):
                 return(0)
 
