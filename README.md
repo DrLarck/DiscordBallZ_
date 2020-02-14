@@ -16,6 +16,13 @@ Here are some technical informations about the project :
 - Libraries : ![discord.py](https://img.shields.io/badge/discord-py-blue.svg) ![asyncpg](https://img.shields.io/badge/async-pg-blue.svg?logo=postgresql)
 - Database : ![postgresql](https://img.shields.io/badge/postgre-sql-blue.svg?logo=postgresql)
 
+## Install packages
+
+To install the **asyncio** and **asyncpg** packages type the following commands in your **terminal** :
+```bash
+$pip install asyncio
+$pip install asyncpg
+```
 ## How to make it work ?
 
 **Discord Ball Z** doesn't support the older versions of **Python** such as **Python 2**. You shouldn't have any problem using **Python 3**.
@@ -67,4 +74,4 @@ Once you've configured everything, open your **terminal** and type :
 $python3 -B main.py
 ```
 
-*Last update : 14/02/20 - 13:16 France by **DrLarck***
+*Last update : 14/02/20 - 19:18 France by **DrLarck***
