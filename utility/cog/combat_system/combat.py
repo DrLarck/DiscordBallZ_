@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 12/02/20 (DrLarck)
+Last update : 14/02/20 (DrLarck)
 """
 
 # dependancies
@@ -319,6 +319,8 @@ class Combat():
         target_index = 1
         dead = []
 
+        print("targetable ", targetable)
+
         for targetable_ in targetable:
             await asyncio.sleep(0)
             
@@ -329,9 +331,16 @@ class Combat():
 
                 target_index += 1
             
-            else:
-                targetable.remove(targetable_)
+            else:  
+                dead.append(targetable_)
         
+        # remove the dead characters
+        for char in dead:
+            await asyncio.sleep(0)
+
+            targetable.remove(char)
+            team_b.remove(char)
+
         # define the color of the embed
         if(order == 0):
             color = 0x009dff
@@ -340,6 +349,10 @@ class Combat():
         else:
             color = 0xff0000
             circle = "🔴"
+
+        # if the displaying is empty
+        if(targetable_display == ""):
+            targetable_display = "None target available"
 
         embed = await Custom_embed(
             client = self.client,
@@ -357,9 +370,7 @@ class Combat():
         await self.ctx.send(f"Please {circle}**{player.name}** select a target among the following by typing its **index**")
 
         # get the input
-        print(targetable)
         possible_input = await _input.get_possible(targetable)
-        print(possible_input)
         player_input = int(await _input.wait_for_input(possible_input, player)) - 1
         
         target = targetable[player_input]
@@ -545,7 +556,9 @@ class Combat():
 
         # get the fighter
         possible_fighter = await self.get_player_fighter(order)
+        print(possible_fighter)
         possible_fighter = await _input.get_possible(possible_fighter)
+        print(possible_fighter)
 
         fighter_ok = False
 
