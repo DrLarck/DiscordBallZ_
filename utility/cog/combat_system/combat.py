@@ -893,6 +893,32 @@ class Combat():
         play_time = len(team)
 
         return(play_time)
+    
+    async def check_character(self, index, order):
+        """
+        `coroutine`
+
+        Displays informations about a character in the combat
+
+        --
+
+        Return : `None`
+        """
+
+        # init
+        characters = self.team_a + self.team_b
+
+        if(order == 0):
+            color = 0x009dff
+        
+        else:
+            color = 0xff0000
+
+        embed = await Custom_embed(
+            self.client, title = "Character infos", colour = color
+        ).setup_embed()
+
+        return
 
     # combat
     async def run(self):
