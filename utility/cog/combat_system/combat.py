@@ -213,7 +213,6 @@ class Combat():
         team_display = ""
         index = 1
 
-        team = None
         playable = []
 
         # if player a
@@ -318,8 +317,6 @@ class Combat():
         # set display
         target_index = 1
         dead = []
-
-        print("targetable ", targetable)
 
         for targetable_ in targetable:
             await asyncio.sleep(0)
@@ -797,6 +794,46 @@ class Combat():
             return(winner)
 
         return
+    
+    async def get_play_time(self, order):
+        """
+        `coroutine`
+
+        Update the teams to know how many times the player has to play
+        
+        - Parameter
+
+        `order` (`int`)
+
+        --
+
+        Return : `int`
+        """
+
+        # init
+        play_time = 0
+        dead = []
+
+        if(order == 0):
+            team = self.team_a
+        
+        else:
+            team = self.team_b
+
+        for char in team:
+            await asyncio.sleep(0)
+
+            if(char.health.current <= 0):
+                dead.append(char)
+        
+        for char_ in dead:
+            await asyncio.sleep(0)
+
+            team.remove(char_)
+        
+        play_time = len(team)
+
+        return(play_time)
 
     # combat
     async def run(self):
@@ -837,51 +874,25 @@ class Combat():
             while not turn_end:
                 await asyncio.sleep(0)
 
-                play_time = len(self.team_a)
+                play_time = await self.get_play_time(0)
 
                 for a in range(play_time):
                     # if there is only one char left
                     # check if the char can play
-                    if(len(self.team_a) <= 1):
-                        last_char = self.team_a[0]
+                    winner = await self.turn(0, turn)
 
-                        if(last_char.health.current > 0):
-                            winner = await self.turn(0, turn)
+                    if(winner != None):
+                        return(winner)
 
-                            if(winner != None):
-                                return(winner)
-                            
-                        else:  # get out of the loop if the last char cannot play
-                            pass
-                    
-                    else:
-                        winner = await self.turn(0, turn)
-
-                        if(winner != None):
-                            return(winner)
-
-                play_time = len(self.team_b)
+                play_time = await self.get_play_time(1)
    
                 for b in range(play_time):
                     # if there is only one char left
                     # check if the char can play
-                    if(len(self.team_b) <= 1):
-                        last_char = self.team_b[0]
+                    winner = await self.turn(1, turn)
 
-                        if(last_char.health.current > 0):
-                            winner = await self.turn(1, turn)
-
-                            if(winner != None):
-                                return(winner)
-                            
-                        else:  # get out of the loop if the last char cannot play
-                            pass
-                    
-                    else:
-                        winner = await self.turn(1, turn)
-
-                        if(winner != None):
-                            return(winner)        
+                    if(winner != None):
+                        return(winner)    
 
                 # END OF TURN
                 if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
