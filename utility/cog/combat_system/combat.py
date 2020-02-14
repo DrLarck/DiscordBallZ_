@@ -519,6 +519,58 @@ class Combat():
 
         return
     
+    async def effects(self, team):
+        """
+        `coroutine`
+        
+        Triggers all the effects of passed `team`
+
+        - Parameter 
+
+        `team` (`list` of `Character()`)
+
+        --
+
+        Return : `None`
+        """
+
+        for character in team:
+            await asyncio.sleep(0)
+
+            # bonus
+            for bonus in character.bonus:
+                await asyncio.sleep(0)
+
+                if(bonus.duration > 0):  # check if the bonus is still available
+                    await bonus.apply()
+
+                    if not bonus.is_permanent:  # if it's not infinite
+                        bonus.duration -= 1
+                
+                else:
+                    character.bonus.remove(bonus)
+                    await bonus.on_remove()  # triggers the on_remove effect
+            
+            # malus
+            for malus in character.malus:
+                await asyncio.sleep(0)
+
+                if(malus.duration > 0):
+                    await malus.apply()
+
+                    if not malus.is_permanent:
+                        malus.duration -= 1
+
+                else:
+                    character.malus.remove(malus)
+                    await malus.on_remove()
+
+            # ki gain
+            character.ki.current += character.regeneration.ki
+            await character.ki.ki_limit()
+
+        return
+    
     async def player_turn(self, player, order, turn):
         """
         `coroutine`
@@ -927,6 +979,10 @@ class Combat():
                         
                     self.removed_a = []
                     self.removed_b = []
+                    
+                    # effect
+                    await self.effects(self.team_a)
+                    await self.effects(self.team_b)
 
                     turn_end = True
             
