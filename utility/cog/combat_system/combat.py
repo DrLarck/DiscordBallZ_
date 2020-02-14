@@ -330,13 +330,7 @@ class Combat():
                 target_index += 1
             
             else:
-                dead.append(targetable_)
-        
-        # remove dead targets
-        for char in dead:
-            await asyncio.sleep(0)
-
-            targetable.remove(dead)
+                targetable.remove(targetable_)
         
         # define the color of the embed
         if(order == 0):
@@ -363,7 +357,9 @@ class Combat():
         await self.ctx.send(f"Please {circle}**{player.name}** select a target among the following by typing its **index**")
 
         # get the input
+        print(targetable)
         possible_input = await _input.get_possible(targetable)
+        print(possible_input)
         player_input = int(await _input.wait_for_input(possible_input, player)) - 1
         
         target = targetable[player_input]
