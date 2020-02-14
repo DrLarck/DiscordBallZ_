@@ -555,6 +555,8 @@ class Combat():
         playable = await self.get_player_fighter(order)
         possible_fighter = await _input.get_possible(playable)
 
+        possible_fighter.append("flee")
+
         fighter_ok = False
 
         while not fighter_ok:
@@ -576,6 +578,11 @@ class Combat():
                 team_b_ = self.team_a_
 
             player_input = await _input.wait_for_input(possible_fighter, player)
+
+            print(player_input)
+            print(possible_fighter)
+            if(player_input == "flee"):
+                return(0)
 
             if(player_input != None):
                 player_input = int(player_input) - 1
@@ -629,6 +636,9 @@ class Combat():
             await asyncio.sleep(0)
 
             player_move = await _input.wait_for_input(possible_move, player)
+
+            if(player_move == "flee"):
+                return(0)
             
             if(player_move != "flee"):
                 player_move = int(player_move) - 1
@@ -783,6 +793,10 @@ class Combat():
 
         # player turn
         character_used = await self.player_turn(player, order, _turn)
+
+        if(character_used == 0):
+            return(0)
+
         character_used.played = True
 
         removed.append(character_used)
@@ -844,7 +858,7 @@ class Combat():
 
         --
 
-        Return : `Player()`
+        Return : `Player()` or `None` if one of the players has fled
         """ 
 
         # init
@@ -881,6 +895,10 @@ class Combat():
                     # check if the char can play
                     winner = await self.turn(0, turn)
 
+                    if(winner == 0):
+                        await self.ctx.send(f":blue_circle:**{self.player_a.name}** has fled the combat")
+                        return
+
                     if(winner != None):
                         return(winner)
 
@@ -890,6 +908,10 @@ class Combat():
                     # if there is only one char left
                     # check if the char can play
                     winner = await self.turn(1, turn)
+
+                    if(winner == 0):
+                        await self.ctx.send(f":red_circle:**{self.player_a.name}** has fled the combat")
+                        return
 
                     if(winner != None):
                         return(winner)    

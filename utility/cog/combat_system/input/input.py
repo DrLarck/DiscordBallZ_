@@ -5,7 +5,7 @@ Combat input object
 
 Author : DrLarck
 
-Last update : 08/02/20 (DrLarck)
+Last update : 14/02/20 (DrLarck)
 """
 
 # dependancies
@@ -113,6 +113,6 @@ class Combat_input():
             return(None)
         
         else:  # worked
-            player_imput = player_imput.content
+            player_imput = (player_imput.content).lower()
 
         return(player_imput)
