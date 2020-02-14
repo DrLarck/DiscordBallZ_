@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 11/02/20 (DrLarck)
+Last update : 12/02/20 (DrLarck)
 """
 
 # dependancies
@@ -111,6 +111,9 @@ class Combat():
 
             await char_a.init()
 
+            # test
+            char_a.health.current = 10
+
         self.team_a = team_a
 
         # get team b 
@@ -120,6 +123,8 @@ class Combat():
             await asyncio.sleep(0)
 
             await char_b.init()
+
+            char_b.health.current = 10
         
         self.team_b = team_b
 
@@ -312,6 +317,7 @@ class Combat():
         
         # set display
         target_index = 1
+        dead = []
 
         for targetable_ in targetable:
             await asyncio.sleep(0)
@@ -324,7 +330,13 @@ class Combat():
                 target_index += 1
             
             else:
-                targetable.remove(targetable_)
+                dead.append(targetable_)
+        
+        # remove dead targets
+        for char in dead:
+            await asyncio.sleep(0)
+
+            targetable.remove(dead)
         
         # define the color of the embed
         if(order == 0):
@@ -734,6 +746,50 @@ class Combat():
                 await self.ctx.send(f"{circle}**{winner.name}** has won the fight against {_circle}**{loser.name}** !")
 
         return(winner)
+    
+    async def turn(self, order, _turn):
+        """
+        `coroutine`
+
+        Run the player's turn
+
+        - Parameter
+
+        `order` (`int`)
+
+        `_turn` (`int`)
+
+        --
+
+        Return : `Player()` if there is a winner, else `None`
+        """
+
+        # init
+        self.move.target = None
+
+        if(order == 0):
+            player = self.player_a
+            removed = self.removed_a
+            team = self.team_a
+        
+        else:
+            player = self.player_b
+            removed = self.removed_b
+            team = self.team_b
+
+        # player turn
+        character_used = await self.player_turn(player, order, _turn)
+        character_used.played = True
+
+        removed.append(character_used)
+        team.remove(character_used)
+
+        winner = await self.get_winner()
+
+        if(winner != None):
+            return(winner)
+
+        return
 
     # combat
     async def run(self):
@@ -777,30 +833,48 @@ class Combat():
                 play_time = len(self.team_a)
 
                 for a in range(play_time):
-                    # player a turn
-                    self.move.target = None
-                    a_character_used = await self.player_turn(self.player_a, 0, turn)
-                    a_character_used.played = True
-                    self.removed_a.append(a_character_used)
-                    self.team_a.remove(a_character_used)
-                    winner = await self.get_winner()
+                    # if there is only one char left
+                    # check if the char can play
+                    if(len(self.team_a) <= 1):
+                        last_char = self.team_a[0]
 
-                    if(winner != None):
-                        return(winner)
+                        if(last_char.health.current > 0):
+                            winner = await self.turn(0, turn)
+
+                            if(winner != None):
+                                return(winner)
+                            
+                        else:  # get out of the loop if the last char cannot play
+                            pass
+                    
+                    else:
+                        winner = await self.turn(0, turn)
+
+                        if(winner != None):
+                            return(winner)
 
                 play_time = len(self.team_b)
    
                 for b in range(play_time):
-                    # player b turn
-                    self.move.target = None
-                    b_character_used = await self.player_turn(self.player_b, 1, turn)
-                    b_character_used.played = True
-                    self.removed_b.append(b_character_used)
-                    self.team_b.remove(b_character_used)
-                    winner = await self.get_winner()
+                    # if there is only one char left
+                    # check if the char can play
+                    if(len(self.team_b) <= 1):
+                        last_char = self.team_b[0]
 
-                    if(winner != None):
-                        return(winner)
+                        if(last_char.health.current > 0):
+                            winner = await self.turn(1, turn)
+
+                            if(winner != None):
+                                return(winner)
+                            
+                        else:  # get out of the loop if the last char cannot play
+                            pass
+                    
+                    else:
+                        winner = await self.turn(1, turn)
+
+                        if(winner != None):
+                            return(winner)        
 
                 # END OF TURN
                 if(len(self.team_a) <= 0 and len(self.team_b) <= 0):
