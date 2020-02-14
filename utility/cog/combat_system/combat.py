@@ -555,10 +555,8 @@ class Combat():
             fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
 
         # get the fighter
-        possible_fighter = await self.get_player_fighter(order)
-        print(possible_fighter)
-        possible_fighter = await _input.get_possible(possible_fighter)
-        print(possible_fighter)
+        playable = await self.get_player_fighter(order)
+        possible_fighter = await _input.get_possible(playable)
 
         fighter_ok = False
 
@@ -585,7 +583,7 @@ class Combat():
             if(player_input != None):
                 player_input = int(player_input) - 1
 
-                player_fighter = team_a[player_input]
+                player_fighter = playable[player_input]
 
                 if(player_fighter.health.current > 0):
                     fighter_ok = True
