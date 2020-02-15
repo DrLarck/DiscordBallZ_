@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 14/02/20 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,6 +15,7 @@ import random
 # graphic
 from utility.graphic.embed import Custom_embed
 from utility.cog.displayer.move import Move_displayer
+from configuration.icon import game_icon
 
 # util
 from utility.cog.combat_system.input.input import Combat_input
@@ -907,17 +908,71 @@ class Combat():
 
         # init
         characters = self.team_a + self.team_b
+        posture_icon = [":crossed_swords:", ":fire:", ":shield:", ":confused:"]
 
         if(order == 0):
             color = 0x009dff
         
         else:
             color = 0xff0000
+        
+        character = characters[index - 1]
+
+        # posture
+        posture = None
+
+        if(character.posture.attacking == True):
+            posture = posture_icon[0]
+        
+        if(character.posture.charging == True):
+            posture = posture_icon[1]
+
+        if(character.posture.defending == True):
+            posture = posture_icon[2]
+        
+        if(character.posture.stunned == True):
+            posture = posture_icon[3]
+        
+        # formatting the embed
+        combat_format = f"__Health__ : \n**{character.health.current:,}** / **{character.health.maximum:,}**:hearts: \n"
+        combat_format += f"__Posture__ : {posture}\n"
+        combat_format += f"__Damage__ :\n:punch: **{character.damage.physical_min:,}** - **{character.damage.physical_max:,}** \n{game_icon['ki_ability']} **{character.damage.ki_min:,}** - **{character.damage.ki_max:,}** \n"
+        combat_format += f"__Defense__ :\n:shield: **{character.defense.armor:,}**\n:rosette: **{character.defense.spirit:,}**\n"
+        combat_format += f"__Ki__ : **{character.ki.current}** :fire:"
+
+        # now the effects
+            # buff
+        if(len(character.bonus) > 0):  # if the character has a buff
+            combat_format += f"\n__Bonus__ : "
+
+            for buff in character.bonus:
+                await asyncio.sleep(0)
+
+                if(buff.is_permanent):
+                    combat_format += f"{buff.icon}[{buff.stack}|*∞*]"    
+                
+                else:
+                    combat_format += f"{buff.icon}[{buff.stack}|{buff.duration}]"
+        
+        if(len(character.malus) > 0):
+            combat_format += f"\n__Malus__ : "
+            
+            for debuff in character.malus:
+                await asyncio.sleep(0)
+
+                combat_format += f"{debuff.icon}[{debuff.stack}|{debuff.duration}]"
 
         embed = await Custom_embed(
-            self.client, title = "Character infos", colour = color
+            self.client, title = "Character infos", colour = color, thumb = character.image.thumb
         ).setup_embed()
-        
+
+        embed.add_field(
+            name = f"{self.character.image.icon}{self.character.info.name} {self.character.type.icon}{self.character.rarity.icon}'s infos :",
+            value = combat_format
+        )
+
+        await self.ctx.send(embed = embed)
+
         return
 
     # combat
