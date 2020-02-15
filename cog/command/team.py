@@ -35,7 +35,7 @@ class Cmd_fighter(commands.Cog):
 
     @commands.check(Basic_checker().is_game_ready)
     @commands.check(Basic_checker().is_registered)
-    @commands.group()
+    @commands.group(invoke_without_command = True)
     async def team(self, ctx):
         """
         Displays the player's team.
