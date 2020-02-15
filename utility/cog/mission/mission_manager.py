@@ -5,7 +5,7 @@ Mission system
 
 Author : DrLarck
 
-Last update : 02/02/20 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,7 +15,8 @@ import asyncio
 from configuration.icon import game_icon
 
 # util
-from utility.cog.fight_system.fight import Fight
+from utility.cog.combat_system.combat import Combat
+from utility.cog.combat_system.cpu import CPU
 from utility.cog.level.level import Leveller
 
 # mission
@@ -64,24 +65,37 @@ class Mission_manager():
 
         if(mission_id <= len(self.missions) and mission_id > 0):
             mission_id -= 1  # get the index
-
-            # init the combat system
-            combat = Fight(client, ctx, player)
             mission = self.missions[mission_id]
+            cpu = CPU()
+            cpu.name = mission.name
 
             await mission.init()
 
-            # get the player's team
-            player_team = await player.team.character()
             opponent_team = mission.opponent
+            player_team = await player.team.character()
+
+            cpu.team.team = opponent_team
+
+            # get the player's team
+            teams = [
+                {
+                    "owner" : player,
+                    "team" : await player.team.character()
+                },
+                {
+                    "owner" : cpu,
+                    "team" : cpu.team.team
+                }
+            ]
+
+            # init the combat system
+            combat = Combat(client, ctx, teams)
 
             if(len(opponent_team) > 0 and len(player_team) > 0):
-                teams = [player_team, opponent_team]
-
-                winner = await combat.run_fight(teams)
+                winner = await combat.run()
 
                 # if the player won
-                if(winner == 1):
+                if(winner == player):
                     # get the unique id of the player's characters
                     player_team_id = await player.team.get_team()
 

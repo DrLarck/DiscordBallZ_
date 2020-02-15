@@ -5,7 +5,7 @@ Load the cogs.
 
 Author : DrLarck
 
-Last update : 01/02/2020 (DrLarck)
+Last update : 15/02/2020 (DrLarck)
 """
 
 # dependancies
@@ -37,10 +37,13 @@ class Cog_loader:
             # command
             "cog.command.help",
             "cog.command.train", "cog.command.summon", "cog.command.box",
-            "cog.command.start", "cog.command.fighter", "cog.command.show",
+            "cog.command.start", "cog.command.team", "cog.command.show",
             "cog.command.profile", "cog.command.cancel", "cog.command.mission",
+            "cog.command.pvp",
             # other
-            "cog.event.on_event"
+            "cog.event.on_event",
+            # BETA
+            "cog.command.beta"
         ]
     
     # method

@@ -5,7 +5,7 @@ Manages the utils for the train command.
 
 Authod : DrLarck
 
-Last update : 02/09/19 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -35,9 +35,7 @@ class Train:
     def __init__(self, client):
         self.client = client
         self.getter = Character_getter()
-        self.possible_opponent = [
-            1, 2, 3, 4, 5, 6
-        ]
+        self.possible_opponent = self.getter.character_list
     
     # method
     async def is_in_team(self, team, character):

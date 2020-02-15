@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 07/02/20 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -118,6 +118,7 @@ class Character:
     def __init__(self):
         # bot
         self.is_npc = False  # if true, the action will automatically be managed by the AI
+        self.played = False  # if true, the character cannot be played this turn
         self.is_minion = False  # a minion is a character supporter such as Cell Jr.
         
         # basic info
@@ -456,7 +457,7 @@ class Character:
 
         # turn 1 manager
         if(turn == 1):
-            possible_move = ["skip", 3]
+            possible_move = [0, 2]
             move["move"] = choice(possible_move)
 
             return(move)
@@ -464,9 +465,10 @@ class Character:
         ############
         # set a list of abilities
         if(len(self.ability) > 0):
-            for ability in self.ability:
+            for i in range(len(self.ability)):
                 await asyncio.sleep(0)
-
+                
+                ability = await self.get_ability(client, ctx, self, None, team_a, team_b, i)
                 ability_list.append(ability)
 
             # order the list
@@ -499,12 +501,12 @@ class Character:
             random_move = randint(1, 4)
         
         else:  # else if the character doesn't have any ability
-            random_move = randint(1, 3)
+            random_move = randint(0, 2)
 
-        if(random_move < 4):  # do not use an ability
+        if(random_move < 3):  # do not use an ability
             move["move"] = random_move
 
-            if(move["move"] == 1):  # if sequence
+            if(move["move"] == 0):  # if sequence
                 # find the targetable targets
                 targetable_a, targetable_b = await team_displayer.get_targetable("sequence")
                 targetable = targetable_a + targetable_b
@@ -517,7 +519,7 @@ class Character:
             if(len(usable_ability) > 0):
                 # pick a random ability in the usuable abilities list
                 # pick a random ability
-                ability_choice = 4  # init to 4, 4 is the ability 1 (index 0)
+                ability_choice = 3  # init to 3, 3 is the ability 1 (index 0)
                 random_ability = randint(0, len(usable_ability) - 1)
 
                 # get the ability object with the random obtained index.
@@ -539,6 +541,6 @@ class Character:
                 move["move"] = ability_choice
             
             else:  # do not have enough ki to use an ability
-                move["move"] = 2
+                move["move"] = 1
 
         return(move)
