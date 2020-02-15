@@ -700,6 +700,7 @@ class Combat():
             
             elif(player_move[0] != "flee"):
                 player_move = int(player_move[0]) - 1
+                print(player_move)
 
                 # initial move
                 if(turn == 1):
@@ -743,7 +744,7 @@ class Combat():
                         )
                         
                         # check the cost
-                        if(player_fighter.ki.current > ability.cost):
+                        if(player_fighter.ki.current >= ability.cost):
                             if(ability.need_target):
                                 self.move.target = await self.get_target(
                                     player, team_a_, team_b_, order,
@@ -752,6 +753,9 @@ class Combat():
                                     ignore_defenders = ability.ignore_defenders
                                 ) 
 
+                                action_ok = True
+                            
+                            else:  # if don't need target just pass
                                 action_ok = True
                         
                         else:
@@ -919,9 +923,12 @@ class Combat():
         """
 
         # init
-        characters = self.team_a + self.team_b
+        characters = self.team_a_ + self.team_b_
         posture_icon = [":crossed_swords:", ":fire:", ":shield:", ":confused:"]
         getter = Character_getter()
+
+        if(index > len(characters)):
+            return
 
         if(order == 0):
             color = 0x009dff
@@ -963,25 +970,47 @@ class Combat():
         
         # formatting the embed
         combat_format = f"__Health__ : **{character.health.current:,}** / **{character.health.maximum:,}**:hearts:"
-        if(comparison_hp != 0):
-            combat_format += f"**({comparison_hp})**"
+        if(comparison_hp != 0): 
+            if(comparison_hp > 0):
+                combat_format += f" **(+ {comparison_hp:,})**"
+            
+            else:
+                combat_format += f" **({comparison_hp:,})**"
 
         combat_format += f"\n__Posture__ : {posture}"
         combat_format += f"\n__Damage__ :\n:punch: **{character.damage.physical_min:,}** - **{character.damage.physical_max:,}**"
         if(comparison_phy != 0):
-            combat_format += f"**({comparison_phy})**"
+            if(comparison_phy > 0):
+                combat_format += f" **(+{comparison_phy:,})**"
+            
+            else:
+                combat_format += f" **({comparison_phy:,})**"
 
         combat_format += f"\n{game_icon['ki_ability']} **{character.damage.ki_min:,}** - **{character.damage.ki_max:,}**"
         if(comparison_ki != 0):
-            combat_format += f"**({comparison_ki})**"
+            if(comparison_ki > 0):
+                combat_format += f" **(+{comparison_ki:,})**"
+            
+            else:
+                combat_format += f" **({comparison_ki:,})**"
 
-        combat_format += f"\n__Defense__ :\n:shield: **{character.defense.armor:,}**\n:rosette: **{character.defense.spirit:,}**"
+        combat_format += f"\n__Defense__ :\n:shield: **{character.defense.armor:,}**"
         if(comparison_armor != 0):
-            combat_format += f"**({comparison_armor})**"
+            if(comparison_armor > 0):
+                combat_format += f" **(+{comparison_armor:,})**"
+
+            else:
+                combat_format += f" **({comparison_armor:,})**"
+        
+        combat_format += f"\n:rosette: **{character.defense.spirit:,}**"
+        if(comparison_spirit != 0):
+            if(comparison_spirit > 0):
+                combat_format += f" **(+{comparison_spirit:,})**"
+            
+            else:
+                combat_format += f" **({comparison_spirit:,})**"
 
         combat_format += f"\n__Ki__ : **{character.ki.current}** :fire:"
-        if(comparison_spirit != 0):
-            combat_format += f"**({comparison_spirit})**"
 
         # now the effects
             # buff
