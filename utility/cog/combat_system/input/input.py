@@ -5,7 +5,7 @@ Combat input object
 
 Author : DrLarck
 
-Last update : 14/02/20 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,7 +24,7 @@ class Combat_input():
         self.client = client
         self.timeout = 120
     
-    async def get_possible(self, options, ability = False):
+    async def get_possible(self, options, team_a, team_b, ability = False):
         """
         `coroutine`
 
@@ -41,6 +41,8 @@ class Combat_input():
 
         # init
         possible = []
+        teams = team_a + team_b
+        index = 1
 
         if(ability):
             start = 4
@@ -55,6 +57,13 @@ class Combat_input():
                 await asyncio.sleep(0)
 
                 possible.append(str(a))
+            
+        for character in teams:
+            await asyncio.sleep(0)
+
+            possible.append(f"check {index}")
+
+            index += 1
 
         return(possible)
 

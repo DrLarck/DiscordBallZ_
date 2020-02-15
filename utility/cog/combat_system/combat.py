@@ -363,7 +363,7 @@ class Combat():
         await self.ctx.send(f"Please {circle}**{player.name}** select a target among the following by typing its **index**")
 
         # get the input
-        possible_input = await _input.get_possible(targetable)
+        possible_input = await _input.get_possible(targetable, self.team_a_, self.team_b_)
         player_input = int(await _input.wait_for_input(possible_input, player)) - 1
         
         target = targetable[player_input]
@@ -601,7 +601,7 @@ class Combat():
 
         # get the fighter
         playable = await self.get_player_fighter(order)
-        possible_fighter = await _input.get_possible(playable)
+        possible_fighter = await _input.get_possible(playable, self.team_a_, self.team_b_)
 
         possible_fighter.append("flee")
 
@@ -626,12 +626,18 @@ class Combat():
                 team_b_ = self.team_a_
 
             player_input = await _input.wait_for_input(possible_fighter, player)
+            player_input = player_input.split()
 
+            # special input
             if(player_input == "flee"):
                 return(0)
+            
+            elif(player_input[0].lower() == "check"):
+                if(len(player_input) > 1):
+                    await self.check_character(int(player_input[1]), order)
 
-            if(player_input != None):
-                player_input = int(player_input) - 1
+            elif(player_input != None):
+                player_input = int(player_input[0]) - 1
 
                 player_fighter = playable[player_input]
 
@@ -669,7 +675,7 @@ class Combat():
         possible_move = []
 
         if(turn > 1):
-            possible_move = await _input.get_possible(player_fighter.ability, ability = True)
+            possible_move = await _input.get_possible(player_fighter.ability, self.team_a_, self.team_b_, ability = True)
             possible_move.append("2")
 
         possible_move.append("1")
@@ -682,12 +688,17 @@ class Combat():
             await asyncio.sleep(0)
 
             player_move = await _input.wait_for_input(possible_move, player)
+            player_move = player_move.split()
 
             if(player_move == "flee"):
                 return(0)
+
+            elif(player_move[0].lower() == "check"):
+                if(len(player_move) > 1):
+                    await self.check_character(int(player_move[1]), order)
             
-            if(player_move != "flee"):
-                player_move = int(player_move) - 1
+            elif(player_move != "flee"):
+                player_move = int(player_move[0]) - 1
 
                 # initial move
                 if(turn == 1):
