@@ -5,7 +5,7 @@ Manager the levelling
 
 Author : DrLarck
 
-Last update : 04/09/19 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -150,7 +150,7 @@ class Leveller:
         """
 
         # init
-        displaying = f"<@{player.id}> "
+        displaying = ""
 
         for character in team:
             await asyncio.sleep(0)
