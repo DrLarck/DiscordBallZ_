@@ -43,8 +43,7 @@ class Player:
         # basics
         self.ctx = ctx
         self.client = client
-        self.is_cpu = False
-        
+
         # player infos
         self.name = player.name
         self.id = player.id

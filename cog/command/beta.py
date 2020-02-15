@@ -31,10 +31,19 @@ class Cmd_beta(commands.Cog):
         """
         # import
         from utility.cog.combat_system.combat import Combat
+        from utility.cog.character.getter import Character_getter
 
         # init
         caller = Player(ctx, self.client, ctx.message.author)
         opponent = Player(ctx, self.client, user)
+        getter = Character_getter()
+        
+        # set team
+        opponent.team.team["a"] = await getter.get_character(4)
+        opponent.team.team["b"] = await getter.get_character(2)
+        opponent.team.team["c"] = await getter.get_character(1)
+
+        opponent.name = "Test"
 
         if(opponent == None):
             opponent = caller
