@@ -25,6 +25,7 @@ from utility.cog.helper.command._team import Help_team
 from utility.cog.helper.command._train import Help_train
 from utility.cog.helper.command._cancel import Help_cancel
 from utility.cog.helper.command._mission import Help_mission
+from utility.cog.helper.command._pvp import Help_pvp
 
 # helper
 class Helper:
@@ -67,8 +68,8 @@ class Helper:
 
         self.commands = [
             Help_start(),
-            Help_box(), Help_cancel(),
-            Help_mission(), Help_profile(), Help_show(),
+            Help_box(), Help_cancel(),Help_mission(),
+            Help_profile(), Help_pvp(), Help_show(), 
             Help_summon(), Help_team(), Help_train()
         ]
 

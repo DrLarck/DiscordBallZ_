@@ -26,17 +26,24 @@ class Cmd_pvp(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.check(Basic_checker.is_game_ready)
-    @commands.check(Basic_checker.is_registered)
-    @commands.check(Fight_checker.has_team)
-    @commands.check(Fight_checker.is_in_fight)
+    @commands.check(Basic_checker().is_game_ready)
+    @commands.check(Basic_checker().is_registered)
+    @commands.check(Fight_checker().has_team)
+    @commands.check(Fight_checker().is_in_fight)
+    @commands.command()
     async def pvp(self, ctx, opponent: discord.Member):
         """
         Start a pvp fight
         """
 
         # init
-        player = Player(ctx, self.client, ctx.message.author)
+        author = ctx.message.author
+
+        if(opponent == author):
+            await ctx.send("You cannot start a fight against **yourself**")
+            return
+
+        player = Player(ctx, self.client, author)
         opponent = Player(ctx, self.client, opponent)
         
         # get the teams
