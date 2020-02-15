@@ -5,7 +5,7 @@ This command allows the player to level up his characters.
 
 Author : DrLarck
 
-Last update : 30/01/20 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,6 +15,8 @@ from discord.ext import commands
 
 # utils
 from utility.cog.fight_system.fight import Fight
+from utility.cog.combat_system.combat import Combat
+from utility.cog.combat_system.cpu import CPU
 from utility.cog.player.player import Player
 from utility.cog.character.getter import Character_getter
 from utility.command._train import Train
@@ -50,67 +52,41 @@ class Cmd_train(commands.Cog):
         # init
         caller = ctx.message.author 
         player = Player(ctx, self.client, caller)
-        getter = Character_getter()
-        tool = Train(self.client)
+        cpu = CPU()
+        cpu.name = "Trainer"
+        train = Train(self.client)
         leveller = Leveller(self.client, ctx)
 
-        # get caller team
-        caller_team = await player.team.get_team()
-        player_team = [
-            await getter.get_from_unique(self.client, caller_team["a"]),
-            await getter.get_from_unique(self.client, caller_team["b"]),
-            await getter.get_from_unique(self.client, caller_team["c"])
+        cpu.team.team = await train.generate_opponent_team(player)
+
+        combat_teams = [
+            {
+                "owner" : player,
+                "team" : await player.team.character()
+            },
+            {
+                "owner" : cpu,
+                "team" : cpu.team.team
+            }
         ]
 
-        # get opponent team
-        opponent_team = await tool.generate_opponent_team(player)
+        combat = Combat(self.client, ctx, combat_teams)
 
-        # test
-        opponent_team = [
-            await getter.get_character(1),
-            await getter.get_character(2),
-            await getter.get_character(3)
-        ]
+        winner = await combat.run()
 
-        for char in opponent_team:
-            await asyncio.sleep(0)
+        if(winner == player):
+            # set the xp
+            # init
+            xp_won = 100
+            player_info = await player.team.get_info()
+            player_team_level, player_team_rarity = player_info["level"], player_info["rarity"]
 
-            char.is_npc = True
-            
-        ############ end test ########
-        
-        team = [player_team, opponent_team]
+            # set the xp gain
+            xp_won += (((1.5 * 100) - 100) * player_team_level) + (100 * (player_team_rarity - 1))
 
-        fight = Fight(self.client, ctx, player)
-
-        await ctx.send(f"<@{player.id}> You enter in combat.")
-
-        winner = await fight.run_fight(team)
-        
-        # redefine team
-        caller_team = await player.team.get_team()
-        
-        # check winning condition
-        id_team = [
-            caller_team["a"], caller_team["b"], caller_team["c"]
-        ]
-
-        # set the xp
-        # init
-        xp_won = 100
-        player_info = await player.team.get_info()
-        player_team_level, player_team_rarity = player_info["level"], player_info["rarity"]
-
-        # set the xp gain
-        xp_won += (((1.5 * 100) - 100) * player_team_level) + (100 * (player_team_rarity - 1))
-
-        if(winner == 0):  # if the player wins it
             # add xp
-            await leveller.team_add_xp(player, id_team, xp_won)
-        
-        elif(winner == 2):  # if draw
-            # half xp gained
-            await leveller.team_add_xp(player, team, xp_won/2)
+            player_team_id = [player.team.team["a"], player.team.team["b"], player.team.team["c"]]
+            await leveller.team_add_xp(player, player.team.team, xp_won)
 
 def setup(client):
     client.add_cog(Cmd_train(client))

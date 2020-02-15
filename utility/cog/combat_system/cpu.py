@@ -110,6 +110,10 @@ class Team():
 
                 character.level = random.randint(self.level_min, self.level_max)
 
+                type_value = random.randint(0, 4)
+
+                character.type.value = type_value
+
                 self.team.append(character)
             
         return(self.team)

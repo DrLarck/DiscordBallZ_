@@ -36,9 +36,14 @@ class Cmd_beta(commands.Cog):
 
         # init
         caller = Player(ctx, self.client, ctx.message.author)
-        opponent = CPU()
-        opponent.name = "Test"
-        opponent.avatar = caller.avatar
+
+        if(user == None):
+            opponent = CPU()
+            opponent.name = "Test"
+            opponent.avatar = caller.avatar
+        
+        else:
+            opponent = Player(ctx, self.client, user)
 
         teams = [
             {
