@@ -35,6 +35,24 @@ class CPU():
         self.is_cpu = True
 
         self.team = Team()
+    
+    async def pick_fighter(self):
+        """
+        `coroutine`
+
+        Randomly choose a fighter
+        """
+
+        return
+    
+    async def make_move(self):
+        """
+        `coroutine`
+
+        Randomly generate a move
+        """
+
+        return
 
 class Team():
     """
