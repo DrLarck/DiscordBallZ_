@@ -633,7 +633,6 @@ class Combat():
             
             else:
                 player_input = await player.pick_fighter()
-                print(player_input)
 
                 fighter_ok = True
 

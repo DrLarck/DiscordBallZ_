@@ -70,7 +70,7 @@ class CPU():
 
         move_object.index = move["move"]
         move_object.target = move["target"]
-        
+
         return(move_object)
 
 class Team():
