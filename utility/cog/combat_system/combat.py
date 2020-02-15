@@ -239,7 +239,7 @@ class Combat():
         for char in team:
             await asyncio.sleep(0)
 
-            if not char.played and char.health.current > 0:
+            if not char.played and char.health.current > 0 and char.posture.stunned == False:
                 posture, posture_icon = await char.posture.get_posture()
                 team_display += f"`{index}`. {char.image.icon}**{char.info.name}**{char.type.icon} - **{char.health.current:,}**:hearts: *({int((char.health.current * 100) / char.health.maximum)} %)* {posture_icon}"
 
@@ -642,11 +642,11 @@ class Combat():
 
                 player_fighter = playable[player_input]
 
-                if(player_fighter.health.current > 0):
+                if(player_fighter.health.current > 0 and player_fighter.posture.stunned == False):
                     fighter_ok = True
                 
                 else:
-                    await self.ctx.send("Please select a fighter that is not :skull:**K.O** : ")
+                    await self.ctx.send("Please select a fighter that is not :skull:**K.O** or **Stunned**")
             
         # wait for an action
         if(turn > 1):
