@@ -44,7 +44,7 @@ class Combat_input():
         teams = team_a + team_b
         index = 1
 
-        if(ability):
+        if(ability):  # defines the amount of abilities the player can use
             start = 4
             end = len(options) + 4
         
@@ -53,6 +53,7 @@ class Combat_input():
             end = len(options) + 1
 
         if(len(options) > 0):
+            # get the index of the usable 
             for a in range(start, end):
                 await asyncio.sleep(0)
 

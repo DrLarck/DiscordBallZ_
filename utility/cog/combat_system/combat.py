@@ -724,22 +724,38 @@ class Combat():
         # wait for an action
         if(turn > 1):
             action_index = 4
+            ability_index = 0
 
+            # abilities
+            # set the display
             for action in player_fighter.ability:
                 await asyncio.sleep(0)
 
-                ability = action(
-                    self.client, self.ctx, player_fighter,
-                    None, team_a, team_b
+                ability = await player_fighter.get_ability(
+                    self.client, self.ctx, player_fighter, player_fighter, 
+                    team_a, self.team_b, ability_index
                 )
 
                 await ability.set_tooltip()
 
-                fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:) : {ability.tooltip}"
+                # if the ability is available
+                if(ability.cooldown <= 0 and player_fighter.ki.current >= ability.cost):
+                    fighter_action += f"`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:) : {ability.tooltip}"
+                
+                else:  # if the ability is on cooldown or not enough ki
+                    if(ability.cooldown > 0):
+                        # add the hourglass to the display
+                        cooldown = f"**Cooldown :** {ability.cooldown:,}:hourglass: - "
+                        fighter_action += cooldown
+
+                    # show the ability as unavailable
+                    # don't show the tooltip
+                    fighter_action += f"~~`{action_index}`. {ability.icon}**{ability.name}** - ({player_fighter.ki.current} / {ability.cost}:fire:)~~"
 
                 fighter_action += "\n"
 
                 action_index += 1
+                ability_index += 1
         
         if not player.is_cpu:
             await self.ctx.send(
@@ -748,9 +764,23 @@ class Combat():
 
         # get the move
         possible_move = []
+        fighter_ability = []
+
+        # get the possible ability
+        for i in range(len(player_fighter.ability)):
+            await asyncio.sleep(0)
+
+            ability = await player_fighter.get_ability(
+                self.client, self.ctx, player_fighter, player_fighter, 
+                team_a, self.team_b, i
+            )
+
+            if(ability.cooldown <= 0):  # not on cooldown
+                if(ability.cost <= player_fighter.ki.current):
+                    fighter_ability.append(ability)
 
         if(turn > 1):
-            possible_move = await _input.get_possible(player_fighter.ability, self.team_a_, self.team_b_, ability = True)
+            possible_move = await _input.get_possible(fighter_ability, self.team_a_, self.team_b_, ability = True)
             possible_move.append("2")
 
         possible_move.append("1")
