@@ -255,7 +255,6 @@ class Combat():
 
         if not player.is_cpu:
             await self.ctx.send(embed = embed)
-            await self.ctx.send(f"Please {circle}**{player.name}** select a fighter : Type its **index** number.")
 
         return(playable)
     
@@ -685,6 +684,7 @@ class Combat():
                 team_a_ = self.team_a_
                 team_b = self.team_b
                 team_b_ = self.team_b_
+                circle = ":blue_circle:"
             
             else:
                 player = self.player_b
@@ -692,8 +692,10 @@ class Combat():
                 team_a_ = self.team_b_
                 team_b = self.team_a
                 team_b_ = self.team_a_
+                circle = ":red_circle:"
 
             if not player.is_cpu:
+                await self.ctx.send(f"Please {circle}**{player.name}** select a fighter : Type its **index** number.\nYou can type, for example : `2` | `flee` | `check 3`")
                 player_input = await _input.wait_for_input(possible_fighter, player)
                 player_input = player_input.split()
             
