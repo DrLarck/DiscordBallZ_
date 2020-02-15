@@ -967,7 +967,7 @@ class Combat():
         ).setup_embed()
 
         embed.add_field(
-            name = f"{self.character.image.icon}{self.character.info.name} {self.character.type.icon}{self.character.rarity.icon}'s infos :",
+            name = f"{character.image.icon}{character.info.name} {character.type.icon}{character.rarity.icon}'s infos :",
             value = combat_format
         )
 
