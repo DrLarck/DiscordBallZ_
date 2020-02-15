@@ -59,17 +59,20 @@ class Team():
         # init
         getter = Character_getter()
 
-        for i in range(3):  # generates 3 characters
-            await asyncio.sleep(0)
+        if(len(self.team) < 3):
+            self.team = []
 
-            # pick a random id in the list
-            char_id = random.choice(getter.character_list) 
+            for i in range(3):  # generates 3 characters
+                await asyncio.sleep(0)
 
-            character = await getter.get_character(char_id)
+                # pick a random id in the list
+                char_id = random.choice(getter.character_list) 
 
-            character.level = random.randint(self.level_min, self.level_max)
+                character = await getter.get_character(char_id)
 
-            self.team.append(character)
-        
+                character.level = random.randint(self.level_min, self.level_max)
+
+                self.team.append(character)
+            
         return(self.team)
 

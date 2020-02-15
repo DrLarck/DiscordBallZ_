@@ -9,6 +9,7 @@ from discord.ext import commands
 
 # util
 from utility.cog.player.player import Player
+from utility.cog.combat_system.cpu import CPU
 
 # characters
 from utility.cog.character.list import c001_sabimen
@@ -35,18 +36,9 @@ class Cmd_beta(commands.Cog):
 
         # init
         caller = Player(ctx, self.client, ctx.message.author)
-        opponent = Player(ctx, self.client, user)
-        getter = Character_getter()
-        
-        # set team
-        opponent.team.team["a"] = await getter.get_character(4)
-        opponent.team.team["b"] = await getter.get_character(2)
-        opponent.team.team["c"] = await getter.get_character(1)
-
+        opponent = CPU()
         opponent.name = "Test"
-
-        if(opponent == None):
-            opponent = caller
+        opponent.avatar = caller.avatar
 
         teams = [
             {
