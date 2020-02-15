@@ -5,7 +5,7 @@ Manages the helper.
 
 Author : DrLarck
 
-Last update : 02/02/2020 (DrLarck)
+Last update : 15/02/2020 (DrLarck)
 """
 
 # dependancies
@@ -18,10 +18,10 @@ from utility.cog.player.attribute.box.box import Box
 # help command
 from utility.cog.helper.command._summon import Help_summon
 from utility.cog.helper.command._box import Help_box
-from utility.cog.helper.command._fighter import Help_fighter
 from utility.cog.helper.command._profile import Help_profile
 from utility.cog.helper.command._show import Help_show
 from utility.cog.helper.command._start import Help_start
+from utility.cog.helper.command._team import Help_team
 from utility.cog.helper.command._train import Help_train
 from utility.cog.helper.command._cancel import Help_cancel
 from utility.cog.helper.command._mission import Help_mission
@@ -67,9 +67,9 @@ class Helper:
 
         self.commands = [
             Help_start(),
-            Help_box(), Help_cancel(), Help_fighter(),
+            Help_box(), Help_cancel(),
             Help_mission(), Help_profile(), Help_show(),
-            Help_summon(), Help_train()
+            Help_summon(), Help_team(), Help_train()
         ]
 
         # util
