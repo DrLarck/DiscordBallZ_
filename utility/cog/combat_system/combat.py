@@ -917,7 +917,7 @@ class Combat():
         embed = await Custom_embed(
             self.client, title = "Character infos", colour = color
         ).setup_embed()
-
+        
         return
 
     # combat
