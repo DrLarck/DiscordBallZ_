@@ -572,6 +572,72 @@ class Combat():
             character.ki.current += character.regeneration.ki
             await character.ki.ki_limit()
 
+            # passive
+            new_passive_list = []
+            if not character.passive_sorted:
+                for passive in character.passive:
+                    await asyncio.sleep(0)
+
+                    passive = passive(
+                        self.client,
+                        self.ctx,
+                        character,
+                        self.team_a,
+                        self.team_b
+                    )
+
+                    new_passive_list.append(passive)
+                
+                character.passive = new_passive_list
+                character.passive_sorted = True
+            
+            # trigger all the passives
+            for _passive in character.passive:
+                await asyncio.sleep(0)
+
+                if not _passive.triggered :
+                    await _passive.apply()
+
+        return
+    
+    async def trigger_leader(self, client, ctx, character_leader):
+        """
+        `coroutine`
+
+        Trigger the leader skill of the passed character.
+
+        --
+
+        Return : None
+        """
+
+        # first sort the leader
+        if(character_leader.health.current > 0):
+            new_leader = []
+            if(character_leader.leader_sorted == False):
+                for leader in character_leader.leader:
+                    await asyncio.sleep(0)
+
+                    leader = leader(
+                        client,
+                        ctx,
+                        character_leader,
+                        self.team_a,
+                        self.team_b
+                    )
+
+                    new_leader.append(leader)
+                
+                character_leader.leader = new_leader
+                character_leader.leader_sorted = True
+
+            # trigger all the leader if they've not been triggered 
+            for _leader in character_leader.leader:
+                await asyncio.sleep(0)
+
+                if not _leader.triggered :
+                    await _leader.apply()
+
         return
     
     async def player_turn(self, player, order, turn):
@@ -1091,6 +1157,9 @@ class Combat():
         await self.ctx.send(f":blue_circle:**{self.player_a.name}** VS :red_circle:**{self.player_b.name}**")
         await asyncio.sleep(1)
 
+        leader_a = self.team_a[0]
+        leader_b = self.team_b[0]
+
         while not combat_end:
             await asyncio.sleep(0)
 
@@ -1154,6 +1223,9 @@ class Combat():
                     self.removed_b = []
                     
                     # effect
+                    await self.trigger_leader(self.client, self.ctx, leader_a)
+                    await self.trigger_leader(self.client, self.ctx, leader_b)
+
                     await self.effects(self.team_a)
                     await self.effects(self.team_b)
 
