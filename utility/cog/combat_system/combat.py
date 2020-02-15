@@ -21,6 +21,7 @@ from configuration.icon import game_icon
 from utility.cog.combat_system.input.input import Combat_input
 from utility.cog.combat_system.attribute.move import Move
 from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.character.getter import Character_getter
 
 class Combat():
     """
@@ -920,6 +921,7 @@ class Combat():
         # init
         characters = self.team_a + self.team_b
         posture_icon = [":crossed_swords:", ":fire:", ":shield:", ":confused:"]
+        getter = Character_getter()
 
         if(order == 0):
             color = 0x009dff
@@ -928,6 +930,21 @@ class Combat():
             color = 0xff0000
         
         character = characters[index - 1]
+        reference = await getter.get_character(character.info.id)
+
+        # init ref character
+        reference.level = character.level
+
+        await reference.init()
+
+        # comparison
+        comparison_hp = character.health.maximum - reference.health.maximum
+
+        comparison_phy = character.damage.physical_max - reference.damage.physical_max
+        comparison_ki = character.damage.ki_max - reference.damage.ki_max
+
+        comparison_armor = character.defense.armor - reference.defense.armor
+        comparison_spirit = character.defense.spirit - reference.defense.spirit
 
         # posture
         posture = None
@@ -945,11 +962,26 @@ class Combat():
             posture = posture_icon[3]
         
         # formatting the embed
-        combat_format = f"__Health__ : \n**{character.health.current:,}** / **{character.health.maximum:,}**:hearts: \n"
-        combat_format += f"__Posture__ : {posture}\n"
-        combat_format += f"__Damage__ :\n:punch: **{character.damage.physical_min:,}** - **{character.damage.physical_max:,}** \n{game_icon['ki_ability']} **{character.damage.ki_min:,}** - **{character.damage.ki_max:,}** \n"
-        combat_format += f"__Defense__ :\n:shield: **{character.defense.armor:,}**\n:rosette: **{character.defense.spirit:,}**\n"
-        combat_format += f"__Ki__ : **{character.ki.current}** :fire:"
+        combat_format = f"__Health__ : **{character.health.current:,}** / **{character.health.maximum:,}**:hearts:"
+        if(comparison_hp != 0):
+            combat_format += f"**({comparison_hp})**"
+
+        combat_format += f"\n__Posture__ : {posture}"
+        combat_format += f"\n__Damage__ :\n:punch: **{character.damage.physical_min:,}** - **{character.damage.physical_max:,}**"
+        if(comparison_phy != 0):
+            combat_format += f"**({comparison_phy})**"
+
+        combat_format += f"\n{game_icon['ki_ability']} **{character.damage.ki_min:,}** - **{character.damage.ki_max:,}**"
+        if(comparison_ki != 0):
+            combat_format += f"**({comparison_ki})**"
+
+        combat_format += f"\n__Defense__ :\n:shield: **{character.defense.armor:,}**\n:rosette: **{character.defense.spirit:,}**"
+        if(comparison_armor != 0):
+            combat_format += f"**({comparison_armor})**"
+
+        combat_format += f"\n__Ki__ : **{character.ki.current}** :fire:"
+        if(comparison_spirit != 0):
+            combat_format += f"**({comparison_spirit})**"
 
         # now the effects
             # buff
