@@ -5,7 +5,7 @@ Manages the player object.
 
 Author : DrLarck
 
-Last update : 29/08/19 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -43,6 +43,8 @@ class Player:
         # basics
         self.ctx = ctx
         self.client = client
+        self.is_cpu = False
+        
         # player infos
         self.name = player.name
         self.id = player.id
