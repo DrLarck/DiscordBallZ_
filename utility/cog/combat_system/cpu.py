@@ -50,6 +50,12 @@ class CPU():
         # init
         fighter_amount = len(self.team.team)
 
+        for char in self.team.team:
+            await asyncio.sleep(0)
+
+            if(char.health.current < 0 or char.posture.stunned):  # if the char is dead or not able to fight, remove it to the possibility
+                fighter_amount -= 1
+
         choice = str(random.randint(1, fighter_amount))
 
         return(choice)

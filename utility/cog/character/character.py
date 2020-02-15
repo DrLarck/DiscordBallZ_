@@ -503,7 +503,7 @@ class Character:
         else:  # else if the character doesn't have any ability
             random_move = randint(0, 2)
 
-        if(random_move < 4):  # do not use an ability
+        if(random_move < 3):  # do not use an ability
             move["move"] = random_move
 
             if(move["move"] == 0):  # if sequence
