@@ -876,8 +876,6 @@ class Combat():
                     )
 
                     action_ok = True
-
-                    print(f"move : {self.move.index} | target : {self.move.target}")
                         
         # execute the action
         await self.battle(player_fighter, order, turn)
