@@ -32,6 +32,7 @@ class CPU():
     def __init__(self):
         self.name = ""
         self.avatar = ""
+        self.is_cpu = True
 
         self.team = Team()
 

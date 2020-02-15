@@ -1065,7 +1065,7 @@ class Combat():
         
         winner = None
         combat_end = False
-        turn = 2
+        turn = 1
 
         # start the fight
         await self.ctx.send(f":blue_circle:**{self.player_a.name}** VS :red_circle:**{self.player_b.name}**")
