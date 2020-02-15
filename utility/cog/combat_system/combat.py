@@ -226,7 +226,7 @@ class Combat():
             removed = self.removed_b
             color = 0xff0000
             circle = "🔴"
-        
+    
         # set embed
         embed = await Custom_embed(
             self.client,
@@ -234,7 +234,7 @@ class Combat():
             thumb = player.avatar,
             colour = color
         ).setup_embed()
-        
+    
         # set player team display
         for char in team:
             await asyncio.sleep(0)
@@ -253,8 +253,9 @@ class Combat():
             inline = False
         )
 
-        await self.ctx.send(embed = embed)
-        await self.ctx.send(f"Please {circle}**{player.name}** select a fighter : Type its **index** number.")
+        if not player.is_cpu:
+            await self.ctx.send(embed = embed)
+            await self.ctx.send(f"Please {circle}**{player.name}** select a fighter : Type its **index** number.")
 
         return(playable)
     
@@ -626,8 +627,15 @@ class Combat():
                 team_b = self.team_a
                 team_b_ = self.team_a_
 
-            player_input = await _input.wait_for_input(possible_fighter, player)
-            player_input = player_input.split()
+            if not player.is_cpu:
+                player_input = await _input.wait_for_input(possible_fighter, player)
+                player_input = player_input.split()
+            
+            else:
+                player_input = await player.pick_fighter()
+                print(player_input)
+
+                fighter_ok = True
 
             # special input
             if(player_input[0].lower() == "flee"):
@@ -667,10 +675,11 @@ class Combat():
                 fighter_action += "\n"
 
                 action_index += 1
-
-        await self.ctx.send(
-            f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
-        )
+        
+        if not player.is_cpu:
+            await self.ctx.send(
+                f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
+            )
 
         # get the move
         possible_move = []
@@ -688,8 +697,12 @@ class Combat():
         while not action_ok:
             await asyncio.sleep(0)
 
-            player_move = await _input.wait_for_input(possible_move, player)
-            player_move = player_move.split()
+            if not player.is_cpu:
+                player_move = await _input.wait_for_input(possible_move, player)
+                player_move = player_move.split()
+
+            else:
+                player_move = "cpu"
 
             if(player_move[0].lower() == "flee"):
                 return(0)
@@ -699,67 +712,75 @@ class Combat():
                     await self.check_character(int(player_move[1]), order)
             
             elif(player_move[0] != "flee"):
-                player_move = int(player_move[0]) - 1
-                print(player_move)
+                if not player.is_cpu:
+                    player_move = int(player_move[0]) - 1
 
-                # initial move
-                if(turn == 1):
-                    # skip
-                    if(player_move == 0):
-                        self.move.index = 0
-
-                        action_ok = True
-                    
-                    # defend
-                    elif(player_move == 2):
-                        self.move.index = 2
-
-                        action_ok = True
-
-                # normal move
-                else:
-                    if(player_move < 3):
-                        # sequence
+                    # initial move
+                    if(turn == 1):
+                        # skip
                         if(player_move == 0):
                             self.move.index = 0
-                            self.move.target = await self.get_target(
-                                player, team_a_, team_b_, order,
-                                target_enemy = True
-                            )
 
                             action_ok = True
                         
-                        else:
-                            self.move.index = player_move
+                        # defend
+                        elif(player_move == 2):
+                            self.move.index = 2
 
                             action_ok = True
 
-                    # abilities
+                    # normal move
                     else:
-                        self.move.index = player_move
-
-                        ability = await player_fighter.get_ability(
-                            self.client, self.ctx, player_fighter, player_fighter, 
-                            team_a, self.team_b, player_move - 3
-                        )
-                        
-                        # check the cost
-                        if(player_fighter.ki.current >= ability.cost):
-                            if(ability.need_target):
+                        if(player_move < 3):
+                            # sequence
+                            if(player_move == 0):
+                                self.move.index = 0
                                 self.move.target = await self.get_target(
                                     player, team_a_, team_b_, order,
-                                    target_ally = ability.target_ally,
-                                    target_enemy = ability.target_enemy,
-                                    ignore_defenders = ability.ignore_defenders
-                                ) 
+                                    target_enemy = True
+                                )
 
                                 action_ok = True
                             
-                            else:  # if don't need target just pass
+                            else:
+                                self.move.index = player_move
+
                                 action_ok = True
-                        
+
+                        # abilities
                         else:
-                            await self.ctx.send("You do not have enough **Ki** to use this ability")
+                            self.move.index = player_move
+
+                            ability = await player_fighter.get_ability(
+                                self.client, self.ctx, player_fighter, player_fighter, 
+                                team_a, self.team_b, player_move - 3
+                            )
+                            
+                            # check the cost
+                            if(player_fighter.ki.current >= ability.cost):
+                                if(ability.need_target):
+                                    self.move.target = await self.get_target(
+                                        player, team_a_, team_b_, order,
+                                        target_ally = ability.target_ally,
+                                        target_enemy = ability.target_enemy,
+                                        ignore_defenders = ability.ignore_defenders
+                                    ) 
+
+                                    action_ok = True
+                                
+                                else:  # if don't need target just pass
+                                    action_ok = True
+                            
+                            else:
+                                await self.ctx.send("You do not have enough **Ki** to use this ability")
+                        
+                else:  # cpu
+                    self.move = await player.make_move(
+                    player_fighter, self.move, self.client, self.ctx,
+                    self.team_a, self.team_b, turn
+                    )
+
+                    action_ok = True
                         
         # execute the action
         await self.battle(player_fighter, order, turn)

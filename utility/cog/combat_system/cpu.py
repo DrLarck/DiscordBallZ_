@@ -41,18 +41,37 @@ class CPU():
         `coroutine`
 
         Randomly choose a fighter
+
+        --
+
+        Return : `str` digit
         """
 
-        return
+        # init
+        fighter_amount = len(self.team.team)
+
+        choice = str(random.randint(1, fighter_amount))
+
+        return(choice)
     
-    async def make_move(self):
+    async def make_move(self, character, move_object, client, ctx, team_a, team_b, turn):
         """
         `coroutine`
 
         Randomly generate a move
+
+        --
+
+        Return : `Move()`
         """
 
-        return
+        # init 
+        move = await character.bot(client, ctx, self, team_a, team_b, turn)
+
+        move_object.index = move["move"]
+        move_object.target = move["target"]
+        
+        return(move_object)
 
 class Team():
     """

@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 09/02/20 (DrLarck)
+Last update : 15/02/20 (DrLarck)
 """
 
 # dependancies
@@ -457,7 +457,7 @@ class Character:
 
         # turn 1 manager
         if(turn == 1):
-            possible_move = ["skip", 3]
+            possible_move = [0, 2]
             move["move"] = choice(possible_move)
 
             return(move)
