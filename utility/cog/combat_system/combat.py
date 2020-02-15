@@ -630,7 +630,7 @@ class Combat():
             player_input = player_input.split()
 
             # special input
-            if(player_input == "flee"):
+            if(player_input[0].lower() == "flee"):
                 return(0)
             
             elif(player_input[0].lower() == "check"):
@@ -691,14 +691,14 @@ class Combat():
             player_move = await _input.wait_for_input(possible_move, player)
             player_move = player_move.split()
 
-            if(player_move == "flee"):
+            if(player_move[0].lower() == "flee"):
                 return(0)
 
             elif(player_move[0].lower() == "check"):
                 if(len(player_move) > 1):
                     await self.check_character(int(player_move[1]), order)
             
-            elif(player_move != "flee"):
+            elif(player_move[0] != "flee"):
                 player_move = int(player_move[0]) - 1
 
                 # initial move
