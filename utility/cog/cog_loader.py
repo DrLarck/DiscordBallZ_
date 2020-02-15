@@ -39,6 +39,7 @@ class Cog_loader:
             "cog.command.train", "cog.command.summon", "cog.command.box",
             "cog.command.start", "cog.command.team", "cog.command.show",
             "cog.command.profile", "cog.command.cancel", "cog.command.mission",
+            "cog.command.pvp",
             # other
             "cog.event.on_event",
             # BETA
