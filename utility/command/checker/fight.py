@@ -5,7 +5,7 @@ Regroups the fight checker
 
 Author : DrLarck
 
-Last update : 31/01/20 (DrLarck)
+Last update : 16/02/20 (DrLarck)
 """
 
 # dependancies
@@ -101,6 +101,6 @@ class Fight_checker:
                 has_fighter = True
 
         if not has_fighter:
-            await ctx.send(f"<@{player.id}> You did not **set any fighter**, in consequence to it, you cannot use this command.\nUse `d!fighter` for more informations.")
+            await ctx.send(f"<@{player.id}> You did not **set any fighter**, in consequence to it, you cannot use this command.\nUse `d!team` for more informations.")
 
         return(has_fighter)
