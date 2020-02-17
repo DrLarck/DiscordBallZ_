@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 15/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -364,7 +364,7 @@ class Combat():
         await self.ctx.send(f"Please {circle}**{player.name}** select a target among the following by typing its **index**")
 
         # get the input
-        possible_input = await _input.get_possible(targetable, self.team_a_, self.team_b_)
+        possible_input = await _input.get_possible(targetable, team_a, team_b)
         player_input = int(await _input.wait_for_input(possible_input, player)) - 1
         
         target = targetable[player_input]
@@ -874,7 +874,7 @@ class Combat():
                 else:  # cpu
                     self.move = await player.make_move(
                     player_fighter, self.move, self.client, self.ctx,
-                    self.team_a, self.team_b, turn
+                    team_a_, team_b_, turn
                     )
 
                     action_ok = True
