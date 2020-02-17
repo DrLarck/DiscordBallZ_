@@ -5,7 +5,7 @@ Manages the red saibaiman leader skill
 
 Author : DrLarck
 
-Last update : 24/11/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -63,16 +63,16 @@ class Leader_saibaiman_red(Effect):
                 effect_checker = Effect_checker(ally)
                 has_power = await effect_checker.get_buff(passive_ref)
 
-            if(has_power == None):
-                new_power = await effect_checker.get_effect(
-                    10,
-                    self.client,
-                    self.ctx,
-                    ally,
-                    self.team_a,
-                    self.team_b
-                )
-            
-                ally.bonus.append(new_power)
+                if(has_power == None):
+                    new_power = await effect_checker.get_effect(
+                        10,
+                        self.client,
+                        self.ctx,
+                        ally,
+                        self.team_a,
+                        self.team_b
+                    )
+                
+                    ally.bonus.append(new_power)
         
         return
