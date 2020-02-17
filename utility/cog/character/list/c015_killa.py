@@ -25,6 +25,8 @@ class Character_015(Character):
         # info
         self.info.name = "Killa"
         self.image.image = "https://i.imgur.com/HgnV9DS.png"
+        self.image.thumb = "https://i.imgur.com/hcrPzH1.png"
+        self.image.icon = "<:Killa:678951187118293010>"
         self.info.id = 15
         self.info.saga = "Buu"
 

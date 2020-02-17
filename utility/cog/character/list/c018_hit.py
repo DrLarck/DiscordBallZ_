@@ -25,6 +25,8 @@ class Character_018(Character):
         # info
         self.info.name = "Hit"
         self.image.image = "https://i.imgur.com/ZfwWvo3.png"
+        self.image.thumb = "https://i.imgur.com/33Qw52X.png"
+        self.image.icon = "<:Hit:678951186484690967>"
         self.info.id = 18
         self.info.saga = "Universe 6"
 

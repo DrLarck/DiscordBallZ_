@@ -25,6 +25,8 @@ class Character_040(Character):
         # info
         self.info.name = "Gohan"
         self.image.image = "https://i.imgur.com/6Q0eTBi.png"
+        self.image.thumb = "https://i.imgur.com/w4zA0iQ.png"
+        self.image.icon = "<:Gohan:678951186619039744>"
         self.info.id = 40
         self.info.saga = "Cell"
 

@@ -25,6 +25,8 @@ class Character_006(Character):
         # info
         self.info.name = "Broly"
         self.image.image = "https://i.imgur.com/LkRGDjf.png"
+        self.image.thumb = "https://i.imgur.com/ukQY1s1.png"
+        self.image.icon = "<:Broly:678951186090688533>"
         self.info.id = 6
         self.info.saga = "Broly"
 

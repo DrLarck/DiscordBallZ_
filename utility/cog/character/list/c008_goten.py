@@ -25,6 +25,8 @@ class Character_008(Character):
         # info
         self.info.name = "Goten"
         self.image.image = "https://i.imgur.com/hJsoNlK.png"
+        self.image.thumb = "https://i.imgur.com/XNiZrwS.png"
+        self.image.icon = "<:Goten:678951186484822057>"
         self.info.id = 8
         self.info.saga = "Buu"
 

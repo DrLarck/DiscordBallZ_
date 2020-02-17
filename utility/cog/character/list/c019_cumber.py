@@ -25,6 +25,8 @@ class Character_019(Character):
         # info
         self.info.name = "Cumber"
         self.image.image = "https://i.imgur.com/XJ0TCd6.png"
+        self.image.thumb = "https://i.imgur.com/ngpQHOb.png"
+        self.image.icon = "<:Cumber:678951186430296069>"
         self.info.id = 19
         self.info.saga = "Universe Conflict"
 

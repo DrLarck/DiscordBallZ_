@@ -25,6 +25,8 @@ class Character_009(Character):
         # info
         self.info.name = "Turles"
         self.image.image = "https://i.imgur.com/7FLZUid.png"
+        self.image.thumb = "https://i.imgur.com/CFQRGwY.png"
+        self.image.icon = "<:Turles:678951186434621440>"
         self.info.id = 9
         self.info.saga = "Tree of Might"
 

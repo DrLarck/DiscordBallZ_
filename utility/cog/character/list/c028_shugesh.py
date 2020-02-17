@@ -25,6 +25,8 @@ class Character_028(Character):
         # info
         self.info.name = "Shugesh"
         self.image.image = "https://i.imgur.com/UmJKSJX.png"
+        self.image.thumb = "https://i.imgur.com/s5BPBlA.png"
+        self.image.icon = "<:Shugesh:678951186694537226>"
         self.info.id = 28
         self.info.saga = "Bardock"
 

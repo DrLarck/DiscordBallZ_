@@ -25,6 +25,8 @@ class Character_030(Character):
         # info
         self.info.name = "Tora"
         self.image.image = "https://i.imgur.com/ni6yCPs.png"
+        self.image.thumb = "https://i.imgur.com/yCSxITL.png"
+        self.image.icon = "<:Tora:678951186459525120>"
         self.info.id = 30
         self.info.saga = "Bardock"
 

@@ -25,6 +25,8 @@ class Character_023(Character):
         # info
         self.info.name = "Android 17"
         self.image.image = "https://i.imgur.com/rXPG331.png"
+        self.image.thumb = "https://i.imgur.com/rD88SRO.png"
+        self.image.icon = "<:Android17:678951186052939797>"
         self.info.id = 23
         self.info.saga = "Android"
 

@@ -25,6 +25,8 @@ class Character_013(Character):
         # info
         self.info.name = "Hercule"
         self.image.image = "https://i.imgur.com/c3UQFit.png"
+        self.image.thumb = "https://i.imgur.com/upO4Hne.png"
+        self.image.icon = "<:Hercule:678951186413387776>"
         self.info.id = 13
         self.info.saga = "Cell"
 

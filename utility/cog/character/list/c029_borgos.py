@@ -25,6 +25,8 @@ class Character_029(Character):
         # info
         self.info.name = "Borgos"
         self.image.image = "https://i.imgur.com/ftyGC9p.png"
+        self.image.thumb = "https://i.imgur.com/aLgiwKQ.png"
+        self.image.icon = "<:Borgos:678951187260637184>"
         self.info.id = 29
         self.info.saga = "Bardock"
 

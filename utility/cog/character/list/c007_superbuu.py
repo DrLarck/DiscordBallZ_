@@ -25,6 +25,8 @@ class Character_007(Character):
         # info
         self.info.name = "Super Buu"
         self.image.image = "https://i.imgur.com/eiVbwAw.png"
+        self.image.thumb = "https://i.imgur.com/JtwkdNO.png"
+        self.image.icon = "<:SuperBuu:678951187008978993>"
         self.info.id = 7
         self.info.saga = "Buu"
 

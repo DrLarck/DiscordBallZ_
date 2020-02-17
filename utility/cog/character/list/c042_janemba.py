@@ -25,6 +25,8 @@ class Character_042(Character):
         # info
         self.info.name = "Janemba"
         self.image.image = "https://i.imgur.com/BrfH5qo.png"
+        self.image.thumb = "https://i.imgur.com/jcPTHQp.png"
+        self.image.icon = "<:Janemba:678951186526633998>"
         self.info.id = 42
         self.info.saga = "Janemba"
 

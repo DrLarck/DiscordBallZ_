@@ -25,6 +25,8 @@ class Character_038(Character):
         # info
         self.info.name = "Cell"
         self.image.image = "https://i.imgur.com/zV40MJL.png"
+        self.image.thumb = "https://i.imgur.com/nhoCEZo.png"
+        self.image.icon = "<:Cell1rst:678951187592118309>"
         self.info.id = 38
         self.info.saga = "Cell"
 

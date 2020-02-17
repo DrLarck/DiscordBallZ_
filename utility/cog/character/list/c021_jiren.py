@@ -25,6 +25,8 @@ class Character_021(Character):
         # info
         self.info.name = "Jiren"
         self.image.image = "https://i.imgur.com/9cPTvB3.png"
+        self.image.thumb = "https://i.imgur.com/HNM4znH.png"
+        self.image.icon = "<:Jiren:678951186417582080>"
         self.info.id = 21
         self.info.saga = "Universe Survival"
 

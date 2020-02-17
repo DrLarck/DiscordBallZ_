@@ -25,6 +25,8 @@ class Character_039(Character):
         # info
         self.info.name = "Goku"
         self.image.image = "https://i.imgur.com/ZLCPJih.png"
+        self.image.thumb = "https://i.imgur.com/ceSdshF.png"
+        self.image.icon = "<:Goku:678951186690342912>"
         self.info.id = 39
         self.info.saga = "Cell"
 

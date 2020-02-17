@@ -25,6 +25,8 @@ class Character_036(Character):
         # info
         self.info.name = "Frieza"
         self.image.image = "https://i.imgur.com/WXKCDWk.png"
+        self.image.thumb = "https://i.imgur.com/tPDeXTS.png"
+        self.image.icon = "<:Frieza:678951187969474560>"
         self.info.id = 36
         self.info.saga = "Namek"
 
