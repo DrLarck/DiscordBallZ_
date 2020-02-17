@@ -22,6 +22,8 @@ Here are listed all the effects id sorted by effect type :
 
 **Paralyzing burns** : 4
 
+**Stun** : 11
+
 ### DOT
 
 **Acid** : 1

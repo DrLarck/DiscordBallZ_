@@ -29,7 +29,7 @@ class Ki_blast(Ability):
         self.name = "Ki blast"
         self.description = f"Inflicts **120 %** of your {self.game_icon['ki_ability']} damage."
 
-        self.cost = 10
+        self.cost = 20
 
         self.need_target = True
         self.target_enemy = True
@@ -53,8 +53,8 @@ class Ki_blast(Ability):
         damager = Damage_calculator(self.caster, self.target)
 
         # set damage
-        damage = random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max) * 2.2
-        damage = await damager.ki_damage(damage)
+        damage = int(random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max) * 2.2)
+        damage = await damager.ki_damage(damage, dodgable = True)
 
         _move = await move.get_new_move()
 

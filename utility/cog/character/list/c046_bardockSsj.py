@@ -16,6 +16,7 @@ from utility.cog.character.character import Character
 
 # ability
 from utility.cog.character.ability.list.ki_blast import Ki_blast
+from utility.cog.character.ability.list.spiritual_final_canon import Spiritual_final_canon
 
 # passive
 
@@ -40,12 +41,12 @@ class Character_046(Character):
         self.health.maximum = 4600
 
         self.damage.physical_max = 650
-        self.damage.ki_max = 1200
+        self.damage.ki_max = 1150
 
         self.defense.armor = 700
         self.defense.spirit = 985
         self.defense.dodge = 10
 
-        self.regeneration.ki = 10
+        self.regeneration.ki = 100
 
-        self.ability = [Ki_blast]
+        self.ability = [Ki_blast, Spiritual_final_canon]

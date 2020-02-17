@@ -5,7 +5,7 @@ Check if the target has an effect active on it.
 
 Author : DrLarck
 
-Last update : 19/10/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -112,7 +112,12 @@ class Effect_checker:
         if(effect_id == 10):
             from utility.cog.character.ability.effect.buff.saibaiman_power_charge import Buff_power_charge
             effect = Buff_power_charge(client, ctx, target, team_a, team_b)
-            
+        
+        # Stun
+        if(effect_id == 11):
+            from utility.cog.character.ability.effect.debuff.stun import Stun
+            effect = Stun(client, ctx, target, team_a, team_b)
+
         return(effect)
 
     async def get_buff(self, buff):
