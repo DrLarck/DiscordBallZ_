@@ -1118,6 +1118,7 @@ class Combat():
 
         # init ref character
         reference.level = character.level
+        reference.rarity.value = character.rarity.value
 
         await reference.init()
 
