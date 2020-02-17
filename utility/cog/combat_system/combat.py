@@ -62,6 +62,7 @@ class Combat():
         self.player_a, self.player_b = None, None
         self.team_a, self.team_b = [], []
         self.team_a_, self.team_b_ = [], []  # copies of the team a and b to allow the player to target the removed fighters
+        self.leader_a, self.leader_b = [], []
         self.removed_a, self.removed_b = [], []
         self.move = Move()
 
@@ -135,6 +136,13 @@ class Combat():
             await asyncio.sleep(0)
 
             self.team_b_.append(character_b)
+        
+        # set leader
+        leader_a = self.team_a[0]
+        leader_b = self.team_b[0]
+
+        self.leader_a = leader_a
+        self.leader_b = leader_b
 
         return(team_a, team_b)
 
@@ -521,7 +529,7 @@ class Combat():
 
         return
     
-    async def effects(self, team, start = False, end = False):
+    async def effects(self, team, leader, start = False, end = False):
         """
         `coroutine`
         
@@ -530,6 +538,8 @@ class Combat():
         - Parameter 
 
         `team` (`list` of `Character()`)
+
+        `leader` (`Character()`) : Leader of the team
 
         `start/end` (`bool`) : Tells if the effect are on turn starts or on turn ends
 
@@ -577,37 +587,75 @@ class Combat():
                 character.ki.current += character.regeneration.ki
                 await character.ki.ki_limit()
 
-        # trigger the passive and make them callable 
-        # if they're not callable yet
         for char in team:
             await asyncio.sleep(0)
-            
-            # make the passive callables
-            new_passive_list = []
+
+            # Make start passive callable 
+            # if they're not callable yet
+            new_passive_start_list, new_passive_end_list = [], []
+            new_leader_list = []
             
             # get the passive effect
-            if not character.passive_sorted:
-                for passive in character.passive:
+            if not char.passive_sorted:
+                for passive in char.passive_start:
                     await asyncio.sleep(0)
 
                     passive = passive(
                         self.client,
                         self.ctx,
-                        character,
+                        char,
                         self.team_a,
                         self.team_b
                     )
 
-                    new_passive_list.append(passive)
+                    new_passive_start_list.append(passive)
                 
                 # replace the objects to make them callable
-                character.passive = new_passive_list
-                character.passive_sorted = True
+                char.passive_start = new_passive_start_list
+                
+                # make the passive end callable
+                for passive_ in char.passive_end:
+                    await asyncio
+
+                    passive_ = passive_(
+                        self.client,
+                        self.ctx,
+                        char,
+                        self.team_a,
+                        self.team_b
+                    )
+
+                    new_passive_end_list.append(passive_)
+                
+                # replace
+                char.passive_end = new_passive_end_list
+                char.passive_sorted = True
+            
+            # get callable leader
+            if not char.leader_sorted:
+                for lead in char.leader:
+                    await asyncio.sleep(0)
+
+                    lead = lead(
+                        self.client,
+                        self.ctx,
+                        char,
+                        self.team_a,
+                        self.team_b
+                    )
+
+                    new_leader_list.append(lead)
+                
+                # replace the non callable list
+                # by the callable one
+                char.leader = new_leader_list
+                char.leader_sorted = True
         
             await char.trigger_passive(start = start, end = end)
-            await char.trigger_leade(start = start, end = end)
-            
 
+        if(leader.health.current > 0):
+            await leader.trigger_leader()
+            
         return
     
     async def trigger_leader(self, client, ctx, character_leader):
@@ -1218,8 +1266,8 @@ class Combat():
             while not turn_end:
                 await asyncio.sleep(0)
 
-                await self.effects(self.team_a, start = True)
-                await self.effects(self.team_b, start = True)
+                await self.effects(self.team_a, self.leader_a, start = True)
+                await self.effects(self.team_b, self.leader_b, start = True)
 
                 play_time = await self.get_play_time(0)
 
@@ -1272,8 +1320,8 @@ class Combat():
                     await self.trigger_leader(self.client, self.ctx, leader_a)
                     await self.trigger_leader(self.client, self.ctx, leader_b)
 
-                    await self.effects(self.team_a, end = True)
-                    await self.effects(self.team_b, end = True)
+                    await self.effects(self.team_a, self.leader_a, end = True)
+                    await self.effects(self.team_b, self.leader_b, end = True)
 
                     turn_end = True
             

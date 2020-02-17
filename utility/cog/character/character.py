@@ -192,8 +192,7 @@ class Character:
         self.passive_end = []  
 
         self.leader_sorted = False
-        self.leader_start = []
-        self.leader_end = []
+        self.leader = []
 
         # on event
         self.on_death_sorted = False
@@ -388,14 +387,14 @@ class Character:
             for _passive in passive:  # triggers the effects one by one
                 await asyncio.sleep(0)
 
-                await _passive.trigger()
+                await _passive.apply()
         
         else:  # if the passive list is empty we return
             return
         
         return
     
-    async def trigger_leader(self, start = False, end = False):
+    async def trigger_leader(self):
         """
         `coroutine`
 
@@ -407,19 +406,13 @@ class Character:
         """
 
         # init
-        leader = []
-
-        if(start):  # i.e trigger passive
-            leader += self.leader_start
-        
-        if(end):
-            leader += self.leader_end
+        leader = self.leader
 
         if(len(leader) > 0):
             for _leader in leader:
                 await asyncio.sleep(0)
 
-                await _leader.trigger()
+                await _leader.apply()
         
         else:
             return
