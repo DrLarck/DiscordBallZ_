@@ -364,7 +364,7 @@ class Character:
         return(ability)
         
         # triggers
-    async def trigger_passive(self):
+    async def trigger_passive(self, start = False, end = False):
         """
         `coroutine`
 
@@ -376,7 +376,13 @@ class Character:
         """
 
         # init
-        passive = self.passive
+        passive = []
+
+        if(start):  # add the passive that are triggered at the beginning of the turn
+            passive += self.passive_start
+        
+        if(end):
+            passive += self.passive_end
 
         if(len(passive) > 0):  # if there is some passive skills in it
             for _passive in passive:  # triggers the effects one by one
@@ -389,7 +395,7 @@ class Character:
         
         return
     
-    async def trigger_leader(self):
+    async def trigger_leader(self, start = False, end = False):
         """
         `coroutine`
 
@@ -401,7 +407,13 @@ class Character:
         """
 
         # init
-        leader = self.leader
+        leader = []
+
+        if(start):  # i.e trigger passive
+            leader += self.leader_start
+        
+        if(end):
+            leader += self.leader_end
 
         if(len(leader) > 0):
             for _leader in leader:
