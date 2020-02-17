@@ -70,10 +70,10 @@ class Spiritual_final_canon(Ability):
         _move = await move.offensive_move(_move)
 
         # inflict damage
-        await self.target.receive_damage(damage["calculated"])
+        #await self.target.receive_damage(damage["calculated"])
 
         # roll stun
-        stun_roll = random.randint(0, 100)
+        stun_roll = random.randint(100, 100)
 
         # 30 % stun chance
         if(stun_roll >= 30):
