@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 15/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -188,10 +188,12 @@ class Character:
         self.ability = []
 
         self.passive_sorted = False
-        self.passive = []
+        self.passive_start = []  # Passive skill that must be triggered at the beginning of the turn
+        self.passive_end = []  
 
         self.leader_sorted = False
-        self.leader = []
+        self.leader_start = []
+        self.leader_end = []
 
         # on event
         self.on_death_sorted = False
