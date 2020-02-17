@@ -5,7 +5,7 @@ Represents Android 17
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_023(Character):
 
         # info
         self.info.name = "Android 17"
+        self.image.image = "https://i.imgur.com/rXPG331.png"
         self.info.id = 23
         self.info.saga = "Android"
 

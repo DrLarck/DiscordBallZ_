@@ -5,7 +5,7 @@ Represents Jeice
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_033(Character):
 
         # info
         self.info.name = "Jeice"
+        self.image.image = "https://i.imgur.com/LAytbv4.png"
         self.info.id = 33
         self.info.saga = "Namek"
 

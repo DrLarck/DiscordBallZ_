@@ -5,7 +5,7 @@ Represents Cumber
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_019(Character):
 
         # info
         self.info.name = "Cumber"
+        self.image.image = "https://i.imgur.com/XJ0TCd6.png"
         self.info.id = 19
         self.info.saga = "Universe Conflict"
 

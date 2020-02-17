@@ -5,7 +5,7 @@ Represents Buu
 
 Author : DrLarck
 
-Last update : 30/01/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_007(Character):
 
         # info
         self.info.name = "Super Buu"
+        self.image.image = "https://i.imgur.com/eiVbwAw.png"
         self.info.id = 7
         self.info.saga = "Buu"
 

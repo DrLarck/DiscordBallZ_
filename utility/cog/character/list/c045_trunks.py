@@ -5,7 +5,7 @@ Represents Future Trunks
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_045(Character):
 
         # info
         self.info.name = "Trunks"
+        self.image.image = "https://i.imgur.com/zhucWYu.png"
         self.info.id = 45
         self.info.saga = "Android"
 

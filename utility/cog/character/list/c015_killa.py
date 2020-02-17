@@ -5,7 +5,7 @@ Represents Killa
 
 Author : Zyorhist
 
-Last update : 03/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_015(Character):
 
         # info
         self.info.name = "Killa"
+        self.image.image = "https://i.imgur.com/HgnV9DS.png"
         self.info.id = 15
         self.info.saga = "Buu"
 

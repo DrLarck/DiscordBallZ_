@@ -5,7 +5,7 @@ Represents Android 19
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_025(Character):
 
         # info
         self.info.name = "Android 19"
+        self.image.image = "https://i.imgur.com/UjzHDP4.png"
         self.info.id = 25
         self.info.saga = "Android"
 

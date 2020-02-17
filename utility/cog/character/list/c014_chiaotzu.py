@@ -5,7 +5,7 @@ Represents Chiaotzu
 
 Author : Zyorhist
 
-Last update : 03/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_014(Character):
 
         # info
         self.info.name = "Chiaotzu"
+        self.image.image = "https://i.imgur.com/DIRvkt4.png"
         self.info.id = 14
         self.info.saga = "Cell"
 

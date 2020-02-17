@@ -5,7 +5,7 @@ Represents Fasha
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_027(Character):
 
         # info
         self.info.name = "Fasha"
+        self.image.image = "https://i.imgur.com/R9iCGcc.png"
         self.info.id = 27
         self.info.saga = "Bardock"
 

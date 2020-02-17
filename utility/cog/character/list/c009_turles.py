@@ -5,7 +5,7 @@ Represents Turles
 
 Author : Zyorhist
 
-Last update : 30/01/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_009(Character):
 
         # info
         self.info.name = "Turles"
+        self.image.image = "https://i.imgur.com/7FLZUid.png"
         self.info.id = 9
         self.info.saga = "Tree of Might"
 

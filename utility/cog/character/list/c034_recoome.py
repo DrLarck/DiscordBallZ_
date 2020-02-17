@@ -5,7 +5,7 @@ Represents Recoome
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_034(Character):
 
         # info
         self.info.name = "Recoome"
+        self.image.image = "https://i.imgur.com/xuInQsX.png"
         self.info.id = 34
         self.info.saga = "Namek"
 

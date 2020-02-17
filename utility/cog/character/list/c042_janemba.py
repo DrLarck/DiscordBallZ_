@@ -5,7 +5,7 @@ Represents Janemba
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_042(Character):
 
         # info
         self.info.name = "Janemba"
+        self.image.image = "https://i.imgur.com/BrfH5qo.png"
         self.info.id = 42
         self.info.saga = "Janemba"
 

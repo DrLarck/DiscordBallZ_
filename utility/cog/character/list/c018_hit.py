@@ -5,7 +5,7 @@ Represents Hit
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_018(Character):
 
         # info
         self.info.name = "Hit"
+        self.image.image = "https://i.imgur.com/ZfwWvo3.png"
         self.info.id = 18
         self.info.saga = "Universe 6"
 

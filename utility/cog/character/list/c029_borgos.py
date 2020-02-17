@@ -5,7 +5,7 @@ Represents Borgos
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_029(Character):
 
         # info
         self.info.name = "Borgos"
+        self.image.image = "https://i.imgur.com/ftyGC9p.png"
         self.info.id = 29
         self.info.saga = "Bardock"
 

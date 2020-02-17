@@ -5,7 +5,7 @@ Represents Launch
 
 Author : Zyorhist
 
-Last update : 30/01/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_010(Character):
 
         # info
         self.info.name = "Launch"
+        self.image.image = "https://i.imgur.com/7JbIYg0.png"
         self.info.id = 10
         self.info.saga = "General Blue"
 

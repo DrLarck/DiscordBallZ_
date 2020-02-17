@@ -5,7 +5,7 @@ Represents Hercule Satan
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_013(Character):
 
         # info
         self.info.name = "Hercule"
+        self.image.image = "https://i.imgur.com/c3UQFit.png"
         self.info.id = 13
         self.info.saga = "Cell"
 

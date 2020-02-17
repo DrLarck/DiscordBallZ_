@@ -5,7 +5,7 @@ Represents Tora
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_030(Character):
 
         # info
         self.info.name = "Tora"
+        self.image.image = "https://i.imgur.com/ni6yCPs.png"
         self.info.id = 30
         self.info.saga = "Bardock"
 

@@ -5,7 +5,7 @@ Represents Goku
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_039(Character):
 
         # info
         self.info.name = "Goku"
+        self.image.image = "https://i.imgur.com/ZLCPJih.png"
         self.info.id = 39
         self.info.saga = "Cell"
 

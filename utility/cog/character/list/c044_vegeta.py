@@ -5,7 +5,7 @@ Represents Vegeta
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_044(Character):
 
         # info
         self.info.name = "Vegeta"
+        self.image.image = "https://i.imgur.com/qM6jwW6.png"
         self.info.id = 44
         self.info.saga = "Android"
 

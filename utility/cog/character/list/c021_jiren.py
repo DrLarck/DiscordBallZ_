@@ -5,7 +5,7 @@ Represents Jiren
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_021(Character):
 
         # info
         self.info.name = "Jiren"
+        self.image.image = "https://i.imgur.com/9cPTvB3.png"
         self.info.id = 21
         self.info.saga = "Universe Survival"
 

@@ -5,7 +5,7 @@ Represents Zarbon
 
 Author : Zyorhist
 
-Last update : 03/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,7 @@ class Character_012(Character):
 
         # info
         self.info.name = "Zarbon"
+        self.image.image = "https://i.imgur.com/GWF5nTg.png"
         self.info.id = 12
         self.info.saga = "Namek"
 
