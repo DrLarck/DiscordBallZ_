@@ -5,7 +5,7 @@ Represents Guldo
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_031(Character):
 
         # info
         self.info.name = "Guldo"
+        self.image.image = "https://i.imgur.com/VLQnIoh.png"
+        self.image.thumb = "https://i.imgur.com/J82s1O5.png"
+        self.image.icon = "<:Guldo:678951187059572760>"
         self.info.id = 31
         self.info.saga = "Namek"
 

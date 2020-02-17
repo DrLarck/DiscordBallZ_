@@ -5,7 +5,7 @@ Represents Android 18
 
 Author : Zyorhist
 
-Last update : 03/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_024(Character):
 
         # info
         self.info.name = "Android 18"
+        self.image.image = "https://i.imgur.com/7Be5WNO.png"
+        self.image.thumb = "https://i.imgur.com/Cz4l3BE.png"
+        self.image.icon = "<:Android18:678951186455461918>"
         self.info.id = 24
         self.info.saga = "Android"
 

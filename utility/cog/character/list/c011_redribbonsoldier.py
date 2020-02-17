@@ -5,7 +5,7 @@ Represents Red Ribbon Soldier
 
 Author : Zyorhist
 
-Last update : 03/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_011(Character):
 
         # info
         self.info.name = "Red Ribbon Soldier"
+        self.image.image = "https://i.imgur.com/BeEGFpv.png"
+        self.image.thumb = "https://i.imgur.com/aOWzL9r.png"
+        self.image.icon = "<:RedRibbonSoldier:678951186434359336>"
         self.info.id = 11
         self.info.saga = "Red Ribbon Army"
 

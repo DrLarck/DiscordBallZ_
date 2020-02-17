@@ -5,7 +5,7 @@ Represents Krillin
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_043(Character):
 
         # info
         self.info.name = "Krillin"
+        self.image.image = "https://i.imgur.com/lwJJcIw.png"
+        self.image.thumb = "https://i.imgur.com/wYxfvf4.png"
+        self.image.icon = "<:Krillin:678951187202048020>"
         self.info.id = 43
         self.info.saga = "Frieza"
 

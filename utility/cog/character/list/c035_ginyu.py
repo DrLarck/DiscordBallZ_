@@ -5,7 +5,7 @@ Represents Gaptain Ginyu
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_035(Character):
 
         # info
         self.info.name = "Ginyu"
+        self.image.image = "https://i.imgur.com/RAwXUUE.png"
+        self.image.thumb = "https://i.imgur.com/tMcm9IS.png"
+        self.image.icon = "<:Ginyu:678951186422038548>"
         self.info.id = 35
         self.info.saga = "Namek"
 

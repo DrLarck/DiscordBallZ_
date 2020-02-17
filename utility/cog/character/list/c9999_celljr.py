@@ -5,7 +5,7 @@ Represents Cell Jr
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_9999(Character):
 
         # info
         self.info.name = "Cell Jr"
+        self.image.image = "https://i.imgur.com/YAofFpk.png"
+        self.image.thumb = "https://i.imgur.com/JzyKnuC.png"
+        self.image.icon = "<:CellJr:678951187176882206>"
         self.info.id = 9999
         self.info.saga = "Cell"
 

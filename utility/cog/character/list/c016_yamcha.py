@@ -5,7 +5,7 @@ Represents Yamcha
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_016(Character):
 
         # info
         self.info.name = "Yamcha"
+        self.image.image = "https://i.imgur.com/h1i6YnB.png"
+        self.image.thumb = "https://i.imgur.com/t4iLCfd.png"
+        self.image.icon = "<:Yamcha:678951187222888448>"
         self.info.id = 16
         self.info.saga = "Cell"
 

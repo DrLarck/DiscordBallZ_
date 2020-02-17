@@ -5,7 +5,7 @@ Represents Android 16
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_022(Character):
 
         # info
         self.info.name = "Android 16"
+        self.image.image = "https://i.imgur.com/6hDogxC.png"
+        self.image.thumb = "https://i.imgur.com/WC0vyjK.png"
+        self.image.icon = "<:Android16:678951177873915923>"
         self.info.id = 22
         self.info.saga = "Android"
 

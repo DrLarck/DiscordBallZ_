@@ -5,7 +5,7 @@ Represents Tien
 
 Author : Zyorhist
 
-Last update : 06/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_017(Character):
 
         # info
         self.info.name = "Tien"
+        self.image.image = "https://i.imgur.com/GOoa9Ve.png"
+        self.image.thumb = "https://i.imgur.com/ybGlXHU.png"
+        self.image.icon = "<:Tien:678951186577227787>"
         self.info.id = 17
         self.info.saga = "Cell"
 

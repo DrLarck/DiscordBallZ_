@@ -5,7 +5,7 @@ Represents Burter
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_032(Character):
 
         # info
         self.info.name = "Burter"
+        self.image.image = "https://i.imgur.com/0NmIqJE.png"
+        self.image.thumb = "https://i.imgur.com/yI92tCC.png"
+        self.image.icon = "<:Burter:678951187013435392>"
         self.info.id = 32
         self.info.saga = "Namek"
 

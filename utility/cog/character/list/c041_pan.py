@@ -5,7 +5,7 @@ Represents Pan
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_041(Character):
 
         # info
         self.info.name = "Pan"
+        self.image.image = "https://i.imgur.com/LmUkkm0.png"
+        self.image.thumb = "https://i.imgur.com/ChSEDli.png"
+        self.image.icon = "<:Pan:678951186539479080>"
         self.info.id = 41
         self.info.saga = "Black Star Dragon Ball"
 

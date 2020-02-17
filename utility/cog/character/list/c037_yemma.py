@@ -5,7 +5,7 @@ Represents King Yemma
 
 Author : Zyorhist
 
-Last update : 07/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -24,6 +24,9 @@ class Character_037(Character):
 
         # info
         self.info.name = "Yemma"
+        self.image.image = "https://i.imgur.com/078jSTO.png"
+        self.image.thumb = "https://i.imgur.com/5Bm2UtA.png"
+        self.image.icon = "<:Yemma:678951187458031627>"
         self.info.id = 37
         self.info.saga = "Buu"
 
