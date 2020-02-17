@@ -15,6 +15,7 @@ import asyncio
 from utility.cog.character.character import Character
 
 # ability
+from utility.cog.character.ability.list.ki_blast import Ki_blast
 
 # passive
 
@@ -47,4 +48,4 @@ class Character_046(Character):
 
         self.regeneration.ki = 10
 
-        
+        self.ability = [Ki_blast]
