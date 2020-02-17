@@ -35,7 +35,7 @@ class Ki_blast(Ability):
         self.target_enemy = True
 
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{self.caster.damage.ki_min * 2.2}** - **{self.caster.damage.ki_max * 2.2}** {self.game_icon['ki_ability']}"
+        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 2.2):,}** - **{int(self.caster.damage.ki_max * 2.2):,}** {self.game_icon['ki_ability']}"
 
     async def use(self):
         """
@@ -65,5 +65,8 @@ class Ki_blast(Ability):
         _move["ki"] = True
 
         _move = await move.offensive_move(_move)
+
+        # inflict damage
+        await self.target.receive_damage(damage["calculated"])
 
         return(_move)
