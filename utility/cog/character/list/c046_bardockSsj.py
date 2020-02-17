@@ -46,3 +46,5 @@ class Character_046(Character):
         self.defense.dodge = 10
 
         self.regeneration.ki = 10
+
+        

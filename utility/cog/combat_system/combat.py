@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 15/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -521,7 +521,7 @@ class Combat():
 
         return
     
-    async def effects(self, team):
+    async def effects(self, team, start = False, end = False):
         """
         `coroutine`
         
@@ -531,48 +531,61 @@ class Combat():
 
         `team` (`list` of `Character()`)
 
+        `start/end` (`bool`) : Tells if the effect are on turn starts or on turn ends
+
         --
 
         Return : `None`
         """
 
-        for character in team:
-            await asyncio.sleep(0)
-
-            # bonus
-            for bonus in character.bonus:
+        # trigger all the malus and bonus effects
+        # at the end of the turn and trigger on end
+        # passive skills
+        if(end):  
+            for character in team:
                 await asyncio.sleep(0)
 
-                if(bonus.duration > 0):  # check if the bonus is still available
-                    await bonus.apply()
+                # bonus
+                for bonus in character.bonus:
+                    await asyncio.sleep(0)
 
-                    if not bonus.is_permanent:  # if it's not infinite
-                        bonus.duration -= 1
+                    if(bonus.duration > 0):  # check if the bonus is still available
+                        await bonus.apply()
+
+                        if not bonus.is_permanent:  # if it's not infinite
+                            bonus.duration -= 1
+                    
+                    else:
+                        character.bonus.remove(bonus)
+                        await bonus.on_remove()  # triggers the on_remove effect
                 
-                else:
-                    character.bonus.remove(bonus)
-                    await bonus.on_remove()  # triggers the on_remove effect
+                # malus
+                for malus in character.malus:
+                    await asyncio.sleep(0)
+
+                    if(malus.duration > 0):
+                        await malus.apply()
+
+                        if not malus.is_permanent:
+                            malus.duration -= 1
+
+                    else:
+                        character.malus.remove(malus)
+                        await malus.on_remove()
+
+                # ki gain
+                character.ki.current += character.regeneration.ki
+                await character.ki.ki_limit()
+
+        # trigger the passive and make them callable 
+        # if they're not callable yet
+        for char in team:
+            await asyncio.sleep(0)
             
-            # malus
-            for malus in character.malus:
-                await asyncio.sleep(0)
-
-                if(malus.duration > 0):
-                    await malus.apply()
-
-                    if not malus.is_permanent:
-                        malus.duration -= 1
-
-                else:
-                    character.malus.remove(malus)
-                    await malus.on_remove()
-
-            # ki gain
-            character.ki.current += character.regeneration.ki
-            await character.ki.ki_limit()
-
-            # passive
+            # make the passive callables
             new_passive_list = []
+            
+            # get the passive effect
             if not character.passive_sorted:
                 for passive in character.passive:
                     await asyncio.sleep(0)
@@ -587,15 +600,13 @@ class Combat():
 
                     new_passive_list.append(passive)
                 
+                # replace the objects to make them callable
                 character.passive = new_passive_list
                 character.passive_sorted = True
+        
+            await char.trigger_passive(start = start, end = end)
+            await char.trigger_leade(start = start, end = end)
             
-            # trigger all the passives
-            for _passive in character.passive:
-                await asyncio.sleep(0)
-
-                if not _passive.triggered :
-                    await _passive.apply()
 
         return
     
@@ -1207,6 +1218,9 @@ class Combat():
             while not turn_end:
                 await asyncio.sleep(0)
 
+                await self.effects(self.team_a, start = True)
+                await self.effects(self.team_b, start = True)
+
                 play_time = await self.get_play_time(0)
 
                 for a in range(play_time):
@@ -1258,8 +1272,8 @@ class Combat():
                     await self.trigger_leader(self.client, self.ctx, leader_a)
                     await self.trigger_leader(self.client, self.ctx, leader_b)
 
-                    await self.effects(self.team_a)
-                    await self.effects(self.team_b)
+                    await self.effects(self.team_a, end = True)
+                    await self.effects(self.team_b, end = True)
 
                     turn_end = True
             
