@@ -46,6 +46,6 @@ class Character_006(Character):
 
         self.critical_chance = 10
        
-        self.regeneration.ki = 100 #2
+        self.regeneration.ki = 2
 
         self.ability = [Powered_shell, Eraser_canon]
