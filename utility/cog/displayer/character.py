@@ -184,7 +184,7 @@ class Character_displayer:
             basic_format += f"__Defense__ :\n:shield: **{self.character.defense.armor:,}** *({comparison.defense.armor:,})*\n:rosette: **{self.character.defense.spirit:,}** *({comparison.defense.spirit:,})*\n"
 
             # setup the embed
-            embed = await Custom_embed(self.client, thumb = self.character.image.thumb).setup_embed()
+            embed = await Custom_embed(self.client, thumb = self.character.image.thumb, colour = await Color_displayer().get_rarity_color(self.character.rarity.value)).setup_embed()
 
             embed.add_field(
                 name = f"{self.character.info.name}'s stats",
