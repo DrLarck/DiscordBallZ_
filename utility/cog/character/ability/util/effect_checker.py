@@ -123,6 +123,11 @@ class Effect_checker:
             from utility.cog.character.ability.effect.buff.saiyan_spirit import Buff_saiyan_spirit
             effect = Buff_saiyan_spirit(client, ctx, target, team_a, team_b)
 
+        # Courage
+        if(effect_id == 13):
+            from utility.cog.character.ability.effect.buff.courage import Buff_courage
+            effect = Buff_courage(client, ctx, target, team_a, team_b)
+            
         return(effect)
 
     async def get_buff(self, buff):

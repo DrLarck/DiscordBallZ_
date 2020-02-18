@@ -26,4 +26,22 @@ class Passive_courage(Effect):
         self.name = "Courage"
         self.icon = self.game_icon["effect"]["bardock_ssj_courage"]
         self.description = f"Gains **100 %** of its {self.game_icon['ki_ability']} and :punch: at the **beginning** of the turn for **10** turns. Gains **1 %** {self.game_icon['ki_ability']} and :punch: per **Max health**:hearts: **%** lost."
+
+        # private
+        self.applied_buff = False
+
+    async def apply(self):
+        """
+        `coroutine`
+
+        Gains 100 % K and P fort 10 turns and increase carrier's stats by 4 % per % MH lost
+
+        --
+
+        Return : `None`
+        """
+
+        # init
         
+
+        return

@@ -18,6 +18,8 @@ Here are listed all the effects id sorted by effect type :
 
 **Saiyan spirit** : 12
 
+**Courage** : 13
+
 ### Debuff
 
 **Acid explosion** : 3
