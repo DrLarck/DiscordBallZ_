@@ -20,6 +20,7 @@ from utility.cog.character.ability.list.spiritual_final_canon import Spiritual_f
 from utility.cog.character.ability.list.saiyan_spirit import Saiyan_spirit
 
 # passive
+from utility.cog.character.ability.passive.courage import Passive_courage
 
 # SSJ bardock
 class Character_046(Character):
@@ -51,3 +52,5 @@ class Character_046(Character):
         self.regeneration.ki = 100
 
         self.ability = [Ki_blast, Spiritual_final_canon, Saiyan_spirit]
+
+        self.passive_start = [Passive_courage]
