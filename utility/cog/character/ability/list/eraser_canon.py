@@ -66,7 +66,7 @@ class Eraser_canon(Ability):
 
             final_move += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} -**{damage_dict['calculated']:,}** {self.game_icon['ki_ability']}\n"
 
-            await enemy.receive_damage(damage_dict['calculated'])
+            await enemy.receive_damage(damage_dict['calculated'], self.caster)
 
             # check if the enemy is stun
             # if the enmy isn't stun, stun it

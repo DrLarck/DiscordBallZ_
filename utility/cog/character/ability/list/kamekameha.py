@@ -5,7 +5,7 @@ Manages the kamekameha ability
 
 Author : Zyorhist
 
-Last update : 02/02/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -81,7 +81,7 @@ class Kamekameha(Ability):
         )
         
         # inflict the damage to the target
-        await self.target.receive_damage(damage_done["calculated"])
+        await self.target.receive_damage(damage_done["calculated"], self.caster)
 
         # set the move
         _move = await move.get_new_move()

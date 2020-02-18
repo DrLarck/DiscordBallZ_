@@ -69,6 +69,6 @@ class Ki_blast(Ability):
         _move = await move.offensive_move(_move)
 
         # inflict damage
-        await self.target.receive_damage(damage["calculated"])
+        await self.target.receive_damage(damage["calculated"], self.caster)
 
         return(_move)

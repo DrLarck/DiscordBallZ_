@@ -5,7 +5,7 @@ Manages the battle phase.
 
 Author : DrLarck
 
-Last update : 18/10/19 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -136,7 +136,7 @@ class Battle_phase:
                                         )
 
                                     # inflict the damage
-                                    await character_move["target"].receive_damage(damage_done["calculated"])
+                                    await character_move["target"].receive_damage(damage_done["calculated"], character)
                                     
                                     # prepare the move info
                                     move_info = {

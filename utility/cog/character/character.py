@@ -280,7 +280,7 @@ class Character:
     async def translate(self):
         return
     
-    async def receive_damage(self, damage):
+    async def receive_damage(self, damage, attacker):
         """
         `coroutine`
 
@@ -289,6 +289,8 @@ class Character:
         - Parameter :
 
         `damage` : Represents the damage received. (int)
+
+        `attacker` (`Character()`)
 
         --
 

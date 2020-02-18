@@ -72,7 +72,7 @@ class Spiritual_final_canon(Ability):
         _move = await move.offensive_move(_move)
 
         # inflict damage
-        await self.target.receive_damage(damage["calculated"])
+        await self.target.receive_damage(damage["calculated"], self.caster)
 
         # roll stun
         stun_roll = random.randint(0, 100)
