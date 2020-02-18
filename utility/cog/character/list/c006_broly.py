@@ -16,6 +16,7 @@ from utility.cog.character.character import Character
 
 # ability
 from utility.cog.character.ability.list.powered_shell import Powered_shell
+from utility.cog.character.ability.list.eraser_canon import Eraser_canon
 
 class Character_006(Character):
     """
@@ -45,6 +46,6 @@ class Character_006(Character):
 
         self.critical_chance = 10
        
-        self.regeneration.ki = 2
+        self.regeneration.ki = 100 #2
 
-        self.ability = [Powered_shell]
+        self.ability = [Powered_shell, Eraser_canon]

@@ -50,7 +50,8 @@ game_icon = {
         "ki_blast" : "<:ki_blast:679296241154129922>",
         "spiritual_final_canon" : "<:spiritual_final_canon:679296250373472263>",
         "saiyan_spirit" : "<:saiyan_spirit:679296249765167126>",
-        "powered_shell" : "<:powered_shield:679340597064105985>"
+        "powered_shell" : "<:powered_shield:679340597064105985>",
+        "eraser_canon" : "<:eraser_canon:679347992284626969>"
     },
 
     # effect
