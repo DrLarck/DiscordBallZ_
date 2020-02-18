@@ -5,7 +5,7 @@ Manages the character 1
 
 Author : DrLarck
 
-Last update : 29/09/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -68,5 +68,5 @@ class Character_001(Character):
 
         # ability
         self.ability = [Acid, Syphon, Unity_is_strength]
-        self.passive = [Passive_green_saibaiman]
+        self.passive_start = [Passive_green_saibaiman]
         self.leader = [Leader_green_saibaiman]

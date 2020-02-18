@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 15/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -188,7 +188,8 @@ class Character:
         self.ability = []
 
         self.passive_sorted = False
-        self.passive = []
+        self.passive_start = []  # Passive skill that must be triggered at the beginning of the turn
+        self.passive_end = []  
 
         self.leader_sorted = False
         self.leader = []
@@ -279,7 +280,7 @@ class Character:
     async def translate(self):
         return
     
-    async def receive_damage(self, damage):
+    async def receive_damage(self, damage, attacker):
         """
         `coroutine`
 
@@ -288,6 +289,8 @@ class Character:
         - Parameter :
 
         `damage` : Represents the damage received. (int)
+
+        `attacker` (`Character()`)
 
         --
 
@@ -362,7 +365,7 @@ class Character:
         return(ability)
         
         # triggers
-    async def trigger_passive(self):
+    async def trigger_passive(self, start = False, end = False):
         """
         `coroutine`
 
@@ -374,13 +377,19 @@ class Character:
         """
 
         # init
-        passive = self.passive
+        passive = []
+
+        if(start):  # add the passive that are triggered at the beginning of the turn
+            passive += self.passive_start
+        
+        if(end):
+            passive += self.passive_end
 
         if(len(passive) > 0):  # if there is some passive skills in it
             for _passive in passive:  # triggers the effects one by one
                 await asyncio.sleep(0)
 
-                await _passive.trigger()
+                await _passive.apply()
         
         else:  # if the passive list is empty we return
             return
@@ -405,7 +414,7 @@ class Character:
             for _leader in leader:
                 await asyncio.sleep(0)
 
-                await _leader.trigger()
+                await _leader.apply()
         
         else:
             return

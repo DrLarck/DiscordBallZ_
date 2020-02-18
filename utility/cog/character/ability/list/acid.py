@@ -5,7 +5,7 @@ Manages the Acid ability.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependance
@@ -95,7 +95,7 @@ Lasts **3** turns."""
         _move = await move.offensive_move(_move)
 
         # inflict damage
-        await self.target.receive_damage(damage["calculated"])
+        await self.target.receive_damage(damage["calculated"], self.caster)
 
         # add a stack of acid on the target
         _acid = Dot_acid(

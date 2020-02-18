@@ -5,7 +5,7 @@ Manages the character 3
 
 Author : DrLarck
 
-Last update : 24/11/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -66,4 +66,4 @@ class Character_003(Character):
         # ability
         self.ability = [Acid, Spreading_acid, Paralyzing_burns]
         self.leader = [Leader_saibaiman_red]
-        self.passive = [Passive_red_saibaiman]
+        self.passive_start = [Passive_red_saibaiman]

@@ -5,7 +5,7 @@ Manages the Arm Stretch ability
 
 Author : Zyorhist
 
-Last update : 30/01/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependance
@@ -90,6 +90,6 @@ class Arm_stretch(Ability):
         _move = await move.offensive_move(_move)
 
         # inflict damage
-        await self.target.receive_damage(damage["calculated"])
+        await self.target.receive_damage(damage["calculated"], self.caster)
 
         return(_move)

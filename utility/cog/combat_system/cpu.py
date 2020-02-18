@@ -5,7 +5,7 @@ CPU user for combats
 
 Author : DrLarck
 
-Last update : 15/02/20 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -48,15 +48,23 @@ class CPU():
         """
 
         # init
-        fighter_amount = len(self.team.team)
+        fighter_index = 1
+        playable = []
 
-        for char in self.team.team:
+        # get the index of playable characters
+        for fighter in self.team.team:
             await asyncio.sleep(0)
 
-            if(char.health.current < 0 or char.posture.stunned):  # if the char is dead or not able to fight, remove it to the possibility
-                fighter_amount -= 1
+            # if the char is playable
+            # add its index into the list
+            if(fighter.health.current > 0 and fighter.posture.stunned == False):
+                playable.append(fighter_index)
 
-        choice = str(random.randint(1, fighter_amount))
+            fighter_index += 1
+
+        # pick a random playable
+        if(len(playable) > 0):
+            choice = str(random.choice(playable))
 
         return(choice)
     

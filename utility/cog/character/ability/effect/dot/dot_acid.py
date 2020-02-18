@@ -5,7 +5,7 @@ Manages the Acid Dot.
 
 Author : DrLarck
 
-Last update : 29/09/19 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependance
@@ -85,7 +85,7 @@ class Dot_acid(Dot):
         )
 
         # apply the calculated damages to the target
-        await self.target.receive_damage(damage["calculated"])
+        await self.target.receive_damage(damage["calculated"], self.caster)
 
         return
 

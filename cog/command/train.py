@@ -86,7 +86,7 @@ class Cmd_train(commands.Cog):
 
             # add xp
             player_team_id = [player.team.team["a"], player.team.team["b"], player.team.team["c"]]
-            await leveller.team_add_xp(player, player.team.team, xp_won)
+            await leveller.team_add_xp(player, player_team_id, xp_won)
 
 def setup(client):
     client.add_cog(Cmd_train(client))
