@@ -28,7 +28,7 @@ class Ki_blast(Ability):
         
         self.name = "Ki blast"
         self.description = f"Inflicts **120 %** of your {self.game_icon['ki_ability']} damage."
-        self.icon = "<:ki_blast:679296241154129922>"
+        self.icon = self.game_icon["ability"]["ki_blast"]
 
         self.cost = 20
 
@@ -60,6 +60,7 @@ class Ki_blast(Ability):
         _move = await move.get_new_move()
 
         _move["name"] = self.name
+        _move["icon"] = self.icon
         _move["damage"] = damage["calculated"]
         _move["critical"] = damage["critical"]
         _move["dodge"] = damage["dodge"]

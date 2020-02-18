@@ -5,7 +5,7 @@ Manages the icons.
 
 Author : DrLarck
 
-Last update : 19/10/19 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 game_icon = {
@@ -46,7 +46,10 @@ game_icon = {
         "paralyzing_burns" : "<:paralyzing_burns:627586801401593856>",
         "pilaf_barrier" : "<:pilaf_barrier:627504111792816128>",
         "triple_pilots" : "<:triple_pilots:627508544488603666>",
-        "rolling_smash" : "<:rolling_smash:627502512290660392>"
+        "rolling_smash" : "<:rolling_smash:627502512290660392>",
+        "ki_blast" : "<:ki_blast:679296241154129922>",
+        "spiritual_final_canon" : "<:spiritual_final_canon:679296250373472263>",
+        "saiyan_spirit" : "<:saiyan_spirit:679296249765167126>"
     },
 
     # effect

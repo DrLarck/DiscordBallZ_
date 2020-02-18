@@ -31,7 +31,7 @@ class Spiritual_final_canon(Ability):
 
         self.name = "Spiritual final canon"
         self.description = f"Inflicts **150 %** of your {self.game_icon['ki_ability']} damage. **30 %** chance to **stun** the target during **1** turn."
-        self.icon = "<:spiritual_final_canon:679296250373472263>"
+        self.icon = self.game_icon["ability"]["spiritual_final_canon"]
 
         self.cost = 45
 
@@ -63,6 +63,7 @@ class Spiritual_final_canon(Ability):
         _move = await move.get_new_move()
 
         _move["name"] = self.name
+        _move["icon"] = self.icon
         _move["damage"] = damage["calculated"]
         _move["critical"] = damage["critical"]
         _move["dodge"] = damage["dodge"]
@@ -75,7 +76,6 @@ class Spiritual_final_canon(Ability):
 
         # roll stun
         stun_roll = random.randint(0, 100)
-        print(stun_roll)
 
         # 30 % stun chance
         if(stun_roll >= 30):

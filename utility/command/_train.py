@@ -85,6 +85,7 @@ class Train:
         # init
         opponent_team = []
         player_average = await player.team.get_info()  
+
         opponent = None
 
         # check if the team is able to fight

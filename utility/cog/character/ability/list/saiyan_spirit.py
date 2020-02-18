@@ -31,7 +31,7 @@ class Saiyan_spirit(Ability):
 
         self.name = "Saiyan spirit"
         self.description = f"Inflicts **200 %** of your {self.game_icon['ki_ability']} damage, increase your {self.game_icon['ki_ability']} and :punch: by **20 %** (stackable). **50 %** chance to **stun** the target."
-        self.icon = "<:saiyan_spirit:679296249765167126>"
+        self.icon = self.game_icon["ability"]["saiyan_spirit"]
 
         self.cost = 70
 
@@ -63,6 +63,7 @@ class Saiyan_spirit(Ability):
         _move = await move.get_new_move()
 
         _move["name"] = self.name
+        _move["icon"] = self.icon
         _move["damage"] = damage["calculated"]
         _move["critical"] = damage["critical"]
         _move["dodge"] = damage["dodge"]
@@ -96,3 +97,5 @@ class Saiyan_spirit(Ability):
                 await self.target.posture.change_posture("stunned")
 
             _move += "__Special__ : The target is **stunned** for 1 turn"
+        
+        return(_move)
