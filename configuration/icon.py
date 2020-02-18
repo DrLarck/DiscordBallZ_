@@ -49,7 +49,8 @@ game_icon = {
         "rolling_smash" : "<:rolling_smash:627502512290660392>",
         "ki_blast" : "<:ki_blast:679296241154129922>",
         "spiritual_final_canon" : "<:spiritual_final_canon:679296250373472263>",
-        "saiyan_spirit" : "<:saiyan_spirit:679296249765167126>"
+        "saiyan_spirit" : "<:saiyan_spirit:679296249765167126>",
+        "powered_shield" : "<:powered_shield:679340597064105985>"
     },
 
     # effect
@@ -64,6 +65,7 @@ game_icon = {
         "blue_saibaiman_leader" : "<:blue_saibaiman_leader:635060238445445131>",
         "red_saibaiman_leader" : "<:red_saibaiman_leader:635060244027932672>",
         "saiyan_spirit_buff" : "<:saiyan_spirit_buff:679306154244833290>",
-        "bardock_ssj_courage" : "<:courage_buff:679296236783927306>"
+        "bardock_ssj_courage" : "<:courage_buff:679296236783927306>",
+        "powere_shell_buff" : "<:powered_shield_bonus:679340600486526997>"
     }
 }
