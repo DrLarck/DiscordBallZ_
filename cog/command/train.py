@@ -57,8 +57,6 @@ class Cmd_train(commands.Cog):
         train = Train(self.client)
         leveller = Leveller(self.client, ctx)
 
-        cpu.team.team = await train.generate_opponent_team(player)
-
         combat_teams = [
             {
                 "owner" : player,
@@ -66,7 +64,7 @@ class Cmd_train(commands.Cog):
             },
             {
                 "owner" : cpu,
-                "team" : cpu.team.team
+                "team" : await train.generate_opponent_team(player)
             }
         ]
 

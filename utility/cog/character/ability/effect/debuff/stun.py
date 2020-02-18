@@ -5,7 +5,7 @@ General stun
 
 Author : DrLarck
 
-Last update : 17/02/19 (DrLarck)
+Last update : 18/02/19 (DrLarck)
 """
 
 # dependancies
@@ -25,6 +25,8 @@ class Stun(Effect):
         Effect.__init__(self, client, ctx, carrier, team_a, team_b)
 
         self.name = "Stun"
+        self.icon = "<:stun:679296251329511424>"
+
         self.id = 11
 
         # duration

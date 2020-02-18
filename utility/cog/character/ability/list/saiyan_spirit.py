@@ -1,5 +1,5 @@
 """
-Spiritual final canon ability
+Saiyan spirit ability
 
 --
 
@@ -21,31 +21,31 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 # effect
 from utility.cog.character.ability.effect.debuff.stun import Stun
 
-class Spiritual_final_canon(Ability):
+class Saiyan_spirit(Ability):
     """
-    Represents the spiritual final canon ability
+    Represents the Saiyan spirit ability
     """
 
     def __init__(self, client, ctx, caster, target, team_a, team_b):
         Ability.__init__(self, client, ctx, caster, target, team_a, team_b)
 
-        self.name = "Spiritual final canon"
-        self.description = f"Inflicts **150 %** of your {self.game_icon['ki_ability']} damage. **30 %** chance to **stun** the target during **1** turn."
-        self.icon = "<:spiritual_final_canon:679296250373472263>"
+        self.name = "Saiyan spirit"
+        self.description = f"Inflicts **200 %** of your {self.game_icon['ki_ability']} damage, increase your {self.game_icon['ki_ability']} and :punch: by **20 %** (stackable). **50 %** chance to **stun** the target."
+        self.icon = "<:saiyan_spirit:679296249765167126>"
 
-        self.cost = 45
+        self.cost = 70
 
         self.need_target = True
         self.target_enemy = True
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 2.5):,}** - **{int(self.caster.damage.ki_max * 2.5):,}** {self.game_icon['ki_ability']}. **30 %** chance to stun the target during **1** turn."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 3):,}** - **{int(self.caster.damage.ki_max * 3):,}** {self.game_icon['ki_ability']}. Increase your {self.game_icon['ki_ability']} and :punch: by **20 %** (stackable). **50 %** chance to **stun** the target."
     
     async def use(self):
         """
         `coroutine`
 
-        Inflicts 150 % of the caster's damage to the target. 30 % chance to stun for 1 turn
+        Inflicts 200 % of your ki damage, 50 % chance to stun the target and increase your P and K by 20 %
 
         --
 
@@ -57,7 +57,7 @@ class Spiritual_final_canon(Ability):
         damager = Damage_calculator(self.caster, self.target)
 
         # set damage
-        damage = int(random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max) * 2.5)
+        damage = int(random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max) * 3)
         damage = await damager.ki_damage(damage, critable = True, dodgable = True)
 
         _move = await move.get_new_move()
@@ -75,10 +75,9 @@ class Spiritual_final_canon(Ability):
 
         # roll stun
         stun_roll = random.randint(0, 100)
-        print(stun_roll)
 
-        # 30 % stun chance
-        if(stun_roll >= 30):
+        # 50 % stun chance
+        if(stun_roll >= 50):
             # stun the target
             # for 1 turn
             checker = Effect_checker(self.target)
@@ -97,5 +96,3 @@ class Spiritual_final_canon(Ability):
                 await self.target.posture.change_posture("stunned")
 
             _move += "__Special__ : The target is **stunned** for 1 turn"
-
-        return(_move)

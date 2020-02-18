@@ -5,7 +5,7 @@ Ki blast
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -28,6 +28,7 @@ class Ki_blast(Ability):
         
         self.name = "Ki blast"
         self.description = f"Inflicts **120 %** of your {self.game_icon['ki_ability']} damage."
+        self.icon = "<:ki_blast:679296241154129922>"
 
         self.cost = 20
 
