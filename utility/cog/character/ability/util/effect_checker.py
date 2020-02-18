@@ -127,6 +127,11 @@ class Effect_checker:
         if(effect_id == 13):
             from utility.cog.character.ability.effect.buff.courage import Buff_courage
             effect = Buff_courage(client, ctx, target, team_a, team_b)
+        
+        # Powered shell
+        if(effect_id == 14):
+            from utility.cog.character.ability.effect.buff.powered_shell import Buff_powered_shell
+            effect = Buff_powered_shell(client, ctx, target, team_a, team_b)
             
         return(effect)
 

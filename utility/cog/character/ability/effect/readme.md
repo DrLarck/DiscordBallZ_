@@ -20,6 +20,8 @@ Here are listed all the effects id sorted by effect type :
 
 **Courage** : 13
 
+**Powered shell** : 14
+
 ### Debuff
 
 **Acid explosion** : 3
