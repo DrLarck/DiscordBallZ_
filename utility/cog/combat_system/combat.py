@@ -698,6 +698,54 @@ class Combat():
 
         return
     
+    async def reset_stat(self, team):
+        """
+        `coroutine`
+
+        Reset the stats of the team
+
+        --
+
+        Return : `None`
+        """
+
+        character_getter = Character_getter()
+
+        for char_a in team:
+            await asyncio.sleep(0)
+
+            # get the reference
+            char_a_ref = await character_getter.get_character(char_a.info.id)
+
+            # set the same stat as the char_a
+            char_a_ref.level = char_a.level
+            char_a_ref.rarity.value = char_a.rarity.value
+            char_a_ref.enhancement = char_a.enhancement
+            await char_a_ref.init()
+
+                # health
+            char_a.health.maximum = char_a_ref.health.maximum
+
+                # damage
+            char_a.damage.physical_max = char_a_ref.damage.physical_max
+            char_a.damage.physical_min = char_a_ref.damage.physical_min
+
+            char_a.damage.ki_max = char_a_ref.damage.ki_max
+            char_a.damage.ki_min = char_a_ref.damage.ki_min
+
+                # defense
+            char_a.defense.armor = char_a_ref.defense.armor
+            char_a.defense.spirit = char_a_ref.defense.spirit
+            char_a.defense.dodge = char_a_ref.defense.dodge
+
+                # bonus
+            char_a.critical_chance = char_a_ref.critical_chance
+            char_a.critical_bonus = char_a_ref.critical_bonus
+            char_a.regeneration.health = char_a_ref.regeneration.health
+            char_a.regeneration.ki = char_a_ref.regeneration.ki
+
+        return
+        
     async def player_turn(self, player, order, turn):
         """
         `coroutine`
@@ -1316,6 +1364,10 @@ class Combat():
                         
                     self.removed_a = []
                     self.removed_b = []
+                    
+                    # reset stats before applying effects
+                    await self.reset_stat(self.team_a)
+                    await self.reset_stat(self.team_b)
                     
                     # effect
                     await self.trigger_leader(self.client, self.ctx, leader_a)
