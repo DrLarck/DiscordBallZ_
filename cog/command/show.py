@@ -5,7 +5,7 @@ Manages the show command.
 
 Author : DrLarck
 
-Last update : 15/09/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -48,7 +48,7 @@ class Cmd_show(commands.Cog):
                     level = 150
             
             else:
-                level = None
+                level = 1
 
         # global id
         if(character_id.isdigit()):
@@ -56,6 +56,7 @@ class Cmd_show(commands.Cog):
             character = await character_getter.get_character(character_id)
 
             if(character != None):
+                character.level = 1
                 displayer.character = character
 
                 await displayer.display(
@@ -64,7 +65,7 @@ class Cmd_show(commands.Cog):
                 )
             
             else:
-                await ctx.send(f"<@{player.id}> Character `#{character_id}` not found.")
+                await ctx.send(f"Character `#{character_id}` not found.")
         
         # unique id
         else:
@@ -79,7 +80,7 @@ class Cmd_show(commands.Cog):
                 )
 
             else:
-                await ctx.send(f"<@{player.id}> Character `#{character_id}` not found.")
+                await ctx.send(f"Character `#{character_id}` not found.")
 
 def setup(client):
     client.add_cog(Cmd_show(client))

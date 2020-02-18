@@ -5,7 +5,7 @@ Manages the character 4
 
 Author : DrLarck
 
-Last update : 22/09/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -64,4 +64,4 @@ class Character_004(Character):
         self.critical_chance = 10
 
         self.ability = [Rolling_smash, Pilaf_barrier, Triple_pilots]
-        self.passive = [Passive_triple_pilots]
+        self.passive_start = [Passive_triple_pilots]

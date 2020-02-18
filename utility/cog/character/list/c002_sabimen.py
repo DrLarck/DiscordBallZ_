@@ -5,7 +5,7 @@ Represents the character 2
 
 Author : DrLarck
 
-Last update : 18/10/19 (DrLarck)
+Last update : 17/02/20 (DrLarck)
 """
 
 # dependancies
@@ -63,5 +63,5 @@ class Character_002(Character):
 
         # ability
         self.ability = [Acid, Acid_explosion]
-        self.passive = [Buff_last_will_acid]
+        self.passive_start = [Buff_last_will_acid]
         self.leader = [Leader_blue_saibaiman]

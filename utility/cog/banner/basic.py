@@ -5,7 +5,7 @@ Manages the basic banner.
 
 Author : DrLarck
 
-Last update : 08/02/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies

@@ -5,7 +5,7 @@ Manages the character getter.
 
 Author : DrLarck
 
-Last update : 15/02/20 (DrLarck)
+Last update : 16/02/20 (DrLarck)
 """
 
 # dependancies
@@ -45,7 +45,7 @@ class Character_getter:
             11, 12, 13, 14, 15, 16 ,17, 18, 19, 20,
             21, 22, 23, 24 , 25, 26, 27, 28, 29, 30,
             31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-            41, 42, 43, 44, 45
+            41, 42, 43, 44, 45, 46
         ]
 
     # method
@@ -293,6 +293,11 @@ class Character_getter:
             from utility.cog.character.list.c045_trunks import Character_045
                     
             character = Character_045()
+        
+        if(character_id == 46):
+            from utility.cog.character.list.c046_bardockSsj import Character_046
+
+            character = Character_046()
                                     
         return(character)
     

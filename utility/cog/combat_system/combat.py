@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -62,6 +62,7 @@ class Combat():
         self.player_a, self.player_b = None, None
         self.team_a, self.team_b = [], []
         self.team_a_, self.team_b_ = [], []  # copies of the team a and b to allow the player to target the removed fighters
+        self.leader_a, self.leader_b = [], []
         self.removed_a, self.removed_b = [], []
         self.move = Move()
 
@@ -135,6 +136,13 @@ class Combat():
             await asyncio.sleep(0)
 
             self.team_b_.append(character_b)
+        
+        # set leader
+        leader_a = self.team_a[0]
+        leader_b = self.team_b[0]
+
+        self.leader_a = leader_a
+        self.leader_b = leader_b
 
         return(team_a, team_b)
 
@@ -406,8 +414,8 @@ class Combat():
                 self.client, title = "Battle phase", colour = 0x009dff, thumb = player.avatar
             ).setup_embed()
 
-            team_a = self.team_a
-            team_b = self.team_b
+            team_a = self.team_a_
+            team_b = self.team_b_
         
         else:
             player = self.player_b
@@ -418,8 +426,8 @@ class Combat():
                 self.client, title = "Battle phase", colour = 0xff0000, thumb = player.avatar
             ).setup_embed()
 
-            team_a = self.team_b
-            team_b = self.team_a
+            team_a = self.team_b_
+            team_b = self.team_a_
 
         if(turn == 1):
             if(self.move.index == 0):
@@ -452,7 +460,7 @@ class Combat():
                 }
 
                 # inflict damage
-                await self.move.target.receive_damage(damage["calculated"])
+                await self.move.target.receive_damage(damage["calculated"], fighter)
                 move = await move.offensive_move(move_info)
             
             # ki gain
@@ -521,7 +529,7 @@ class Combat():
 
         return
     
-    async def effects(self, team):
+    async def effects(self, team, leader, start = False, end = False):
         """
         `coroutine`
         
@@ -531,72 +539,123 @@ class Combat():
 
         `team` (`list` of `Character()`)
 
+        `leader` (`Character()`) : Leader of the team
+
+        `start/end` (`bool`) : Tells if the effect are on turn starts or on turn ends
+
         --
 
         Return : `None`
         """
 
-        for character in team:
+        # trigger all the malus and bonus effects
+        # at the end of the turn and trigger on end
+        # passive skills
+        if(end):  
+            for character in team:
+                await asyncio.sleep(0)
+
+                # bonus
+                for bonus in character.bonus:
+                    await asyncio.sleep(0)
+
+                    if(bonus.duration > 0):  # check if the bonus is still available
+                        await bonus.apply()
+
+                        if not bonus.is_permanent:  # if it's not infinite
+                            bonus.duration -= 1
+                    
+                    else:
+                        character.bonus.remove(bonus)
+                        await bonus.on_remove()  # triggers the on_remove effect
+                
+                # malus
+                for malus in character.malus:
+                    await asyncio.sleep(0)
+
+                    if(malus.duration > 0):
+                        await malus.apply()
+
+                        if not malus.is_permanent:
+                            malus.duration -= 1
+
+                    else:
+                        character.malus.remove(malus)
+                        await malus.on_remove()
+
+                # ki gain
+                character.ki.current += character.regeneration.ki
+                await character.ki.ki_limit()
+
+        for char in team:
             await asyncio.sleep(0)
 
-            # bonus
-            for bonus in character.bonus:
-                await asyncio.sleep(0)
-
-                if(bonus.duration > 0):  # check if the bonus is still available
-                    await bonus.apply()
-
-                    if not bonus.is_permanent:  # if it's not infinite
-                        bonus.duration -= 1
-                
-                else:
-                    character.bonus.remove(bonus)
-                    await bonus.on_remove()  # triggers the on_remove effect
+            # Make start passive callable 
+            # if they're not callable yet
+            new_passive_start_list, new_passive_end_list = [], []
+            new_leader_list = []
             
-            # malus
-            for malus in character.malus:
-                await asyncio.sleep(0)
-
-                if(malus.duration > 0):
-                    await malus.apply()
-
-                    if not malus.is_permanent:
-                        malus.duration -= 1
-
-                else:
-                    character.malus.remove(malus)
-                    await malus.on_remove()
-
-            # ki gain
-            character.ki.current += character.regeneration.ki
-            await character.ki.ki_limit()
-
-            # passive
-            new_passive_list = []
-            if not character.passive_sorted:
-                for passive in character.passive:
+            # get the passive effect
+            if not char.passive_sorted:
+                for passive in char.passive_start:
                     await asyncio.sleep(0)
 
                     passive = passive(
                         self.client,
                         self.ctx,
-                        character,
+                        char,
                         self.team_a,
                         self.team_b
                     )
 
-                    new_passive_list.append(passive)
+                    new_passive_start_list.append(passive)
                 
-                character.passive = new_passive_list
-                character.passive_sorted = True
+                # replace the objects to make them callable
+                char.passive_start = new_passive_start_list
+                
+                # make the passive end callable
+                for passive_ in char.passive_end:
+                    await asyncio
+
+                    passive_ = passive_(
+                        self.client,
+                        self.ctx,
+                        char,
+                        self.team_a,
+                        self.team_b
+                    )
+
+                    new_passive_end_list.append(passive_)
+                
+                # replace
+                char.passive_end = new_passive_end_list
+                char.passive_sorted = True
             
-            # trigger all the passives
-            for _passive in character.passive:
-                await asyncio.sleep(0)
+            # get callable leader
+            if not char.leader_sorted:
+                for lead in char.leader:
+                    await asyncio.sleep(0)
 
-                if not _passive.triggered :
-                    await _passive.apply()
+                    lead = lead(
+                        self.client,
+                        self.ctx,
+                        char,
+                        self.team_a,
+                        self.team_b
+                    )
 
+                    new_leader_list.append(lead)
+                
+                # replace the non callable list
+                # by the callable one
+                char.leader = new_leader_list
+                char.leader_sorted = True
+        
+            await char.trigger_passive(start = start, end = end)
+
+        if(leader.health.current > 0):
+            await leader.trigger_leader()
+            
         return
     
     async def trigger_leader(self, client, ctx, character_leader):
@@ -639,6 +698,54 @@ class Combat():
 
         return
     
+    async def reset_stat(self, team):
+        """
+        `coroutine`
+
+        Reset the stats of the team
+
+        --
+
+        Return : `None`
+        """
+
+        character_getter = Character_getter()
+
+        for char_a in team:
+            await asyncio.sleep(0)
+
+            # get the reference
+            char_a_ref = await character_getter.get_character(char_a.info.id)
+
+            # set the same stat as the char_a
+            char_a_ref.level = char_a.level
+            char_a_ref.rarity.value = char_a.rarity.value
+            char_a_ref.enhancement = char_a.enhancement
+            await char_a_ref.init()
+
+                # health
+            char_a.health.maximum = char_a_ref.health.maximum
+
+                # damage
+            char_a.damage.physical_max = char_a_ref.damage.physical_max
+            char_a.damage.physical_min = char_a_ref.damage.physical_min
+
+            char_a.damage.ki_max = char_a_ref.damage.ki_max
+            char_a.damage.ki_min = char_a_ref.damage.ki_min
+
+                # defense
+            char_a.defense.armor = char_a_ref.defense.armor
+            char_a.defense.spirit = char_a_ref.defense.spirit
+            char_a.defense.dodge = char_a_ref.defense.dodge
+
+                # bonus
+            char_a.critical_chance = char_a_ref.critical_chance
+            char_a.critical_bonus = char_a_ref.critical_bonus
+            char_a.regeneration.health = char_a_ref.regeneration.health
+            char_a.regeneration.ki = char_a_ref.regeneration.ki
+
+        return
+        
     async def player_turn(self, player, order, turn):
         """
         `coroutine`
@@ -735,7 +842,7 @@ class Combat():
 
                 ability = await player_fighter.get_ability(
                     self.client, self.ctx, player_fighter, player_fighter, 
-                    team_a, self.team_b, ability_index
+                    team_a, team_b, ability_index
                 )
 
                 await ability.set_tooltip()
@@ -774,7 +881,7 @@ class Combat():
 
             ability = await player_fighter.get_ability(
                 self.client, self.ctx, player_fighter, player_fighter, 
-                team_a, self.team_b, i
+                team_a, team_b, i
             )
 
             if(ability.cooldown <= 0):  # not on cooldown
@@ -850,7 +957,7 @@ class Combat():
 
                             ability = await player_fighter.get_ability(
                                 self.client, self.ctx, player_fighter, player_fighter, 
-                                team_a, self.team_b, player_move - 3
+                                team_a, team_b, player_move - 3
                             )
                             
                             # check the cost
@@ -1006,7 +1113,7 @@ class Combat():
 
         # init
         play_time = 0
-        dead = []
+        unplayable = []
 
         if(order == 0):
             team = self.team_a
@@ -1017,10 +1124,10 @@ class Combat():
         for char in team:
             await asyncio.sleep(0)
 
-            if(char.health.current <= 0):
-                dead.append(char)
+            if(char.health.current <= 0 or char.posture.stunned):
+                unplayable.append(char)
         
-        for char_ in dead:
+        for char_ in unplayable:
             await asyncio.sleep(0)
 
             team.remove(char_)
@@ -1059,6 +1166,7 @@ class Combat():
 
         # init ref character
         reference.level = character.level
+        reference.rarity.value = character.rarity.value
 
         await reference.init()
 
@@ -1090,43 +1198,43 @@ class Combat():
         combat_format = f"__Health__ : **{character.health.current:,}** / **{character.health.maximum:,}**:hearts:"
         if(comparison_hp != 0): 
             if(comparison_hp > 0):
-                combat_format += f" **(+ {comparison_hp:,})**"
+                combat_format += f" *(+ {comparison_hp:,})*"
             
             else:
-                combat_format += f" **({comparison_hp:,})**"
+                combat_format += f" *({comparison_hp:,})*"
 
         combat_format += f"\n__Posture__ : {posture}"
         combat_format += f"\n__Damage__ :\n:punch: **{character.damage.physical_min:,}** - **{character.damage.physical_max:,}**"
         if(comparison_phy != 0):
             if(comparison_phy > 0):
-                combat_format += f" **(+{comparison_phy:,})**"
+                combat_format += f" *(+{comparison_phy:,})*"
             
             else:
-                combat_format += f" **({comparison_phy:,})**"
+                combat_format += f" *({comparison_phy:,})*"
 
         combat_format += f"\n{game_icon['ki_ability']} **{character.damage.ki_min:,}** - **{character.damage.ki_max:,}**"
         if(comparison_ki != 0):
             if(comparison_ki > 0):
-                combat_format += f" **(+{comparison_ki:,})**"
+                combat_format += f" *(+{comparison_ki:,})*"
             
             else:
-                combat_format += f" **({comparison_ki:,})**"
+                combat_format += f" *({comparison_ki:,})*"
 
         combat_format += f"\n__Defense__ :\n:shield: **{character.defense.armor:,}**"
         if(comparison_armor != 0):
             if(comparison_armor > 0):
-                combat_format += f" **(+{comparison_armor:,})**"
+                combat_format += f" *(+{comparison_armor:,})*"
 
             else:
-                combat_format += f" **({comparison_armor:,})**"
+                combat_format += f" *({comparison_armor:,})*"
         
         combat_format += f"\n:rosette: **{character.defense.spirit:,}**"
         if(comparison_spirit != 0):
             if(comparison_spirit > 0):
-                combat_format += f" **(+{comparison_spirit:,})**"
+                combat_format += f" *(+{comparison_spirit:,})*"
             
             else:
-                combat_format += f" **({comparison_spirit:,})**"
+                combat_format += f" *({comparison_spirit:,})*"
 
         combat_format += f"\n__Ki__ : **{character.ki.current}** :fire:"
 
@@ -1207,6 +1315,9 @@ class Combat():
             while not turn_end:
                 await asyncio.sleep(0)
 
+                await self.effects(self.team_a, self.leader_a, start = True)
+                await self.effects(self.team_b, self.leader_b, start = True)
+
                 play_time = await self.get_play_time(0)
 
                 for a in range(play_time):
@@ -1254,12 +1365,16 @@ class Combat():
                     self.removed_a = []
                     self.removed_b = []
                     
+                    # reset stats before applying effects
+                    await self.reset_stat(self.team_a)
+                    await self.reset_stat(self.team_b)
+                    
                     # effect
                     await self.trigger_leader(self.client, self.ctx, leader_a)
                     await self.trigger_leader(self.client, self.ctx, leader_b)
 
-                    await self.effects(self.team_a)
-                    await self.effects(self.team_b)
+                    await self.effects(self.team_a, self.leader_a, end = True)
+                    await self.effects(self.team_b, self.leader_b, end = True)
 
                     turn_end = True
             
