@@ -62,6 +62,8 @@ game_icon = {
         "triple_pilots" : "<:triple_pilots_buff:627508545062961164>",
         "green_saibaiman_leader" : "<:green_saibaiman_leader:627925946313342976>",
         "blue_saibaiman_leader" : "<:blue_saibaiman_leader:635060238445445131>",
-        "red_saibaiman_leader" : "<:red_saibaiman_leader:635060244027932672>"
+        "red_saibaiman_leader" : "<:red_saibaiman_leader:635060244027932672>",
+        "saiyan_spirit_buff" : "<:saiyan_spirit_buff:679306154244833290>",
+        "bardock_ssj_courage" : "<:courage_buff:679296236783927306>"
     }
 }
