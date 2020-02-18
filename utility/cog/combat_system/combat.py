@@ -414,8 +414,8 @@ class Combat():
                 self.client, title = "Battle phase", colour = 0x009dff, thumb = player.avatar
             ).setup_embed()
 
-            team_a = self.team_a
-            team_b = self.team_b
+            team_a = self.team_a_
+            team_b = self.team_b_
         
         else:
             player = self.player_b
@@ -426,8 +426,8 @@ class Combat():
                 self.client, title = "Battle phase", colour = 0xff0000, thumb = player.avatar
             ).setup_embed()
 
-            team_a = self.team_b
-            team_b = self.team_a
+            team_a = self.team_b_
+            team_b = self.team_a_
 
         if(turn == 1):
             if(self.move.index == 0):
@@ -842,7 +842,7 @@ class Combat():
 
                 ability = await player_fighter.get_ability(
                     self.client, self.ctx, player_fighter, player_fighter, 
-                    team_a, self.team_b, ability_index
+                    team_a, team_b, ability_index
                 )
 
                 await ability.set_tooltip()
@@ -881,7 +881,7 @@ class Combat():
 
             ability = await player_fighter.get_ability(
                 self.client, self.ctx, player_fighter, player_fighter, 
-                team_a, self.team_b, i
+                team_a, team_b, i
             )
 
             if(ability.cooldown <= 0):  # not on cooldown
@@ -957,7 +957,7 @@ class Combat():
 
                             ability = await player_fighter.get_ability(
                                 self.client, self.ctx, player_fighter, player_fighter, 
-                                team_a, self.team_b, player_move - 3
+                                team_a, team_b, player_move - 3
                             )
                             
                             # check the cost

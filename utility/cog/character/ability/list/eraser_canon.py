@@ -53,7 +53,6 @@ class Eraser_canon(Ability):
         damage = random.randint(int(self.caster.damage.ki_min * 1.15), int(self.caster.damage.ki_max * 1.15))
         final_move = f"__Move__ : `{self.name}`{self.icon}\n__Damage__ : \n"
 
-        print(self.team_b)
         for enemy in self.team_b:
             await asyncio.sleep(0)
 
