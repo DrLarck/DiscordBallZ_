@@ -5,7 +5,7 @@ Manages the colors.
 
 Author : DrLarck
 
-Last update : 22/08/19 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -44,16 +44,16 @@ class Color_displayer:
         elif(rarity_id == 1):
             color = game_color["r"]
         
-        elif(rarity_id == 1):
+        elif(rarity_id == 2):
             color = game_color["sr"]
         
-        elif(rarity_id == 1):
+        elif(rarity_id == 3):
             color = game_color["ssr"]
         
-        elif(rarity_id == 1):
+        elif(rarity_id == 4):
             color = game_color["ur"]
         
-        elif(rarity_id == 1):
+        elif(rarity_id == 5):
             color = game_color["lr"]
 
         return(color)
