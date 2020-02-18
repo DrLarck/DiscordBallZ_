@@ -16,6 +16,8 @@ Here are listed all the effects id sorted by effect type :
 
 **Power charge** : 10
 
+**Saiyan spirit** : 12
+
 ### Debuff
 
 **Acid explosion** : 3

@@ -20,6 +20,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 
 # effect
 from utility.cog.character.ability.effect.debuff.stun import Stun
+from utility.cog.character.ability.effect.buff.saiyan_spirit import Buff_saiyan_spirit
 
 class Saiyan_spirit(Ability):
     """
@@ -97,5 +98,24 @@ class Saiyan_spirit(Ability):
                 await self.target.posture.change_posture("stunned")
 
             _move += "__Special__ : The target is **stunned** for 1 turn"
+        
+        # apply saiyan spirit buff
+        checker = Effect_checker(self.caster)
+        saiyan_spirit_ref = Buff_saiyan_spirit(self.client, self.ctx, self.caster, self.team_a, self.team_b)
+        
+        saiyan_spirit_buff = await checker.get_buff(saiyan_spirit_ref)
+
+        # if the buff has not been found
+        # add it
+        if(saiyan_spirit_buff == None):
+            saiyan_spirit_buff = saiyan_spirit_ref
+            saiyan_spirit_buff.stack = 1
+
+            self.caster.bonus.append(saiyan_spirit_buff)
+        
+        # the buff is already on the caster
+        # add a stack
+        else:
+            saiyan_spirit_buff.stack += 1
         
         return(_move)
