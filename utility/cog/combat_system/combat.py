@@ -1198,43 +1198,43 @@ class Combat():
         combat_format = f"__Health__ : **{character.health.current:,}** / **{character.health.maximum:,}**:hearts:"
         if(comparison_hp != 0): 
             if(comparison_hp > 0):
-                combat_format += f" **(+ {comparison_hp:,})**"
+                combat_format += f" *(+ {comparison_hp:,})*"
             
             else:
-                combat_format += f" **({comparison_hp:,})**"
+                combat_format += f" *({comparison_hp:,})*"
 
         combat_format += f"\n__Posture__ : {posture}"
         combat_format += f"\n__Damage__ :\n:punch: **{character.damage.physical_min:,}** - **{character.damage.physical_max:,}**"
         if(comparison_phy != 0):
             if(comparison_phy > 0):
-                combat_format += f" **(+{comparison_phy:,})**"
+                combat_format += f" *(+{comparison_phy:,})*"
             
             else:
-                combat_format += f" **({comparison_phy:,})**"
+                combat_format += f" *({comparison_phy:,})*"
 
         combat_format += f"\n{game_icon['ki_ability']} **{character.damage.ki_min:,}** - **{character.damage.ki_max:,}**"
         if(comparison_ki != 0):
             if(comparison_ki > 0):
-                combat_format += f" **(+{comparison_ki:,})**"
+                combat_format += f" *(+{comparison_ki:,})*"
             
             else:
-                combat_format += f" **({comparison_ki:,})**"
+                combat_format += f" *({comparison_ki:,})*"
 
         combat_format += f"\n__Defense__ :\n:shield: **{character.defense.armor:,}**"
         if(comparison_armor != 0):
             if(comparison_armor > 0):
-                combat_format += f" **(+{comparison_armor:,})**"
+                combat_format += f" *(+{comparison_armor:,})*"
 
             else:
-                combat_format += f" **({comparison_armor:,})**"
+                combat_format += f" *({comparison_armor:,})*"
         
         combat_format += f"\n:rosette: **{character.defense.spirit:,}**"
         if(comparison_spirit != 0):
             if(comparison_spirit > 0):
-                combat_format += f" **(+{comparison_spirit:,})**"
+                combat_format += f" *(+{comparison_spirit:,})*"
             
             else:
-                combat_format += f" **({comparison_spirit:,})**"
+                combat_format += f" *({comparison_spirit:,})*"
 
         combat_format += f"\n__Ki__ : **{character.ki.current}** :fire:"
 
