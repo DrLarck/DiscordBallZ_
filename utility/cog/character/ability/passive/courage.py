@@ -62,7 +62,7 @@ class Passive_courage(Effect):
             self.applied_buff = True
         
         # now calculate the bonus
-        missing_percent = int((self.carrier.health.current * 100) / self.carrier.health.maximum)
+        missing_percent = int(100 - (self.carrier.health.current * 100) / self.carrier.health.maximum)
 
         phy_bonus = int((carrier_ref.damage.physical_max  * 0.04) * missing_percent)
         ki_bonus = int((carrier_ref.damage.ki_max  * 0.04) * missing_percent)

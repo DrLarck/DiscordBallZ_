@@ -29,7 +29,7 @@ class Buff_courage(Effect):
         self.id = 13
 
         self.initial_duration = 10
-        self.duration = 1
+        self.duration = 10
 
     async def apply(self):
         """
@@ -51,7 +51,7 @@ class Buff_courage(Effect):
 
         # calculate the bonus
         ki_bonus = carrier_ref.damage.ki_max
-        phy_bonus = carrier_ref.damage.phy_max 
+        phy_bonus = carrier_ref.damage.physical_max 
 
         # add the bonus
         self.carrier.damage.physical_min += phy_bonus

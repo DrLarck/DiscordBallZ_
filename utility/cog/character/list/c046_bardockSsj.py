@@ -49,7 +49,7 @@ class Character_046(Character):
         self.defense.spirit = 985
         self.defense.dodge = 10
 
-        self.regeneration.ki = 100
+        self.regeneration.ki = 4
 
         self.ability = [Ki_blast, Spiritual_final_canon, Saiyan_spirit]
 
