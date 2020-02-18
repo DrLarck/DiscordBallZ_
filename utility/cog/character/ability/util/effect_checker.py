@@ -5,7 +5,7 @@ Check if the target has an effect active on it.
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -117,6 +117,11 @@ class Effect_checker:
         if(effect_id == 11):
             from utility.cog.character.ability.effect.debuff.stun import Stun
             effect = Stun(client, ctx, target, team_a, team_b)
+        
+        # Saiyan spirit
+        if(effect_id == 12):
+            from utility.cog.character.ability.effect.buff.saiyan_spirit import Buff_saiyan_spirit
+            effect = Buff_saiyan_spirit(client, ctx, target, team_a, team_b)
 
         return(effect)
 

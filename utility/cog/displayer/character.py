@@ -5,7 +5,7 @@ Manages the displaying of the characters.
 
 Author : DrLarck
 
-Last update : 18/10/19 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -197,16 +197,53 @@ class Character_displayer:
             # sending the embed
             await self.ctx.send(embed = embed)
 
+            # send the passive and leader infos
+            message = ""
+
+            if(len(self.character.leader) > 0):
+                message += ":crown: Leader skill\n"
+
+                for leader in self.character.leader:
+                    await asyncio.sleep(0)
+
+                    _leader = leader(self.client, self.ctx, None, None, None)
+
+                    message += f"{_leader.icon}**__{_leader.name}__** : *{_leader.description}*\n"
+
+            if(len(self.character.passive_start) > 0 or len(self.character.passive_end) > 0):
+                if(len(self.character.passive_start) > 0):
+                    message += "\n:cyclone: Passive skill\n"
+
+                    for passive in self.character.passive_start:
+                        await asyncio.sleep(0)
+
+                        _passive_s = passive(self.client, self.ctx, None, None, None)
+
+                        message += f"{_passive_s.icon}**__{_passive_s.name}__** : *{_passive_s.description}*\n"
+
+                if(len(self.character.passive_end) > 0):
+
+                    for _passive in self.character.passive_end:
+                        await asyncio.sleep(0)
+
+                        _passive_e = passive(self.client, self.ctx, None, None, None)
+
+                        message += f"\n{_passive_e.icon}**__{_passive_e.name}** : *{_passive_e.description}*\n"
+
             # now send the abilities info
             if(len(self.character.ability) > 0):
+                message += "\n:book: Ability"
+
                 for skill in self.character.ability:
                     await asyncio.sleep(0)
 
                     _skill = skill(self.client, self.ctx, None, None, None, None)
 
-                    message = f"{_skill.icon}**__{_skill.name}__** (:fire: *{_skill.cost}*): *{_skill.description}*\n--"
-
-                    await self.ctx.send(message)
+                    message += f"\n{_skill.icon}**__{_skill.name}__** (:fire: *{_skill.cost}*): *{_skill.description}*\n"
+            
+            # send the big message
+            if(message != ""):
+                await self.ctx.send(message)
 
         ## TEAM FORMAT ##
         elif(team_format):
