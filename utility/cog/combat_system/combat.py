@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 18/02/20 (DrLarck)
 """
 
 # dependancies
@@ -1065,7 +1065,7 @@ class Combat():
 
         # init
         play_time = 0
-        dead = []
+        unplayable = []
 
         if(order == 0):
             team = self.team_a
@@ -1076,10 +1076,10 @@ class Combat():
         for char in team:
             await asyncio.sleep(0)
 
-            if(char.health.current <= 0):
-                dead.append(char)
+            if(char.health.current <= 0 or char.posture.stunned):
+                unplayable.append(char)
         
-        for char_ in dead:
+        for char_ in unplayable:
             await asyncio.sleep(0)
 
             team.remove(char_)
