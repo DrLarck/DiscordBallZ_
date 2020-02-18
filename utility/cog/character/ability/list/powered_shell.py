@@ -29,7 +29,7 @@ class Powered_shell(Ability):
 
         self.name = "Powered shell"
         self.description = f"The carrier gains **10 %** damage reduction for **5** turns."
-        self.icon = self.game_icon["ability"]["power_shell"]
+        self.icon = self.game_icon["ability"]["powered_shell"]
 
         self.cost = 25
 

@@ -66,6 +66,6 @@ game_icon = {
         "red_saibaiman_leader" : "<:red_saibaiman_leader:635060244027932672>",
         "saiyan_spirit_buff" : "<:saiyan_spirit_buff:679306154244833290>",
         "bardock_ssj_courage" : "<:courage_buff:679296236783927306>",
-        "powere_shell_buff" : "<:powered_shield_bonus:679340600486526997>"
+        "powered_shell_buff" : "<:powered_shield_bonus:679340600486526997>"
     }
 }
