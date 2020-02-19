@@ -36,6 +36,10 @@ class Damage():
 
     `target` (`list` of `Character()`)
 
+    `force` (`int`)
+
+    `bonus` (`list` of `Bonus()`)
+
     """
 
     def __init__(self, ability, physical = 0, ki = 0, true = 0):
@@ -47,6 +51,10 @@ class Damage():
         self.name = ability.name
         self.icon = ability.icon
         self.target = ability.target
+        self.force = ability.caster.force
+
+        # get the bonuses list
+        self.bonus = ability.caster.damage.bonus
     
     async def get_display(self):
         """
