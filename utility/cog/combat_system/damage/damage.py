@@ -79,3 +79,22 @@ class Damage():
             display += ")"
 
         return(display)
+    
+    async def edit(self, physical = 0, ki = 0, true = 0):
+        """
+        `coroutine`
+
+        Edit the `Damage()` object and generate a new display
+
+        --
+
+        Return : `str` (damage display)
+        """
+
+        self.physical = physical
+        self.ki = ki
+        self.true = true
+
+        display = await self.get_display()
+
+        return(display)
