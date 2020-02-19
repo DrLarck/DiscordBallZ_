@@ -30,7 +30,7 @@ class Ability:
 
     `caster` : Represents the ability caster.
 
-    `target` : Represents the ability target as a `Character()` instance.
+    `target` : Represents the ability target as a `list` of `Character()` instance.
 
     `team_a` | `team_b` : Represents a list of `Character()`.
     Team A represents the ally team of the caster, team B the opponent one.
