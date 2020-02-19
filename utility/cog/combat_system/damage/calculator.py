@@ -250,10 +250,59 @@ class Damage_calculator():
         # get physical damage
         physical = (
             (((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
-            (defense ) * (1 - (physical_reduction * neutral_reduction))) * type_advantage) * multiplier_crit
+            (defense) * (1 - (physical_reduction * neutral_reduction))) * type_advantage) * multiplier_crit
         )
 
         # edit damage object
         damage.physical = physical
+
+        return(damage)
+    
+    async def get_ki_damage(self, attacker, target, damage):
+        """
+        `coroutine`
+
+        Calculate the Ki damage
+        - Parameter
+
+        `attacker` (`Character()`)
+
+        `target` (`Character()`)
+
+        `damage` (`Damage()`)
+
+        --
+
+        Return : `Damage()`
+        """
+
+        # init
+        type_advantage = await self.get_type_advantage(attacker, target)
+        critical = await self.get_critical(attacker.critical_chance)
+        multiplier_crit = 1
+
+        # increase the critical multiplier
+        # in case of crit
+        if(critical):
+            multiplier_crit = 1.5 + (attacker.critical_bonus / 100)
+
+        # get bonus value
+        bonus = await self.get_bonus(attacker)
+
+        # get defense value
+        defense = await self.get_defense(target, damage, ki = True)
+
+        # get damage reduction
+        ki_reduction = 1 - (target.defense.damage_reduction_ki / 100)
+        neutral_reduction = 1 - (target.defense.damage_reduction_neutral / 100)
+
+        # get physical damage
+        ki = (
+            (((damage.ki + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_ki) *
+            (defense) * (1 - (ki_reduction * neutral_reduction))) * type_advantage) * multiplier_crit
+        )
+
+        # edit damage object
+        damage.ki = ki
 
         return(damage)
