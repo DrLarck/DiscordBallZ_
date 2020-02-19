@@ -176,7 +176,7 @@ class Damage_calculator():
 
         return(bonus)
     
-    async def get_defense(self, attacker, damage, physical = False, ki = False):
+    async def get_defense(self, target, damage, physical = False, ki = False):
         """
         `coroutine`
 
@@ -184,7 +184,7 @@ class Damage_calculator():
 
         - Parameter 
 
-        `attacker` (`Character()`)
+        `target` (`Character()`)
 
         `damage` (`Damage()`)
 
@@ -201,10 +201,10 @@ class Damage_calculator():
         defense = 1
 
         if(physical):
-            defense = ((2500 + damage.force) / (2500 + attacker.defense.armor))        
+            defense = ((2500 + damage.force) / (2500 + target.defense.armor))        
         
         elif(ki):
-            defense = ((2500 + damage.force) / (2500 + attacker.defense.spirit))        
+            defense = ((2500 + damage.force) / (2500 + target.defense.spirit))        
 
         return(defense)
     
@@ -241,11 +241,11 @@ class Damage_calculator():
         bonus = await self.get_bonus(attacker)
 
         # get defense value
-        defense = await self.get_defense(attacker, damage, physical = True)
+        defense = await self.get_defense(target, damage, physical = True)
 
         # get damage reduction
-        physical_reduction = 1 - (attacker.defense.damage_reduction_physical / 100)
-        neutral_reduction = 1 - (attacker.defense.damage_reduction_neutral / 100)
+        physical_reduction = 1 - (target.defense.damage_reduction_physical / 100)
+        neutral_reduction = 1 - (target.defense.damage_reduction_neutral / 100)
 
         # get physical damage
         physical = (
