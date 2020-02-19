@@ -207,7 +207,5 @@ class Ability_damage():
 
         self.true_phy = 0
         self.true_ki = 0
-
-        self.rarity = 0
-        self.ability_level = 0
+        
         self.force = 0

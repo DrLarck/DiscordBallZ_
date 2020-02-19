@@ -231,6 +231,7 @@ class Damage_calculator():
         type_advantage = await self.get_type_advantage(attacker, target)
         critical = await self.get_critical(attacker.critical_chance)
         multiplier_crit = 1
+        damage_reduction = 1
 
         # increase the critical multiplier
         # in case of crit
@@ -247,10 +248,12 @@ class Damage_calculator():
         physical_reduction = 1 - (target.defense.damage_reduction_physical / 100)
         neutral_reduction = 1 - (target.defense.damage_reduction_neutral / 100)
 
+        damage_reduction *= (physical_reduction * neutral_reduction)
+
         # get physical damage
         physical = (
-            (((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
-            (defense) * (1 - (physical_reduction * neutral_reduction))) * type_advantage) * multiplier_crit
+            ((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
+            defense * damage_reduction * type_advantage) * multiplier_crit
         )
 
         # edit damage object
@@ -280,6 +283,7 @@ class Damage_calculator():
         type_advantage = await self.get_type_advantage(attacker, target)
         critical = await self.get_critical(attacker.critical_chance)
         multiplier_crit = 1
+        damage_reduction = 1
 
         # increase the critical multiplier
         # in case of crit
@@ -296,10 +300,12 @@ class Damage_calculator():
         ki_reduction = 1 - (target.defense.damage_reduction_ki / 100)
         neutral_reduction = 1 - (target.defense.damage_reduction_neutral / 100)
 
+        damage_reduction *= (ki_reduction * neutral_reduction)
+
         # get physical damage
         ki = (
-            (((damage.ki + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_ki) *
-            (defense) * (1 - (ki_reduction * neutral_reduction))) * type_advantage) * multiplier_crit
+            ((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
+            defense * damage_reduction * type_advantage) * multiplier_crit
         )
 
         # edit damage object
