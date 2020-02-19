@@ -121,23 +121,23 @@ class Ability:
 
         # get physical damage based on caster's physical
         if(self.damage.physical > 0):
-            self.damage.physical = int((self.damage.physical * self.caster.damage.physical_max) / 100)
-            damage.physical = self.damage.physical
+            damage_phy = int((self.damage.physical * self.caster.damage.physical_max) / 100)
+            damage.physical = damage_phy
         
         # get the ki damage
         if(self.damage.ki > 0):
-            self.damage.ki = int((self.damage.ki * self.caster.damage.ki_max) / 100)
-            damage.ki = self.damage.ki
+            damage_ki = int((self.damage.ki * self.caster.damage.ki_max) / 100)
+            damage.ki = damage_ki
         
         # get the true phy damage
         if(self.damage.true_phy > 0):
-            self.damage.true_phy = int((self.damage.true_phy * self.caster.damage.physical_max) / 100)
-            true += self.damage.true_phy
+            true_phy = int((self.damage.true_phy * self.caster.damage.physical_max) / 100)
+            true += true_phy
         
         # get the true ki damage
         if(self.damage.true_ki > 0):
-            self.damage.true_ki = int((self.damage.true_ki * self.caster.damage.ki_max) / 100)
-            true += self.damage.true_ki
+            true_ki = int((self.damage.true_ki * self.caster.damage.ki_max) / 100)
+            true += true_ki
 
         damage.true = true
 
