@@ -154,6 +154,60 @@ class Damage_calculator():
 
         return(critical)
     
+    async def get_bonus(self, attacker):
+        """
+        `coroutine`
+
+        Get the bonus total value
+
+        --
+
+        Return : `int`
+        """ 
+
+        # init
+        bonus = 0
+
+        # get the bonus
+        for _bonus in attacker.damage.bonus:
+            await asyncio.sleep(0)
+
+            bonus += _bonus.value
+
+        return(bonus)
+    
+    async def get_defense(self, attacker, damage, physical = False, ki = False):
+        """
+        `coroutine`
+
+        Make the defense calculation
+
+        - Parameter 
+
+        `attacker` (`Character()`)
+
+        `damage` (`Damage()`)
+
+        `physical` (`bool`)
+
+        `ki` (`bool`)
+
+        --
+
+        Return : `float`
+        """
+
+        # init
+        defense = 1
+
+        if(physical):
+            defense = ((2500 + damage.force) / (2500 + attacker.defense.armor))        
+        
+        elif(ki):
+            defense = ((2500 + damage.force) / (2500 + attacker.defense.spirit))        
+
+        return(defense)
+    
     async def get_physical_damage(self, attacker, target, damage):
         """
         `coroutine`
@@ -176,5 +230,30 @@ class Damage_calculator():
         # init
         type_advantage = await self.get_type_advantage(attacker, target)
         critical = await self.get_critical(attacker.critical_chance)
-        
+        multiplier_crit = 1
+
+        # increase the critical multiplier
+        # in case of crit
+        if(critical):
+            multiplier_crit = 1.5 + (attacker.critical_bonus / 100)
+
+        # get bonus value
+        bonus = await self.get_bonus(attacker)
+
+        # get defense value
+        defense = await self.get_defense(attacker, damage, physical = True)
+
+        # get damage reduction
+        physical_reduction = 1 - (attacker.defense.damage_reduction_physical / 100)
+        neutral_reduction = 1 - (attacker.defense.damage_reduction_neutral / 100)
+
+        # get physical damage
+        physical = (
+            (((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
+            (defense ) * (1 - (physical_reduction * neutral_reduction))) * type_advantage) * multiplier_crit
+        )
+
+        # edit damage object
+        damage.physical = physical
+
         return(damage)
