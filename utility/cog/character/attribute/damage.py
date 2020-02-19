@@ -18,9 +18,9 @@ class Character_damage:
     `physical_max` | `physical_min` : Represents the max physical damage and min.
 
     `ki_max` | `ki_min` : Same as physical, but for ki abilities.
-    
-    `amplifier` (`float`)
-    
+
+    `amplfier_physical/ki/neutral` (`float`)
+
     `bonus` (`list` of `Bonus()`)
     """
 
@@ -29,11 +29,14 @@ class Character_damage:
         # physical damage values
         self.physical_max = 0
         self.physical_min = 0
+        self.amplifier_physical = 0
 
         # ki damage values
         self.ki_max = 0
         self.ki_min = 0
+        self.amplifier_ki = 0
 
-        self.amplifier = 0
+        # neutral
+        self.amplifier_neutral = 0
 
         self.bonus = []
