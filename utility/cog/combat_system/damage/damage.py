@@ -61,7 +61,7 @@ class Damage():
 
         # init
         total_damage = self.physical + self.ki + self.true
-        display = f"__Damage__ : - **{total_damage:,}**"
+        display = f"-**{total_damage:,}**"
         detail_cpt = 0
 
         # display the detailed damages
