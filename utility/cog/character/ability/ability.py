@@ -14,6 +14,9 @@ import asyncio
 # graphic
 from configuration.icon import game_icon
 
+# damage object
+from utility.cog.combat_system.damage.damage import Damage
+
 # super class
 class Ability:
     """
@@ -85,7 +88,7 @@ class Ability:
         self.ignore_defenders = False
 
         # damage
-        self.damage = Damage()
+        self.damage = Ability_damage()
     
     # method
     async def set_tooltip(self):
@@ -100,6 +103,45 @@ class Ability:
         """
 
         return
+    
+    async def get_damage(self):
+        """
+        `coroutine`
+
+        Generate a `Damage()` object for the ability based on the ability's damage info
+
+        --
+
+        Return : `Damage()`
+        """
+
+        # init
+        damage = Damage(self)
+        true = 0
+
+        # get physical damage based on caster's physical
+        if(self.damage.physical > 0):
+            self.damage.physical = int((self.damage.physical * self.caster.damage.physical_max) / 100)
+            damage.physical = self.damage.physical
+        
+        # get the ki damage
+        if(self.damage.ki > 0):
+            self.damage.ki = int((self.damage.ki * self.caster.damage.ki_max) / 100)
+            damage.ki = self.damage.ki
+        
+        # get the true phy damage
+        if(self.damage.true_phy > 0):
+            self.damage.true_phy = int((self.damage.true_phy * self.caster.damage.physical_max) / 100)
+            true += self.damage.true_phy
+        
+        # get the true ki damage
+        if(self.damage.true_ki > 0):
+            self.damage.true_ki = int((self.damage.true_ki * self.caster.damage.ki_max) / 100)
+            true += self.damage.true_ki
+
+        damage.true = true
+
+        return(damage)
 
     async def init(self):
         """
@@ -130,7 +172,7 @@ class Ability:
 
         return
 
-class Damage():
+class Ability_damage():
     """
     Ability's damage attribute
 
