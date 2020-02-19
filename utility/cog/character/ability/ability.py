@@ -43,6 +43,10 @@ class Ability:
 
     `icon` : Represents the ability's icon as `discord.Emoji`.
 
+    `game_icon` (`dict`)
+
+    `level` (`int`)
+
     `cost` : Represents the ability ki cost.
 
     `cooldown` : Represents the ability cooldown.
@@ -76,6 +80,7 @@ class Ability:
         self.tooltip = None
         self.icon = "<:notfound:617735236473585694>"
         self.game_icon = game_icon
+        self.level = 0
 
         # condition
         self.cost = 0
@@ -178,6 +183,8 @@ class Ability_damage():
 
     - Attribute 
 
+    `total` (`int`)
+
     `physical` (`int`)
 
     `ki` (`int`)
@@ -194,6 +201,7 @@ class Ability_damage():
     """
 
     def __init__(self):
+        self.total = 0
         self.physical = 0
         self.ki = 0
 
