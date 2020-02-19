@@ -20,18 +20,33 @@ class Damage():
 
     - Parameter 
 
+    `ability` (`Ability()`)
+
     `physical` (`int`) 
 
     `ki` (`int`)
 
     `true` (`int`)
 
+    - Attribute
+
+    `name` (`str`)
+
+    `icon` (`str`)
+
+    `target` (`list` of `Character()`)
+
     """
 
-    def __init__(self, physical = 0, ki = 0, true = 0):
+    def __init__(self, ability, physical = 0, ki = 0, true = 0):
         self.physical = physical
         self.ki = ki
         self.true = true
+
+        # info
+        self.name = ability.name
+        self.icon = ability.icon
+        self.target = ability.target
     
     async def get_display(self):
         """
