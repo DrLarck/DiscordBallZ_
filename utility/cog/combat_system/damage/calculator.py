@@ -130,3 +130,51 @@ class Damage_calculator():
 
         return(multiplier)
     
+    async def get_critical(self, critical_chance):
+        """
+        `coroutine`
+
+        Tells if it's a critical strike or not
+
+        - Parameter
+
+        `critical_chance` (`float`)
+
+        --
+
+        Return : `bool`
+        """
+
+        # init
+        roll = random.uniform(0, 100)
+        critical = False
+
+        if(roll <= critical_chance):
+            critical = True
+
+        return(critical)
+    
+    async def get_physical_damage(self, attacker, target, damage):
+        """
+        `coroutine`
+
+        Calculate the physical damage
+
+        - Parameter
+
+        `attacker` (`Character()`)
+
+        `target` (`Character()`)
+
+        `damage` (`Damage()`)
+
+        --
+
+        Return : `Damage()`
+        """
+
+        # init
+        type_advantage = await self.get_type_advantage(attacker, target)
+        critical = await self.get_critical(attacker.critical_chance)
+        
+        return(damage)
