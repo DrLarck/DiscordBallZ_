@@ -20,12 +20,61 @@ class Damage_calculator():
 
     """
 
+    async def inflict_damage(self, attacker, target, damage):
+        """
+        `coroutine`
+
+        Inflict the damage to the target
+
+        - Parameter 
+
+        `attacker` (`Character()`)
+
+        `target` (`Character()`)
+
+        `damage` (`Damage()`)
+
+        --
+
+        Return : `str`
+        """
+
+        # init
+        display = ""
+
+        # check physical damage from damage object
+        # if there is physical damage
+        # calculate the physical damage
+
+        # check ki damage
+        # if there is ki damage
+        # calculate ki damage
+
+        # check true damage
+        # if there is true damage
+        # add it to the final damage
+
+        # edit the damage object
+        
+        # get the display
+
+        # inflict damage
+
+        # return the display
+        return(display)
+
     # util
     async def get_type_advantage(self, attacker, target):
         """
         `coroutine`
 
         Get the type advantage multiplier
+
+        - Parameter
+
+        `attacker` (`Character()`)
+
+        `target` (`Target()`)
 
         --
 
@@ -80,3 +129,4 @@ class Damage_calculator():
             pass
 
         return(multiplier)
+    
