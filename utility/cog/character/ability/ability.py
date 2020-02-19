@@ -5,7 +5,7 @@ Ability super class.
 
 Author : DrLarck
 
-Last update : 08/02/20 (DrLarck)
+Last update : 19/02/20 (DrLarck)
 """
 
 # dependance
@@ -83,6 +83,9 @@ class Ability:
         self.target_ally = False
         self.target_enemy = False
         self.ignore_defenders = False
+
+        # damage
+        self.damage = Damage()
     
     # method
     async def set_tooltip(self):
@@ -126,3 +129,35 @@ class Ability:
         """
 
         return
+
+class Damage():
+    """
+    Ability's damage attribute
+
+    - Attribute 
+
+    `physical` (`int`)
+
+    `ki` (`int`)
+
+    `true_phy` (`int`) : True damage based on the phy stat of the caster
+
+    `true_ki` (`int`) : Same as true_phy but based on ki
+
+    `rarity` (`int`) : Bonus damage (flat) based on the caster's rarity
+
+    `ability_level` (`int`) : Bonus damage (flat) based on the ability level
+
+    `force` (`int`) : Defense reduction (flat) bonus
+    """
+
+    def __init__(self):
+        self.physical = 0
+        self.ki = 0
+
+        self.true_phy = 0
+        self.true_ki = 0
+
+        self.rarity = 0
+        self.ability_level = 0
+        self.force = 0
