@@ -19,7 +19,9 @@ class Damage_calculator():
     """
     Allow the damage calculation
 
-    - Attribute
+    - Method
+
+    `inflict_damage(attacker, target, damage)` (`Character()`, `Character()`, `Damage()`) : `str` - Inflict the damages from the `Damage()` object and trigger `on_death()` effects
 
     """
 
