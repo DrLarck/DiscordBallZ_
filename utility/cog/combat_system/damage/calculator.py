@@ -51,7 +51,7 @@ class Damage_calculator():
         total = 0
         dodge = random.uniform(0, 100)
 
-        if(dodge <= target.defense.dodge):  # if the target doesn't dodge the attack
+        if(dodge >= target.defense.dodge):  # if the target doesn't dodge the attack
             # check physical damage from damage object
             # if there is physical damage
             # calculate the physical damage
@@ -304,7 +304,7 @@ class Damage_calculator():
 
         # get physical damage
         physical = (
-            ((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
+            ((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.damage.amplifier_physical) *
             defense * damage_reduction * type_advantage) * multiplier_crit
         )
 

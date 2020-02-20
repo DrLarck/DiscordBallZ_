@@ -145,6 +145,7 @@ class Character:
 
         # 2 types of damage : Physical and Ki one
         self.damage = Character_damage()
+        self.force = 0
 
         # the critical values are in %
         self.critical_chance = 0
