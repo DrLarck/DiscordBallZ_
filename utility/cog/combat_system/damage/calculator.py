@@ -5,12 +5,15 @@ Damage calculator object
 
 Author : DrLarck
 
-Last update : 19/02/20 (DrLarck)
+Last update : 20/02/20 (DrLarck)
 """
 
 # dependancies
 import asyncio
 import random
+
+# graphic
+from configuration.icon import game_icon
 
 class Damage_calculator():
     """
@@ -41,24 +44,71 @@ class Damage_calculator():
 
         # init
         display = ""
+        detail = ""
+        detail_cpt = 0
+        total = 0
+        dodge = random.uniform(0, 100)
 
-        # check physical damage from damage object
-        # if there is physical damage
-        # calculate the physical damage
+        if(dodge <= target.defense.dodge):  # if the target doesn't dodge the attack
+            # check physical damage from damage object
+            # if there is physical damage
+            # calculate the physical damage
+            if(damage.physical > 0):
+                physical = await self.get_physical_damage(attacker, target, damage)
+                detail += f":punch:-{physical:,}"
+                total += physical
 
-        # check ki damage
-        # if there is ki damage
-        # calculate ki damage
+                detail_cpt += 1
 
-        # check true damage
-        # if there is true damage
-        # add it to the final damage
+            # check ki damage
+            # if there is ki damage
+            # calculate ki damage
+            if(damage.ki > 0):
+                ki = await self.get_ki_damage(attacker, target, damage)
+                
+                if(detail_cpt > 0):
+                    detail += ", "
 
-        # edit the damage object
+                detail += f"{game_icon['ki_ability']}-{ki:,}"
+                total += ki
+
+            # check true damage
+            # if there is true damage
+            # add it to the final damage
+            if(damage.true > 0):
+                true = damage.true
+
+                if(detail_cpt > 0):
+                    detail += ", "
+
+                detail += f":anger:{true:,}"
+                total += true
+            
+            # get the display
+            display = f"__Damage__ : **-{total:,}**"
+
+            # display the detailed damage
+            if(detail != ""):
+                display += f" *({detail})*"
+
+            # inflict damage
+            gonna_die = False  # check if the damages are going to kill the target
+            
+            if(total >= target.health.current):  # the target is going to die from the damages
+                gonna_die = true
+            
+            # inflict
+            target.health.current -= total
+            await target.health.health_limit()
+
+            # trigger on_death() effects
+            for death in target.on_death:
+                await asyncio.sleep(0)
+
+                death.apply()
         
-        # get the display
-
-        # inflict damage
+        else:  # the target has dodged
+            display += ":dash: **DODGED**"
 
         # return the display
         return(display)
