@@ -51,8 +51,6 @@ class Damage_calculator():
         total = 0
         dodge = random.uniform(0, 100)
 
-        print(damage.physical, damage.ki, damage.true)
-
         if(dodge >= target.defense.dodge):  # if the target doesn't dodge the attack
             # check physical damage from damage object
             # if there is physical damage
