@@ -45,7 +45,7 @@ class Damage_calculator():
         """
 
         # init
-        display = ""
+        display = f"__Move__ : {damage.icon}**{damage.name}**"
         detail = ""
         detail_cpt = 0
         total = 0
@@ -87,7 +87,7 @@ class Damage_calculator():
                 total += true
             
             # get the display
-            display = f"__Damage__ : **-{total:,}**"
+            display += f"\n__Damage__ : **-{total:,}**"
 
             # display the detailed damage
             if(detail != ""):

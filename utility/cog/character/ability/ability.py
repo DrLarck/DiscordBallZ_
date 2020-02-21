@@ -5,7 +5,7 @@ Ability super class.
 
 Author : DrLarck
 
-Last update : 19/02/20 (DrLarck)
+Last update : 21/02/20 (DrLarck)
 """
 
 # dependance
@@ -81,6 +81,7 @@ class Ability:
         self.icon = "<:notfound:617735236473585694>"
         self.game_icon = game_icon
         self.level = 0
+        self.id = 0
 
         # condition
         self.cost = 0
@@ -121,7 +122,7 @@ class Ability:
         """
 
         # init
-        damage = self.damage
+        damage = Damage(self)
         true = 0
 
         # get physical damage based on caster's physical
@@ -145,8 +146,6 @@ class Ability:
             true += true_ki
 
         damage.true = true
-        
-        self.damage = damage
 
         return(damage)
 
@@ -204,7 +203,6 @@ class Ability_damage():
     """
 
     def __init__(self):
-        self.total = 0
         self.physical = 0
         self.ki = 0
 
