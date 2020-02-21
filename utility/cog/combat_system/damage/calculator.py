@@ -5,7 +5,7 @@ Damage calculator object
 
 Author : DrLarck
 
-Last update : 20/02/20 (DrLarck)
+Last update : 21/02/20 (DrLarck)
 """
 
 # dependancies
@@ -51,14 +51,16 @@ class Damage_calculator():
         total = 0
         dodge = random.uniform(0, 100)
 
+        print(damage.physical, damage.ki, damage.true)
+
         if(dodge >= target.defense.dodge):  # if the target doesn't dodge the attack
             # check physical damage from damage object
             # if there is physical damage
             # calculate the physical damage
             if(damage.physical > 0):
-                physical = await self.get_physical_damage(attacker, target, damage)
-                detail += f":punch:-{physical:,}"
-                total += physical
+                damage = await self.get_physical_damage(attacker, target, damage)
+                detail += f":punch:-{damage.physical:,}"
+                total += damage.physical
 
                 detail_cpt += 1
 
@@ -66,13 +68,13 @@ class Damage_calculator():
             # if there is ki damage
             # calculate ki damage
             if(damage.ki > 0):
-                ki = await self.get_ki_damage(attacker, target, damage)
+                damage = await self.get_ki_damage(attacker, target, damage)
                 
                 if(detail_cpt > 0):
                     detail += ", "
 
-                detail += f"{game_icon['ki_ability']}-{ki:,}"
-                total += ki
+                detail += f"{game_icon['ki_ability']}-{damage.ki:,}"
+                total += damage.ki
 
             # check true damage
             # if there is true damage
@@ -104,10 +106,11 @@ class Damage_calculator():
             await target.health.health_limit()
 
             # trigger on_death() effects
-            for death in target.on_death:
-                await asyncio.sleep(0)
+            if(gonna_die):
+                for death in target.on_death:
+                    await asyncio.sleep(0)
 
-                death.apply()
+                    death.apply()
         
         else:  # the target has dodged
             display += ":dash: **DODGED**"
@@ -284,6 +287,7 @@ class Damage_calculator():
         critical = await self.get_critical(attacker.critical_chance)
         multiplier_crit = 1
         damage_reduction = 1
+        amplifier = 1
 
         # increase the critical multiplier
         # in case of crit
@@ -292,6 +296,9 @@ class Damage_calculator():
 
         # get bonus value
         bonus = await self.get_bonus(attacker)
+
+        # get the amplifier
+        amplifier += (attacker.damage.amplifier_neutral + attacker.damage.amplifier_physical)
 
         # get defense value
         defense = await self.get_defense(target, damage, physical = True)
@@ -303,10 +310,10 @@ class Damage_calculator():
         damage_reduction *= (physical_reduction * neutral_reduction)
 
         # get physical damage
-        physical = (
-            ((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.damage.amplifier_physical) *
+        physical = int((
+            ((damage.physical + bonus) * amplifier *
             defense * damage_reduction * type_advantage) * multiplier_crit
-        )
+        ))
 
         # edit damage object
         damage.physical = physical
@@ -336,6 +343,7 @@ class Damage_calculator():
         critical = await self.get_critical(attacker.critical_chance)
         multiplier_crit = 1
         damage_reduction = 1
+        amplifier = 1
 
         # increase the critical multiplier
         # in case of crit
@@ -344,6 +352,9 @@ class Damage_calculator():
 
         # get bonus value
         bonus = await self.get_bonus(attacker)
+
+        # get the amplifier
+        amplifier += (attacker.damage.amplifier_neutral + attacker.damage.amplifier_ki)
 
         # get defense value
         defense = await self.get_defense(target, damage, ki = True)
@@ -355,10 +366,10 @@ class Damage_calculator():
         damage_reduction *= (ki_reduction * neutral_reduction)
 
         # get physical damage
-        ki = (
-            ((damage.physical + bonus) * (attacker.damage.amplifier_neutral + attacker.amplifier_physical) *
+        ki = int((
+            ((damage.physical + bonus) * amplifier *
             defense * damage_reduction * type_advantage) * multiplier_crit
-        )
+        ))
 
         # edit damage object
         damage.ki = ki

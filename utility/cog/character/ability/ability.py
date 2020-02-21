@@ -121,7 +121,7 @@ class Ability:
         """
 
         # init
-        damage = Damage(self)
+        damage = self.damage
         true = 0
 
         # get physical damage based on caster's physical
@@ -145,6 +145,8 @@ class Ability:
             true += true_ki
 
         damage.true = true
+        
+        self.damage = damage
 
         return(damage)
 
@@ -161,6 +163,7 @@ class Ability:
 
         # set the tooltip
         await self.set_tooltip()
+        await self.get_damage()
 
         return
     
