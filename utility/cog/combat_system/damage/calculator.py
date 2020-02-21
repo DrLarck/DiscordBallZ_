@@ -83,7 +83,7 @@ class Damage_calculator():
                 if(detail_cpt > 0):
                     detail += ", "
 
-                detail += f":anger:{true:,}"
+                detail += f":anger:-{true:,}"
                 total += true
             
             # get the display
