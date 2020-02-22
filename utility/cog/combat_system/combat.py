@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 22/02/20 (DrLarck)
 """
 
 # dependancies
@@ -20,7 +20,7 @@ from configuration.icon import game_icon
 # util
 from utility.cog.combat_system.input.input import Combat_input
 from utility.cog.combat_system.attribute.move import Move
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 from utility.cog.character.getter import Character_getter
 
 class Combat():
@@ -400,7 +400,7 @@ class Combat():
 
         # init
         if(self.move.target):
-            damager = Damage_calculator(fighter, self.move.target)
+            damager = Damage_calculator()
             
         display = ""
         move = Move_displayer()
@@ -431,86 +431,31 @@ class Combat():
 
         if(turn == 1):
             if(self.move.index == 0):
-                move = await move.skip_move()
+                display = await move.skip_move()
             
             elif(self.move.index == 2):
-                move = await move.defense_move()
+                display = await move.defense_move()
 
                 await fighter.posture.change_posture("defending")
 
         else:
-            # sequence move
-            if(self.move.index == 0):
-                await fighter.posture.change_posture("attacking")
+            # Ability
+            await fighter.posture.change_posture("attacking")
 
-                damage = await damager.physical_damage(
-                    random.randint(fighter.damage.physical_min, fighter.damage.physical_max),
-                    dodgable = True,
-                    critable = True
-                )
+            ability = await fighter.get_ability(
+                self.client,
+                self.ctx,
+                fighter,
+                self.move.target,
+                team_a,
+                team_b,
+                self.move.index
+            )
 
-                move_info = {
-                    "name" : "Sequence",
-                    "icon" : "👊",
-                    "damage" : damage["calculated"],
-                    "critical" : damage["critical"],
-                    "dodge" : damage["dodge"],
-                    "physical" : True,
-                    "ki" : False
-                }
+            display = await ability.use()
 
-                # inflict damage
-                await self.move.target.receive_damage(damage["calculated"], fighter)
-                move = await move.offensive_move(move_info)
-            
-            # ki gain
-            elif(self.move.index == 1):
-                await fighter.posture.change_posture("charging")
-
-                missing_ki = fighter.ki.maximum - fighter.ki.current
-                missing_ki *= 0.1  # 10 % of missing
-
-                gain = int(random.randint(1, 5) + fighter.rarity.value + missing_ki)
-
-                fighter.ki.current += gain
-                await fighter.ki.ki_limit()
-
-                move_info = {
-                    "name" : "Ki charge",
-                    "icon" : "🔥",
-                    "damage" : gain,
-                    "critical" : False,
-                    "dodge" : False,
-                    "physical" : False,
-                    "ki" : False
-                }
-
-                move = await move.ki_move(move_info)
-            
-            # defending
-            elif(self.move.index == 2):
-                await fighter.posture.change_posture("defending")
-
-                move = await move.defense_move()
-
-            # ability
-            elif(self.move.index > 2):
-                await fighter.posture.change_posture("attacking")
-
-                ability = await fighter.get_ability(
-                    self.client,
-                    self.ctx,
-                    fighter,
-                    self.move.target,
-                    team_a,
-                    team_b,
-                    self.move.index - 3
-                )
-
-                move = await ability.use()
-
-                fighter.ki.current -= ability.cost
-                await fighter.ki.ki_limit()
+            fighter.ki.current -= ability.cost
+            await fighter.ki.ki_limit()
             
         # display
         if(self.move.target == None):
@@ -521,7 +466,7 @@ class Combat():
 
         embed.add_field(
             name = field_name,
-            value = move,
+            value = display,
             inline = False
         )
 
@@ -771,7 +716,7 @@ class Combat():
             fighter_action = "`1.` :arrow_right: **Skip**\n`3.` :shield: **Defend**\n"
         
         else:
-            fighter_action = "`1`. :punch:**Sequence**\n`2`. :fire:**Ki charge**\n`3`. :shield:**Defend**\n"
+            fighter_action = ""
 
         # get the fighter
         playable = await self.get_player_fighter(order)
