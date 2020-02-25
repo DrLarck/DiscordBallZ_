@@ -16,7 +16,7 @@ from utility.cog.character.character import Character
 
 # test
 from utility.cog.character.ability.list._4_acid import Acid_4
-from utility.cog.character.ability.list.acid_explosion import Acid_explosion
+from utility.cog.character.ability.list._5_acid_explosion import Acid_explosion_5
 
 from utility.cog.character.ability.leader.saibaiman_blue import Leader_blue_saibaiman
 from utility.cog.character.ability.effect.buff.saibaiman_last_will_acid import Buff_last_will_acid
@@ -62,6 +62,6 @@ class Character_002(Character):
         self.regeneration.ki = 2
 
         # ability
-        self.ability = [Acid_4, Acid_explosion]
+        self.ability = [Acid_4, Acid_explosion_5]
         self.passive_start = [Buff_last_will_acid]
         self.leader = [Leader_blue_saibaiman]
