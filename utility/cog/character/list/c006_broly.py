@@ -5,7 +5,7 @@ Represents Broly
 
 Author : Zyorhist
 
-Last update : 18/02/20 (DrLarck)
+Last update : 21/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,6 +15,7 @@ import asyncio
 from utility.cog.character.character import Character
 
 # ability
+from utility.cog.character.ability.list.sequence_001 import Sequence_1
 from utility.cog.character.ability.list.powered_shell import Powered_shell
 from utility.cog.character.ability.list.eraser_canon import Eraser_canon
 
@@ -48,4 +49,4 @@ class Character_006(Character):
        
         self.regeneration.ki = 2
 
-        self.ability = [Powered_shell, Eraser_canon]
+        self.ability = [Sequence_1 ,Powered_shell, Eraser_canon]

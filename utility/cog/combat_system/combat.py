@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 22/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -399,9 +399,6 @@ class Combat():
         """
 
         # init
-        if(self.move.target):
-            damager = Damage_calculator()
-            
         display = ""
         move = Move_displayer()
 
@@ -835,7 +832,6 @@ class Combat():
 
         if(turn > 1):
             possible_move = await _input.get_possible(fighter_ability, self.team_a_, self.team_b_, ability = True)
-            possible_move.append("2")
 
         possible_move.append("1")
         possible_move.append("3")
