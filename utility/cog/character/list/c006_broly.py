@@ -17,6 +17,7 @@ from utility.cog.character.character import Character
 # ability
 from utility.cog.character.ability.list._1_sequence import Sequence_1
 from utility.cog.character.ability.list._2_ki_charge import Ki_charge_2
+from utility.cog.character.ability.list._3_defend import Defend_3
 from utility.cog.character.ability.list.powered_shell import Powered_shell
 from utility.cog.character.ability.list.eraser_canon import Eraser_canon
 
@@ -50,4 +51,4 @@ class Character_006(Character):
        
         self.regeneration.ki = 2
 
-        self.ability = [Sequence_1, Ki_charge_2, Powered_shell, Eraser_canon]
+        self.ability = [Sequence_1, Ki_charge_2, Defend_3, Powered_shell, Eraser_canon]
