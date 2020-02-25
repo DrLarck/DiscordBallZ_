@@ -31,6 +31,11 @@ from utility.cog.displayer.team import Team_displayer
 from utility.cog.displayer.icon import Icon_displayer
 from utility.cog.displayer.category import Category_displayer
 
+# ability
+from utility.cog.character.ability.list._1_sequence import Sequence_1
+from utility.cog.character.ability.list._2_ki_charge import Ki_charge_2
+from utility.cog.character.ability.list._3_defend import Defend_3
+
 # character class
 class Character:
     """
@@ -186,7 +191,7 @@ class Character:
         # ability
         # list of abilities
         self.ability_sorted = False
-        self.ability = []
+        self.ability = [Sequence_1, Ki_charge_2, Defend_3]
 
         self.passive_sorted = False
         self.passive_start = []  # Passive skill that must be triggered at the beginning of the turn
