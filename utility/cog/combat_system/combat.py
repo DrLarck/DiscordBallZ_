@@ -774,7 +774,7 @@ class Combat():
             
         # wait for an action
         if(turn > 1):
-            action_index = 4
+            action_index = 1
             ability_index = 0
 
             # abilities
