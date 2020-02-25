@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -339,9 +339,10 @@ class Character:
 
         Return : `Ability()` instance.
         """
-        
+
         # find the ability then create an instance of it
         ability = self.ability[ability_index]
+        
         if(self.ability_sorted == False):
             ability = ability(
                 client,
@@ -461,7 +462,7 @@ class Character:
         )
 
         move = {
-            "move" : 3,
+            "move" : 0,
             "target" : None
         }  # init to defend
 
@@ -529,7 +530,7 @@ class Character:
             if(len(usable_ability) > 0):
                 # pick a random ability in the usuable abilities list
                 # pick a random ability
-                ability_choice = 3  # init to 3, 3 is the ability 1 (index 0)
+                ability_choice = 0  # init to 0, 0 is the ability 1 (index 0)
                 random_ability = randint(0, len(usable_ability) - 1)
 
                 # get the ability object with the random obtained index.
