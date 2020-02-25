@@ -5,7 +5,7 @@ Manages the Acid ability.
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependance
@@ -14,14 +14,14 @@ from random import randint
 
 # utility
 from utility.cog.displayer.move import Move_displayer
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 
 from utility.cog.character.ability.ability import Ability
 from utility.cog.character.ability.effect.dot.dot_acid import Dot_acid
 from utility.cog.character.ability.util.effect_checker import Effect_checker
 
 # ability
-class Acid(Ability):
+class Acid_4(Ability):
     """
     This ability applies a DOT on the target. This DOT inflicts damage
     at each turn.
@@ -44,10 +44,14 @@ class Acid(Ability):
         self.description = f"""Inflicts **25 %** of your {self.game_icon['ki_ability']} damage and applies a stack of **__Acid__** to the target.
 Each stack of **__Acid__** inflicts an amount of **1.5 % (+ 5 % of the highest Saibaiman {self.game_icon['ki_ability']} /250 in your team)** of the target's **Maximum** :hearts: as {self.game_icon['ki_ability']} damage per stack each turn.
 Lasts **3** turns."""
+        self.id = 4
 
         self.cost = 8
         self.need_target = True
         self.target_enemy = True
+
+        # damage
+        self.damage.ki = 25
     
     # method
     async def set_tooltip(self):
@@ -69,33 +73,11 @@ Lasts **3** turns."""
         # init
         await self.caster.posture.change_posture("attacking")
 
-        move = Move_displayer()
-        calculator = Damage_calculator(self.caster, self.target)
-        checker = Effect_checker(self.target)
+        damager = Damage_calculator(self.caster, self.target)
 
-        # get the damage
-        damage = randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
-        damage = int(damage * 0.25)  # the ability inflicts only 25 % of the ki damage
-        damage = await calculator.ki_damage(
-            damage,
-            critable = True,
-            dodgable = True
-        )
+        damage = await self.get_damage()
 
-        # define move info
-        _move = await move.get_new_move()
-
-        _move["name"] = self.name
-        _move["icon"] = self.icon
-        _move["damage"] = damage["calculated"]
-        _move["critical"] = damage["critical"]
-        _move["dodge"] = damage["dodge"]
-        _move["ki"] = True
-
-        _move = await move.offensive_move(_move)
-
-        # inflict damage
-        await self.target.receive_damage(damage["calculated"], self.caster)
+        display = await damager.inflict_damage(self.caster, self.target, damage)
 
         # add a stack of acid on the target
         _acid = Dot_acid(
@@ -108,4 +90,4 @@ Lasts **3** turns."""
 
         await _acid.add_stack()
 
-        return(_move)
+        return(display)
