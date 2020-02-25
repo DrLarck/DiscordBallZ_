@@ -1,5 +1,5 @@
 """
-Ki charage ability
+Ki charge ability
 
 --
 
