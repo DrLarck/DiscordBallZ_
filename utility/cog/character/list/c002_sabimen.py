@@ -5,7 +5,7 @@ Represents the character 2
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,7 +15,7 @@ import asyncio
 from utility.cog.character.character import Character
 
 # test
-from utility.cog.character.ability.list.acid import Acid
+from utility.cog.character.ability.list._4_acid import Acid_4
 from utility.cog.character.ability.list.acid_explosion import Acid_explosion
 
 from utility.cog.character.ability.leader.saibaiman_blue import Leader_blue_saibaiman
@@ -62,6 +62,6 @@ class Character_002(Character):
         self.regeneration.ki = 2
 
         # ability
-        self.ability = [Acid, Acid_explosion]
+        self.ability = [Acid_4, Acid_explosion]
         self.passive_start = [Buff_last_will_acid]
         self.leader = [Leader_blue_saibaiman]

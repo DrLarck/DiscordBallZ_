@@ -5,7 +5,7 @@ Manages the character 1
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,7 +15,7 @@ import asyncio
 from utility.cog.character.character import Character
 
 # abilities
-from utility.cog.character.ability.list.acid import Acid
+from utility.cog.character.ability.list._4_acid import Acid_4
 from utility.cog.character.ability.list.syphon import Syphon
 from utility.cog.character.ability.list.unity_is_strength import Unity_is_strength
 
@@ -67,6 +67,6 @@ class Character_001(Character):
         self.regeneration.ki = 3
 
         # ability
-        self.ability = [Acid, Syphon, Unity_is_strength]
+        self.ability = [Acid_4, Syphon, Unity_is_strength]
         self.passive_start = [Passive_green_saibaiman]
         self.leader = [Leader_green_saibaiman]

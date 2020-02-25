@@ -5,7 +5,7 @@ Represents Bardock
 
 Author : DrLarck
 
-Last update : 06/09/19 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -13,9 +13,6 @@ import asyncio
 
 # util
 from utility.cog.character.character import Character
-
-# test
-from utility.cog.character.ability.list.acid import Acid
 
 # Bardock
 class Character_026(Character):
