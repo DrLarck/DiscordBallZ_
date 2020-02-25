@@ -50,5 +50,3 @@ class Character_026(Character):
 
         # crit
         self.critical_chance = 15
-
-        self.ability = [Acid]
