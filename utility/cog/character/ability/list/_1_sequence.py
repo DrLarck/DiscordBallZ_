@@ -5,7 +5,7 @@ Manages the Sequence ability
 
 Author : DrLarck
 
-Last update : 21/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
