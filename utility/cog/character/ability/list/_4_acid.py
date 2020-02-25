@@ -73,7 +73,7 @@ Lasts **3** turns."""
         # init
         await self.caster.posture.change_posture("attacking")
 
-        damager = Damage_calculator(self.caster, self.target)
+        damager = Damage_calculator()
 
         damage = await self.get_damage()
 
