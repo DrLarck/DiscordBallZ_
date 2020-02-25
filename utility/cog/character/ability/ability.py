@@ -5,11 +5,12 @@ Ability super class.
 
 Author : DrLarck
 
-Last update : 21/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependance
 import asyncio
+import random
 
 # graphic
 from configuration.icon import game_icon
@@ -127,22 +128,27 @@ class Ability:
 
         # get physical damage based on caster's physical
         if(self.damage.physical > 0):
-            damage_phy = int((self.damage.physical * self.caster.damage.physical_max) / 100)
+            # generate random damage
+            caster_phy = random.randint(self.caster.damage.physical_min, self.caster.damage.physical_max)
+            damage_phy = int((self.damage.physical * caster_phy) / 100)
             damage.physical = damage_phy
         
         # get the ki damage
         if(self.damage.ki > 0):
-            damage_ki = int((self.damage.ki * self.caster.damage.ki_max) / 100)
+            caster_ki = random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
+            damage_ki = int((self.damage.ki * caster_ki) / 100)
             damage.ki = damage_ki
         
         # get the true phy damage
         if(self.damage.true_phy > 0):
-            true_phy = int((self.damage.true_phy * self.caster.damage.physical_max) / 100)
+            caster_phy = random.randint(self.caster.damage.physical_min, self.caster.damage.physical_max)
+            true_phy = int((self.damage.true_phy * caster_phy) / 100)
             true += true_phy
         
         # get the true ki damage
         if(self.damage.true_ki > 0):
-            true_ki = int((self.damage.true_ki * self.caster.damage.ki_max) / 100)
+            caster_ki = random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
+            true_ki = int((self.damage.true_ki * caster_ki) / 100)
             true += true_ki
 
         damage.true = true
