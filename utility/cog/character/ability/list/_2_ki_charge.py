@@ -38,7 +38,7 @@ class Ki_charge_2(Ability):
         # based on misisng ki and rarity of the character
         ki_gain = int(self.caster.rarity.value + missing_ki)
 
-        self.tooltip = f"Generates **{ki_gain:,}** - **{ki_gain + 5:,}** ki points."
+        self.tooltip = f"Generates **{ki_gain:,}** - **{ki_gain + 5:,}**:fire: ki points."
     
     async def use(self):
         # changing posture
