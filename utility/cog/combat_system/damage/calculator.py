@@ -5,7 +5,7 @@ Damage calculator object
 
 Author : DrLarck
 
-Last update : 21/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -45,7 +45,7 @@ class Damage_calculator():
         """
 
         # init
-        display = f"__Move__ : {damage.icon}**{damage.name}**"
+        display = f"__Move__ : {damage.icon}**{damage.name}**\n"
         detail = ""
         detail_cpt = 0
         total = 0
@@ -87,7 +87,7 @@ class Damage_calculator():
                 total += true
             
             # get the display
-            display += f"\n__Damage__ : **-{total:,}**"
+            display += f"__Damage__ : **-{total:,}**"
 
             # display the detailed damage
             if(detail != ""):
@@ -111,7 +111,7 @@ class Damage_calculator():
                     death.apply()
         
         else:  # the target has dodged
-            display += ":dash: **DODGED**"
+            display += "__Damage__ : :dash: **DODGED**"
 
         # return the display
         return(display)
