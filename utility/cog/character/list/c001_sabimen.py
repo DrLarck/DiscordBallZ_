@@ -17,7 +17,7 @@ from utility.cog.character.character import Character
 # abilities
 from utility.cog.character.ability.list._4_acid import Acid_4
 from utility.cog.character.ability.list._8_syphon import Syphon_8
-from utility.cog.character.ability.list.unity_is_strength import Unity_is_strength
+from utility.cog.character.ability.list._9_unity_is_strength import Unity_is_strength_9
 
 # passive
 from utility.cog.character.ability.passive.saibaiman_green import Passive_green_saibaiman
@@ -67,6 +67,6 @@ class Character_001(Character):
         self.regeneration.ki = 3
 
         # ability
-        self.ability = [Acid_4, Syphon_8, Unity_is_strength]
+        self.ability = [Acid_4, Syphon_8, Unity_is_strength_9]
         self.passive_start = [Passive_green_saibaiman]
         self.leader = [Leader_green_saibaiman]
