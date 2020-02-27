@@ -5,7 +5,7 @@ Manages the paralyzing burns ability.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 27/02/20 (DrLarck)
 """
 
 # dependancies
@@ -22,7 +22,7 @@ from utility.cog.displayer.move import Move_displayer
 from configuration.icon import game_icon
 
 # ability
-class Paralyzing_burns(Ability):
+class Paralyzing_burns_6(Ability):
     """
     Stuns the target according how many active acid stacks it has on it.
     Remove the acid stacks.
@@ -52,7 +52,8 @@ class Paralyzing_burns(Ability):
         self.description = f"""If the target has at least **3** stack of **__Acid__** active on it : get **Stunned** for **2** turns.
 If the target has more than **3** **__Acid__** stack on it : get **Stunned** for **4** turns.
 **Remove** al the **__Acid__** stacks on the target."""
-
+        self.id = 6
+        
         self.icon = self.game_icon['ability']['paralyzing_burns']
         self.cost = 75
         
