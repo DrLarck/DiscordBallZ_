@@ -5,7 +5,7 @@ Manages the syphon ability
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 27/02/20 (DrLarck)
 """
 
 # dependancies
@@ -19,7 +19,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.fight_system.calculator.damage import Damage_calculator
 
 # syphon
-class Syphon(Ability):
+class Syphon_8(Ability):
     """
     Represents the syphon ability.
 
@@ -44,7 +44,8 @@ class Syphon(Ability):
         self.name = "Syphon"
         self.description = f"""Inflicts **10 % (+ 2 % of the target's Missing :hearts: per __Acid__ stacks on the target)** of your {self.game_icon['ki_ability']} damage.
 Heals you for an amount of **50 %** of the damage dealt."""
-
+        self.id = 8
+        
         self.icon = self.game_icon['ability']['syphon']
         self.cost = 25
 
