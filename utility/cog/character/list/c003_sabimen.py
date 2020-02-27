@@ -16,7 +16,7 @@ from utility.cog.character.character import Character
 
 # test
 from utility.cog.character.ability.list._4_acid import Acid_4
-from utility.cog.character.ability.list.spreading_acid import Spreading_acid
+from utility.cog.character.ability.list._7_spreading_acid import Spreading_acid_7
 from utility.cog.character.ability.list._6_paralyzing_burns import Paralyzing_burns_6
 
 from utility.cog.character.ability.passive.saibaiman_red import Passive_red_saibaiman
@@ -64,6 +64,6 @@ class Character_003(Character):
         self.regeneration.ki = 4
 
         # ability
-        self.ability = [Acid_4, Spreading_acid, Paralyzing_burns_6]
+        self.ability = [Acid_4, Spreading_acid_7, Paralyzing_burns_6]
         self.leader = [Leader_saibaiman_red]
         self.passive_start = [Passive_red_saibaiman]
