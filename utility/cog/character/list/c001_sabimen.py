@@ -5,7 +5,7 @@ Manages the character 1
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 27/02/20 (DrLarck)
 """
 
 # dependancies
