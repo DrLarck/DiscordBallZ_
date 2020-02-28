@@ -5,7 +5,7 @@ Manages the character 3
 
 Author : DrLarck
 
-Last update : 27/02/20 (DrLarck)
+Last update : 28/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,6 +15,9 @@ import asyncio
 from utility.cog.character.character import Character
 
 # test
+from utility.cog.character.ability.list._1_sequence import Sequence_1
+from utility.cog.character.ability.list._2_ki_charge import Ki_charge_2
+from utility.cog.character.ability.list._3_defend import Defend_3
 from utility.cog.character.ability.list._4_acid import Acid_4
 from utility.cog.character.ability.list._7_spreading_acid import Spreading_acid_7
 from utility.cog.character.ability.list._6_paralyzing_burns import Paralyzing_burns_6
@@ -64,6 +67,6 @@ class Character_003(Character):
         self.regeneration.ki = 4
 
         # ability
-        self.ability = [Acid_4, Spreading_acid_7, Paralyzing_burns_6]
+        self.ability = [Sequence_1, Ki_charge_2, Defend_3, Acid_4, Spreading_acid_7, Paralyzing_burns_6]
         self.leader = [Leader_saibaiman_red]
         self.passive_start = [Passive_red_saibaiman]
