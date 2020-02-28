@@ -5,7 +5,7 @@ Manages the triple pilots ability.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 28/02/20 (DrLarck)
 """
 
 # dependancies
@@ -17,7 +17,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.displayer.move import Move_displayer
 
 # ability
-class Triple_pilots(Ability):
+class Triple_pilots_12(Ability):
     """
     Consums one charge of Triple pilots to recover 30 % of Max health.
     """
@@ -31,7 +31,8 @@ class Triple_pilots(Ability):
         self.name = "Triple pilots"
         self.description = f"""This unit consums one stack of **__Triple pilots__** bonus to recover **30 %** of its **Maximum** :hearts:."""
         self.icon = self.game_icon['ability']['triple_pilots']
-
+        self.id = 12
+        
     # method
     async def set_tooltip(self):
         self.tooltip = f"Consums a charge of **__Triple pilots__**{self.game_icon['effect']['triple_pilots']} to restore **{int((30 * self.caster.health.maximum)/100):,}** :hearts:."
