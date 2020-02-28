@@ -15,7 +15,7 @@ import asyncio
 from utility.cog.character.character import Character
 
 # test
-from utility.cog.character.ability.list.rolling_smash import Rolling_smash
+from utility.cog.character.ability.list._11_rolling_smash import Rolling_smash_11
 from utility.cog.character.ability.list._10_pilaf_barrier import Pilaf_barrier_10
 from utility.cog.character.ability.list.triple_pilots import Triple_pilots
 
@@ -63,5 +63,5 @@ class Character_004(Character):
         # crit
         self.critical_chance = 10
 
-        self.ability = [Rolling_smash, Pilaf_barrier_10, Triple_pilots]
+        self.ability = [Rolling_smash_11, Pilaf_barrier_10, Triple_pilots]
         self.passive_start = [Passive_triple_pilots]
