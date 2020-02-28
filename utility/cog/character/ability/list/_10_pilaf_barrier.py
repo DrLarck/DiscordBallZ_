@@ -5,7 +5,7 @@ Manages the Pilaf Barrier ability
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 28/02/20 (DrLarck)
 """
 
 # dependancies
@@ -17,7 +17,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.displayer.move import Move_displayer
 
 # ability
-class Pilaf_barrier(Ability):
+class Pilaf_barrier_10(Ability):
     """
     Pilaf takes 50 % reduced physical damage and is considered defending this turn.
 
@@ -42,7 +42,8 @@ class Pilaf_barrier(Ability):
         self.description = f"""Applies **__Pilaf Barrier__** bonus on this unit which makes it take **50 %** less :punch: damage for **1** turn and change its posture to :shield:.
 {self.game_icon['cooldown']}**Cooldown** : **3** turns."""
         self.icon = self.game_icon['ability']['pilaf_barrier']
-
+        self.id = 10
+        
         self.cost = 0
     
     # method
