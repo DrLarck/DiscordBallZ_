@@ -5,7 +5,7 @@ Saiyan spirit ability
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 29/02/20 (DrLarck)
 """
 
 # dependancies
@@ -14,7 +14,7 @@ import random
 
 # util
 from utility.cog.character.ability.ability import Ability
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 from utility.cog.displayer.move import Move_displayer
 from utility.cog.character.ability.util.effect_checker import Effect_checker
 
@@ -22,7 +22,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.character.ability.effect.debuff.stun import Stun
 from utility.cog.character.ability.effect.buff.saiyan_spirit import Buff_saiyan_spirit
 
-class Saiyan_spirit(Ability):
+class Saiyan_spirit_19(Ability):
     """
     Represents the Saiyan spirit ability
     """
@@ -38,6 +38,8 @@ class Saiyan_spirit(Ability):
 
         self.need_target = True
         self.target_enemy = True
+
+        self.damage.ki = 200
     
     async def set_tooltip(self):
         self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 3):,}** - **{int(self.caster.damage.ki_max * 3):,}** {self.game_icon['ki_ability']}. Increase your {self.game_icon['ki_ability']} and :punch: by **20 %** (stackable). **50 %** chance to **stun** the target."
@@ -54,26 +56,13 @@ class Saiyan_spirit(Ability):
         """
 
         # init
-        move = Move_displayer()
-        damager = Damage_calculator(self.caster, self.target)
+        damager = Damage_calculator()
 
         # set damage
-        damage = int(random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max) * 3)
-        damage = await damager.ki_damage(damage, critable = True, dodgable = True)
-
-        _move = await move.get_new_move()
-
-        _move["name"] = self.name
-        _move["icon"] = self.icon
-        _move["damage"] = damage["calculated"]
-        _move["critical"] = damage["critical"]
-        _move["dodge"] = damage["dodge"]
-        _move["ki"] = True
-
-        _move = await move.offensive_move(_move)
+        damage = await self.get_damage()
 
         # inflict damage
-        await self.target.receive_damage(damage["calculated"], self.caster)
+        display = await damager.inflict_damage(self.caster, self.target, damage)
 
         # roll stun
         stun_roll = random.randint(0, 100)
@@ -97,7 +86,7 @@ class Saiyan_spirit(Ability):
 
                 await self.target.posture.change_posture("stunned")
 
-            _move += "__Special__ : The target is **stunned** for 1 turn"
+            display += "__Special__ : The target is **stunned** for 1 turn"
         
         # apply saiyan spirit buff
         checker = Effect_checker(self.caster)
@@ -118,4 +107,4 @@ class Saiyan_spirit(Ability):
         else:
             saiyan_spirit_buff.stack += 1
         
-        return(_move)
+        return(display)
