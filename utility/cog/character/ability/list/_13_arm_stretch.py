@@ -5,7 +5,7 @@ Manages the Arm Stretch ability
 
 Author : Zyorhist
 
-Last update : 18/02/20 (DrLarck)
+Last update : 29/02/20 (DrLarck)
 """
 
 # dependance
@@ -13,15 +13,12 @@ import asyncio
 from random import randint
 
 # utility
-from utility.cog.displayer.move import Move_displayer
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 
 from utility.cog.character.ability.ability import Ability
-from utility.cog.character.ability.effect.dot.dot_acid import Dot_acid
-from utility.cog.character.ability.util.effect_checker import Effect_checker
 
 # ability
-class Arm_stretch(Ability):
+class Arm_stretch_13(Ability):
     """
     This ability applies performs a sequence attack against any enemy
     """
@@ -41,10 +38,14 @@ class Arm_stretch(Ability):
         self.name = "Arm Stretch"
         #self.icon = self.game_icon['ability']['arm_stretch']
         self.description = f"""Performs a sequence attack against any enemy"""
+        self.id = 13
 
         self.cost = 5
         self.target_enemy = True
         self.need_target = True
+        self.ignore_defenders = True
+
+        self.damage.physical = 100
     
     # method
     async def set_tooltip(self):
@@ -66,30 +67,12 @@ class Arm_stretch(Ability):
         # init
         await self.caster.posture.change_posture("attacking")
 
-        move = Move_displayer()
-        calculator = Damage_calculator(self.caster, self.target)
+        calculator = Damage_calculator()
 
         # get the damage
-        damage = randint(self.caster.damage.physical_min, self.caster.damage.physical_max)
-        damage = await calculator.physical_damage(
-            damage,
-            critable = True,
-            dodgable = True
-        )
+        damage = await self.get_damage()
 
         # define move info
-        _move = await move.get_new_move()
+        display = await calculator.inflict_damage(self.caster, self.target, damage)
 
-        _move["name"] = self.name
-        _move["icon"] = self.icon
-        _move["damage"] = damage["calculated"]
-        _move["critical"] = damage["critical"]
-        _move["dodge"] = damage["dodge"]
-        _move["physical"] = True
-
-        _move = await move.offensive_move(_move)
-
-        # inflict damage
-        await self.target.receive_damage(damage["calculated"], self.caster)
-
-        return(_move)
+        return(display)
