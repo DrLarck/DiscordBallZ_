@@ -5,7 +5,7 @@ Manages the Acid Dot.
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 29/02/20 (DrLarck)
 """
 
 # dependance
@@ -16,7 +16,8 @@ from utility.cog.character.ability.dot import Dot
 from utility.cog.character.ability.util.effect_checker import Effect_checker
 
 # damage
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
+from utility.cog.combat_system.damage.damage import Damage
 
 # dot acid
 class Dot_acid(Dot):
@@ -51,7 +52,7 @@ class Dot_acid(Dot):
         self.stack = 1
 
         # unique
-        self.damager = Damage_calculator(self.caster, self.target)
+        self.damager = Damage_calculator()
         self.saibaiman_id = [1, 2, 3]
 
     # method
@@ -67,25 +68,21 @@ class Dot_acid(Dot):
         """
 
         # init
-        _damage = 0
+        _damage = Damage(self)
+        damager = Damage_calculator()
 
         # increase the damage if the target has 3 or more active stacks on it
         if(self.stack >= 3):
-            _damage = self.tick_damage * 1.5
+            _damage.ki = self.tick_damage * 1.5
         
         else:
-            _damage = self.tick_damage
+            _damage.ki = self.tick_damage
         
-        _damage *= self.stack
-
-        # get the damage
-        # force it to be non-dodgable and non-critable to avoid the target dodge and the acid critical
-        damage = await self.damager.ki_damage(
-            _damage,
-        )
+        _damage.ki *= self.stack
 
         # apply the calculated damages to the target
-        await self.target.receive_damage(damage["calculated"], self.caster)
+        self.target.health.current -= _damage
+        await self.target.health.health_limit()
 
         return
 

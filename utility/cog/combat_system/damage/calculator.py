@@ -365,7 +365,7 @@ class Damage_calculator():
 
         # get physical damage
         ki = int((
-            ((damage.physical + bonus) * amplifier *
+            ((damage.ki + bonus) * amplifier *
             defense * damage_reduction * type_advantage) * multiplier_crit
         ))
 
