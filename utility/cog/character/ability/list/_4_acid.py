@@ -5,7 +5,7 @@ Manages the Acid ability.
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 01/03/20 (DrLarck)
 """
 
 # dependance

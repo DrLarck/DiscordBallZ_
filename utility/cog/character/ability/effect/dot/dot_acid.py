@@ -5,7 +5,7 @@ Manages the Acid Dot.
 
 Author : DrLarck
 
-Last update : 29/02/20 (DrLarck)
+Last update : 01/03/20 (DrLarck)
 """
 
 # dependance
@@ -39,7 +39,6 @@ class Dot_acid(Dot):
         # attribute
         self.name = "Acid"
         self.icon = self.game_icon['effect']['acid']
-        self.caster = None
         self.target = target
         self.id = 1
         
@@ -68,17 +67,16 @@ class Dot_acid(Dot):
         """
 
         # init
-        _damage = Damage(self)
-        damager = Damage_calculator()
+        _damage = 0
 
         # increase the damage if the target has 3 or more active stacks on it
         if(self.stack >= 3):
-            _damage.ki = self.tick_damage * 1.5
+            _damage = self.tick_damage * 1.5
         
         else:
-            _damage.ki = self.tick_damage
+            _damage = self.tick_damage
         
-        _damage.ki *= self.stack
+        _damage *= self.stack
 
         # apply the calculated damages to the target
         self.target.health.current -= _damage
