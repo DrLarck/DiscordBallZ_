@@ -5,7 +5,7 @@ Eraser canon ability object
 
 Author : DrLarck
 
-Last update : 29/02/20 (DrLarck)
+Last update : 01/03/20 (DrLarck)
 """
 
 # dependancies
@@ -39,7 +39,7 @@ class Eraser_canon_15(Ability):
         self.damage.ki = 15
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 1.15):,}** - **{int(self.caster.damage.ki_max * 1.15):,}** {self.game_icon['ki_ability']} damage to **all** enemies. **Stun** them for **1** turn."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 0.15):,}** - **{int(self.caster.damage.ki_max * 0.15):,}** {self.game_icon['ki_ability']} damage to **all** enemies. **Stun** them for **1** turn."
     
     async def use(self):
         """
@@ -67,7 +67,7 @@ class Eraser_canon_15(Ability):
             # inflict the damage
             _damage = await damager.inflict_damage(self.caster, enemy, damage)
 
-            final_move += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} -**{_damage:,}** {self.game_icon['ki_ability']}\n"
+            final_move += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} -**{damage.ki:,}** {self.game_icon['ki_ability']}\n"
 
             # check if the enemy is stun
             # if the enmy isn't stun, stun it
