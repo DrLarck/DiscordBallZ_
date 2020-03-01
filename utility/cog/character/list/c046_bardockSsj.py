@@ -5,7 +5,7 @@ Super Saiyan Bardock
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 28/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,6 +15,9 @@ import asyncio
 from utility.cog.character.character import Character
 
 # ability
+from utility.cog.character.ability.list._1_sequence import Sequence_1
+from utility.cog.character.ability.list._2_ki_charge import Ki_charge_2
+from utility.cog.character.ability.list._3_defend import Defend_3
 from utility.cog.character.ability.list.ki_blast import Ki_blast
 from utility.cog.character.ability.list.spiritual_final_canon import Spiritual_final_canon
 from utility.cog.character.ability.list.saiyan_spirit import Saiyan_spirit
@@ -51,6 +54,6 @@ class Character_046(Character):
 
         self.regeneration.ki = 4
 
-        self.ability = [Ki_blast, Spiritual_final_canon, Saiyan_spirit]
+        self.ability = [Sequence_1, Ki_charge_2, Defend_3, Ki_blast, Spiritual_final_canon, Saiyan_spirit]
 
         self.passive_start = [Passive_courage]

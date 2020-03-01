@@ -5,7 +5,7 @@ Manages the Acid Explosion ability.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -14,12 +14,11 @@ from random import randint
 
 # util
 from utility.cog.character.ability.ability import Ability
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 from utility.cog.character.ability.util.effect_checker import Effect_checker
-from utility.cog.displayer.move import Move_displayer
 
 # acid explosion
-class Acid_explosion(Ability):
+class Acid_explosion_5(Ability):
     """
     Represents the Acid explosion ability.
     """
@@ -41,12 +40,15 @@ class Acid_explosion(Ability):
         self.description = f"""Inflicts **50 %** of your {self.game_icon['ki_ability']} damage.
 If the target has at least **3** stacks of **__Acid__** : **Add** a stack of **__Acid__** to all the target's team members.
 Applies the **__Acid explosion__** malus to the **main target** which will reduce the target's :rosette: by **2 %** : Lasts **2** turns."""
+        self.id = 5
 
         self.icon = self.game_icon['ability']['acid_explosion']
         self.cost = 30
 
         self.need_target = True
         self.target_enemy = True
+
+        self.damage.ki = 50
     
     # method
     async def set_tooltip(self):
@@ -70,9 +72,8 @@ Applies the **__Acid explosion__** malus to the **main target** which will reduc
         """
 
         # init
-        move = Move_displayer()
         effect_checker = Effect_checker(self.target)
-        damage_calculator = Damage_calculator(self.caster, self.target)
+        damager = Damage_calculator()
         
         # debuff
         acid_ref = await effect_checker.get_effect(
@@ -94,12 +95,7 @@ Applies the **__Acid explosion__** malus to the **main target** which will reduc
         )
 
         # set the damage
-        damage = randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
-        damage /= 2  # 50 % of the ki damage
-        damage = await damage_calculator.ki_damage(
-            damage,
-            critable = True
-        )
+        damage = await self.get_damage()
 
         # check if the target has acid
         has_acid = await effect_checker.get_debuff(acid_ref)
@@ -145,16 +141,7 @@ Applies the **__Acid explosion__** malus to the **main target** which will reduc
         else:
             self.target.malus.append(explosion_ref)
         
-        # setting up the move display
-        _move = await move.get_new_move()
+        # display
+        display = await damager.inflict_damage(self.caster, self.target, damage)
 
-        _move["name"] = self.name
-        _move["icon"] = self.icon
-        _move["damage"] = damage["calculated"]
-        _move["critical"] = damage["critical"]
-        _move["dodge"] = damage["dodge"]
-        _move["ki"] = True
-
-        _move = await move.offensive_move(_move)
-
-        return(_move)
+        return(display)

@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -30,6 +30,11 @@ from utility.cog.character.attribute.regenation import Character_regen
 from utility.cog.displayer.team import Team_displayer
 from utility.cog.displayer.icon import Icon_displayer
 from utility.cog.displayer.category import Category_displayer
+
+# ability
+from utility.cog.character.ability.list._1_sequence import Sequence_1
+from utility.cog.character.ability.list._2_ki_charge import Ki_charge_2
+from utility.cog.character.ability.list._3_defend import Defend_3
 
 # character class
 class Character:
@@ -145,6 +150,7 @@ class Character:
 
         # 2 types of damage : Physical and Ki one
         self.damage = Character_damage()
+        self.force = 0
 
         # the critical values are in %
         self.critical_chance = 0
@@ -185,7 +191,7 @@ class Character:
         # ability
         # list of abilities
         self.ability_sorted = False
-        self.ability = []
+        self.ability = [Sequence_1, Ki_charge_2, Defend_3]
 
         self.passive_sorted = False
         self.passive_start = []  # Passive skill that must be triggered at the beginning of the turn
@@ -338,9 +344,10 @@ class Character:
 
         Return : `Ability()` instance.
         """
-        
+
         # find the ability then create an instance of it
         ability = self.ability[ability_index]
+        
         if(self.ability_sorted == False):
             ability = ability(
                 client,
@@ -460,7 +467,7 @@ class Character:
         )
 
         move = {
-            "move" : 3,
+            "move" : 0,
             "target" : None
         }  # init to defend
 
@@ -528,7 +535,7 @@ class Character:
             if(len(usable_ability) > 0):
                 # pick a random ability in the usuable abilities list
                 # pick a random ability
-                ability_choice = 3  # init to 3, 3 is the ability 1 (index 0)
+                ability_choice = 0  # init to 0, 0 is the ability 1 (index 0)
                 random_ability = randint(0, len(usable_ability) - 1)
 
                 # get the ability object with the random obtained index.

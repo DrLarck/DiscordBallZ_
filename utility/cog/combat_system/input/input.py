@@ -45,8 +45,8 @@ class Combat_input():
         index = 1
 
         if(ability):  # defines the amount of abilities the player can use
-            start = 4
-            end = len(options) + 4
+            start = 1
+            end = len(options) + 1
         
         else:
             start = 1

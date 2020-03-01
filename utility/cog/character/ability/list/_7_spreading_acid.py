@@ -5,7 +5,7 @@ Manages the spreading acid ability.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 27/02/20 (DrLarck)
 """
 
 # dependancies
@@ -20,7 +20,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from configuration.icon import game_icon
 
 # spreading acid
-class Spreading_acid(Ability):
+class Spreading_acid_7(Ability):
     """
     Add a stack of acid to all the characters that have at least one stack of acid active on it.
     """
@@ -41,7 +41,8 @@ class Spreading_acid(Ability):
         # ability
         self.name = "Spreading acid"
         self.description = f"""Add a stack of **__Acid__** to all the active **__Acid__** malus."""
-
+        self.id = 7
+        
         self.icon = self.game_icon['ability']['spreading_acid']
         self.cost = 30
     

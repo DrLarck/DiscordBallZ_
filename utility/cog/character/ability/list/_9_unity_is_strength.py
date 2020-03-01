@@ -5,7 +5,7 @@ Manages the Unity is Strength ability.
 
 Author : DrLarck
 
-Last update : 28/09/19 (DrLarck)
+Last update : 27/02/20 (DrLarck)
 """
 
 # dependancies
@@ -19,7 +19,7 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.character.ability.ability import Ability
 
 # spell
-class Unity_is_strength(Ability):
+class Unity_is_strength_9(Ability):
     """
     Applies the Unity is Strenght buff on the Saibaimen.
     """
@@ -42,7 +42,8 @@ class Unity_is_strength(Ability):
         self.description = f"""Applies the **__Unity is strength__** bonus on all the **Saibaiman** in your team.
 Heals up the carriers of the bonus for an amount of **1 %** of the carrier's {self.game_icon['ki_ability']} per active **__Acid__** stack on the **enemy team**.
 Moreover, **your team** stacks up **__Acid__** **2** time faster on the **enemy team** and increase their **maximum stack** and **duration** by **2**."""
-
+        self.id = 9
+        
         self.icon = self.game_icon['ability']['unity_is_strength']
         self.cost = 60
 

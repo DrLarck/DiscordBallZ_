@@ -5,7 +5,7 @@ Manages the character 3
 
 Author : DrLarck
 
-Last update : 17/02/20 (DrLarck)
+Last update : 28/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,9 +15,12 @@ import asyncio
 from utility.cog.character.character import Character
 
 # test
-from utility.cog.character.ability.list.acid import Acid
-from utility.cog.character.ability.list.spreading_acid import Spreading_acid
-from utility.cog.character.ability.list.paralyzing_burns import Paralyzing_burns
+from utility.cog.character.ability.list._1_sequence import Sequence_1
+from utility.cog.character.ability.list._2_ki_charge import Ki_charge_2
+from utility.cog.character.ability.list._3_defend import Defend_3
+from utility.cog.character.ability.list._4_acid import Acid_4
+from utility.cog.character.ability.list._7_spreading_acid import Spreading_acid_7
+from utility.cog.character.ability.list._6_paralyzing_burns import Paralyzing_burns_6
 
 from utility.cog.character.ability.passive.saibaiman_red import Passive_red_saibaiman
 from utility.cog.character.ability.leader.saibaiman_red import Leader_saibaiman_red
@@ -64,6 +67,6 @@ class Character_003(Character):
         self.regeneration.ki = 4
 
         # ability
-        self.ability = [Acid, Spreading_acid, Paralyzing_burns]
+        self.ability = [Sequence_1, Ki_charge_2, Defend_3, Acid_4, Spreading_acid_7, Paralyzing_burns_6]
         self.leader = [Leader_saibaiman_red]
         self.passive_start = [Passive_red_saibaiman]

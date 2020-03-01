@@ -5,7 +5,7 @@ Eraser canon ability object
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 01/03/20 (DrLarck)
 """
 
 # dependancies
@@ -14,14 +14,14 @@ import random
 
 # util
 from utility.cog.character.ability.ability import Ability
-from utility.cog.fight_system.calculator.damage import Damage_calculator
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.displayer.move import Move_displayer
 
 # effect
 from utility.cog.character.ability.effect.debuff.stun import Stun
 
-class Eraser_canon(Ability):
+class Eraser_canon_15(Ability):
     """
     Represents the Eraser canon ability
     """
@@ -32,11 +32,14 @@ class Eraser_canon(Ability):
         self.name = "Eraser canon"
         self.description = f"Inflicts **15 %** of your {self.game_icon['ki_ability']} damage to **all** enemies. Stun them for **1** turn."
         self.icon = self.game_icon["ability"]["eraser_canon"]
+        self.id = 15
 
         self.cost = 75
+
+        self.damage.ki = 15
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 1.15):,}** - **{int(self.caster.damage.ki_max * 1.15):,}** {self.game_icon['ki_ability']} damage to **all** enemies. **Stun** them for **1** turn."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.ki_min * 0.15):,}** - **{int(self.caster.damage.ki_max * 0.15):,}** {self.game_icon['ki_ability']} damage to **all** enemies. **Stun** them for **1** turn."
     
     async def use(self):
         """
@@ -50,7 +53,7 @@ class Eraser_canon(Ability):
         """
 
         # init
-        damage = random.randint(int(self.caster.damage.ki_min * 1.15), int(self.caster.damage.ki_max * 1.15))
+        damage = await self.get_damage()
         final_move = f"__Move__ : `{self.name}`{self.icon}\n__Damage__ : \n"
 
         for enemy in self.team_b:
@@ -59,14 +62,12 @@ class Eraser_canon(Ability):
             # init for the enemy
             stun = Stun(self.client, self.ctx, enemy, self.team_a, self.team_b)
             checker = Effect_checker(enemy)
-            damager = Damage_calculator(self.caster, enemy)
+            damager = Damage_calculator()
 
             # inflict the damage
-            damage_dict = await damager.ki_damage(damage)
+            _damage = await damager.inflict_damage(self.caster, enemy, damage)
 
-            final_move += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} -**{damage_dict['calculated']:,}** {self.game_icon['ki_ability']}\n"
-
-            await enemy.receive_damage(damage_dict['calculated'], self.caster)
+            final_move += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} -**{damage.ki:,}** {self.game_icon['ki_ability']}\n"
 
             # check if the enemy is stun
             # if the enmy isn't stun, stun it

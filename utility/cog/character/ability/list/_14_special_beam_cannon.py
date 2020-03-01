@@ -5,7 +5,7 @@ Manages the special beam canon ability
 
 Author : Zyorhist
 
-Last update : 18/02/20 (DrLarck)
+Last update : 29/02/20 (DrLarck)
 """
 
 # dependancies
@@ -15,12 +15,10 @@ from random import randint
 # util
 from utility.cog.character.ability.ability import Ability
 
-from utility.cog.fight_system.calculator.damage import Damage_calculator
-
-from utility.cog.displayer.move import Move_displayer
+from utility.cog.combat_system.damage.calculator import Damage_calculator
 
 # ability
-class Special_beam_cannon(Ability):
+class Special_beam_cannon_14(Ability):
     """
     Deal true damage to opponent
     
@@ -42,6 +40,7 @@ class Special_beam_cannon(Ability):
         # stat
         self.name = "Special Beam Cannon"
         self.description = f"""Inflicts **50 %** of your  {self.game_icon['ki_ability']} damage as true damage"""
+        self.id = 14
         
         # self.icon = self.game_icon['ability']['special_beam_cannon']
 
@@ -50,6 +49,8 @@ class Special_beam_cannon(Ability):
         # targetting
         self.need_target = True
         self.target_enemy = True
+
+        self.damage.ki = 50
     
     # method
     async def set_tooltip(self):
@@ -69,31 +70,11 @@ class Special_beam_cannon(Ability):
         """
 
         # init
-        move = Move_displayer()
-        damage_calculator = Damage_calculator(self.caster, self.target)
+        damage_calculator = Damage_calculator()
 
-        roll_damage = int((randint(self.caster.damage.ki_min, self.caster.damage.ki_max)) * 0.5)
-        damage_done = await damage_calculator.physical_damage(
-            roll_damage,
-            dodgable = True,
-            critable = False,
-            ignore_defense = True
-        )
+        damage = await self.get_damage()
         
         # inflict the damage to the target
-        await self.target.receive_damage(damage_done["calculated"], self.caster)
+        display = await damage_calculator.inflict_damage(self.caster, self.target, damage)
 
-        # set the move
-        _move = await move.get_new_move()
-
-        _move["name"] = self.name
-        _move["icon"] = self.icon
-        _move["damage"] = damage_done["calculated"]
-        _move["dodge"] = damage_done["dodge"]
-        _move["critical"] = damage_done["critical"]
-        _move["physical"] = False
-        _move["ki"] = False
-
-        _move = await move.offensive_move(_move)
-
-        return(_move)
+        return(display)

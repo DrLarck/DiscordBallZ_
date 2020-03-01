@@ -5,7 +5,7 @@ Powered shell ability object
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 29/02/20 (DrLarck)
 """
 
 # dependancies
@@ -19,7 +19,7 @@ from utility.cog.displayer.move import Move_displayer
 # buff
 from utility.cog.character.ability.effect.buff.powered_shell import Buff_powered_shell
 
-class Powered_shell(Ability):
+class Powered_shell_16(Ability):
     """
     Represents the Powered Shelle ability
     """
@@ -30,7 +30,8 @@ class Powered_shell(Ability):
         self.name = "Powered shell"
         self.description = f"The carrier gains **10 %** damage reduction for **5** turns."
         self.icon = self.game_icon["ability"]["powered_shell"]
-
+        self.id = 16
+        
         self.cost = 25
 
         self.need_target = False

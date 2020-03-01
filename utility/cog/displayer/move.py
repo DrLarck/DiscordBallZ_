@@ -5,7 +5,7 @@ Manages the way the move are displayed.
 
 Author : DrLarck
 
-Last update : 21/09/19 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependancies
@@ -97,11 +97,11 @@ class Move_displayer:
         # init
         offensive_display = ""
 
-        offensive_display += f"__Move__ : `{move['name']}`{move['icon']}\n"
+        offensive_display += f"__Move__ : {move['icon']}`{move['name']}`\n"
 
         # type of damage
         if(move["dodge"]):
-            offensive_display += f"__Damage__ : **DODGED ! 💨**\n"
+            offensive_display += f"__Damage__ : :dash: **DODGED !**\n"
         
         elif(move["physical"]):
             offensive_display += f"__Damage__ : -**{move['damage']:,}** :punch: "
@@ -147,8 +147,8 @@ class Move_displayer:
         # init
         ki_display = ""
 
-        ki_display += f"__Move__ : `{move['name']}`{move['icon']}\n"
-        ki_display += f"__Ki gain__ : +**{move['damage']}** :fire: \n"
+        ki_display += f"__Move__ : {move['icon']}`{move['name']}`\n"
+        ki_display += f"__Ki gain__ : +**{move['damage']}**:fire: \n"
         
         return(ki_display)
     
@@ -168,7 +168,7 @@ class Move_displayer:
         # init
         effect_display = ""
 
-        effect_display += f"__Move__ : `{move['name']}`{move['icon']}\n"
+        effect_display += f"__Move__ : {move['icon']}`{move['name']}`\n"
 
         if(move["damage"] != 0):
             if(move["damage"] < 0):  # damaging
@@ -193,7 +193,7 @@ class Move_displayer:
         # init
         defend_display = ""
 
-        defend_display += "__Move__ : Defending :shield:"
+        defend_display += "__Move__ : :shield:`Defend`"
 
         return(defend_display)
     
@@ -211,6 +211,6 @@ class Move_displayer:
         # init
         skip_display = ""
 
-        skip_display += "__Move__ : Skip ⏩"
+        skip_display += "__Move__ : ⏩`Skip` "
 
         return(skip_display)

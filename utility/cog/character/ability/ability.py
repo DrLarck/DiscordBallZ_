@@ -5,14 +5,18 @@ Ability super class.
 
 Author : DrLarck
 
-Last update : 08/02/20 (DrLarck)
+Last update : 25/02/20 (DrLarck)
 """
 
 # dependance
 import asyncio
+import random
 
 # graphic
 from configuration.icon import game_icon
+
+# damage object
+from utility.cog.combat_system.damage.damage import Damage
 
 # super class
 class Ability:
@@ -39,6 +43,10 @@ class Ability:
     `description` : Represents the ability description.
 
     `icon` : Represents the ability's icon as `discord.Emoji`.
+
+    `game_icon` (`dict`)
+
+    `level` (`int`)
 
     `cost` : Represents the ability ki cost.
 
@@ -73,6 +81,8 @@ class Ability:
         self.tooltip = None
         self.icon = "<:notfound:617735236473585694>"
         self.game_icon = game_icon
+        self.level = 0
+        self.id = 0
 
         # condition
         self.cost = 0
@@ -83,6 +93,9 @@ class Ability:
         self.target_ally = False
         self.target_enemy = False
         self.ignore_defenders = False
+
+        # damage
+        self.damage = Ability_damage()
     
     # method
     async def set_tooltip(self):
@@ -97,6 +110,50 @@ class Ability:
         """
 
         return
+    
+    async def get_damage(self):
+        """
+        `coroutine`
+
+        Generate a `Damage()` object for the ability based on the ability's damage info
+
+        --
+
+        Return : `Damage()`
+        """
+
+        # init
+        damage = Damage(self)
+        true = 0
+
+        # get physical damage based on caster's physical
+        if(self.damage.physical > 0):
+            # generate random damage
+            caster_phy = random.randint(self.caster.damage.physical_min, self.caster.damage.physical_max)
+            damage_phy = int((self.damage.physical * caster_phy) / 100)
+            damage.physical = damage_phy
+        
+        # get the ki damage
+        if(self.damage.ki > 0):
+            caster_ki = random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
+            damage_ki = int((self.damage.ki * caster_ki) / 100)
+            damage.ki = damage_ki
+        
+        # get the true phy damage
+        if(self.damage.true_phy > 0):
+            caster_phy = random.randint(self.caster.damage.physical_min, self.caster.damage.physical_max)
+            true_phy = int((self.damage.true_phy * caster_phy) / 100)
+            true += true_phy
+        
+        # get the true ki damage
+        if(self.damage.true_ki > 0):
+            caster_ki = random.randint(self.caster.damage.ki_min, self.caster.damage.ki_max)
+            true_ki = int((self.damage.true_ki * caster_ki) / 100)
+            true += true_ki
+
+        damage.true = true
+
+        return(damage)
 
     async def init(self):
         """
@@ -111,6 +168,7 @@ class Ability:
 
         # set the tooltip
         await self.set_tooltip()
+        await self.get_damage()
 
         return
     
@@ -126,3 +184,35 @@ class Ability:
         """
 
         return
+
+class Ability_damage():
+    """
+    Ability's damage attribute
+
+    - Attribute 
+
+    `total` (`int`)
+
+    `physical` (`int`)
+
+    `ki` (`int`)
+
+    `true_phy` (`int`) : True damage based on the phy stat of the caster
+
+    `true_ki` (`int`) : Same as true_phy but based on ki
+
+    `rarity` (`int`) : Bonus damage (flat) based on the caster's rarity
+
+    `ability_level` (`int`) : Bonus damage (flat) based on the ability level
+
+    `force` (`int`) : Defense reduction (flat) bonus
+    """
+
+    def __init__(self):
+        self.physical = 0
+        self.ki = 0
+
+        self.true_phy = 0
+        self.true_ki = 0
+        
+        self.force = 0
