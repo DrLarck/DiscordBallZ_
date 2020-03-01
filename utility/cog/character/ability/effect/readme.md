@@ -22,6 +22,8 @@ Here are listed all the effects id sorted by effect type :
 
 **Powered shell** : 14
 
+**Derusting** : 15
+
 ### Debuff
 
 **Acid explosion** : 3
