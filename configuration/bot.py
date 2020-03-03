@@ -5,7 +5,7 @@ Here is the basic configuration of the bot.
 
 Author : DrLarck
 
-Last update : 01/03/2020 (DrLarck)
+Last update : 03/03/2020 (DrLarck)
 """
 
 # dependancies
@@ -57,22 +57,13 @@ class Bot_config:
 
     # droprate
     droprate = {
-        "n" : 0,
-        "r" : 100,
+        "n" : 100,
+        "r" : 60,
         "sr" : 20,
         "ssr" : 5,
         "ur" : 1,
         "lr" : 0.1
     }
-
-    """
-    100
-    60
-    20
-    5
-    1
-    0.1
-    """
 
     # level per rarity
     rarity_level = {
