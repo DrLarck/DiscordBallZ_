@@ -5,7 +5,7 @@ Pirate robot character
 
 Author : DrLarck
 
-Last update : 01/03/20 (DrLarck)
+Last update : 03/03/20 (DrLarck)
 """
 
 # dependancies
@@ -13,6 +13,9 @@ import asyncio
 
 # util
 from utility.cog.character.character import Character
+
+# ability
+from utility.cog.character.ability.list._20_derusting import Derusting_20
 
 class Character_047(Character):
     """
@@ -36,3 +39,5 @@ class Character_047(Character):
         self.defense.spirit = 420
 
         self.ki.maximum = 0
+
+        self.ability = [Derusting_20]

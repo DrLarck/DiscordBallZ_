@@ -27,7 +27,7 @@ class Derusting_20(Ability):
         Ability.__init__(self, client, ctx, caster, target, team_a, team_b)
 
         self.name = "Derusting"
-        self.description = f"Add a stack of **[Derusting]** to this unit."
+        self.description = f"Add a stack of **[Derusting]** to this unit. Set the posture to :shield:`Defending`."
         self.id = 20
     
     async def use(self):
@@ -36,6 +36,9 @@ class Derusting_20(Ability):
 
         Applies a stack of Derusting to this unit
         """
+
+        # set posture to defending
+        await self.caster.posture.change_posture("defending")
 
         # init
         display = f"__Move__ : {self.icon}`{self.name}`"
