@@ -5,7 +5,7 @@ Check if the target has an effect active on it.
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 01/03/20 (DrLarck)
 """
 
 # dependancies
@@ -132,7 +132,12 @@ class Effect_checker:
         if(effect_id == 14):
             from utility.cog.character.ability.effect.buff.powered_shell import Buff_powered_shell
             effect = Buff_powered_shell(client, ctx, target, team_a, team_b)
-            
+        
+        # Derusting
+        if(effect == 15):
+            from utility.cog.character.ability.effect.buff.derusting import Buff_derusting
+            effect = Buff_derusting(client, ctx, target, team_a, team_b)
+
         return(effect)
 
     async def get_buff(self, buff):

@@ -5,7 +5,7 @@ Derusting buff
 
 Author : DrLarck
 
-Last update : 01/03/20 (DrLarck)
+Last update : 03/03/20 (DrLarck)
 """
 
 # dependancies
@@ -47,11 +47,11 @@ class Buff_derusting(Effect):
         await reference.init()
 
         # get the bonus
-        hp_bonus = self.carrier.health.maximum * 0.05
-        physical_bonus = self.carrier.damage.physical_max * 0.05
-        ki_bonus = self.carrier.damage.ki_max * 0.05
-        armor_bonus = self.carrier.defense.armor * 0.05
-        spirit_bonus = self.carrier.defense.spirit * 0.05
+        hp_bonus = (self.carrier.health.maximum * 0.05) * self.stack
+        physical_bonus = (self.carrier.damage.physical_max * 0.05) * self.stack
+        ki_bonus = (self.carrier.damage.ki_max * 0.05) * self.stack
+        armor_bonus = (self.carrier.defense.armor * 0.05) * self.stack
+        spirit_bonus = (self.carrier.defense.spirit * 0.05) * self.stack
 
         # apply the bonus
         self.carrier.health.maximum += hp_bonus
