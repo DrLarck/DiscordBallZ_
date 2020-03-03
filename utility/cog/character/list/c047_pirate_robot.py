@@ -14,6 +14,9 @@ import asyncio
 # util
 from utility.cog.character.character import Character
 
+# passive
+from utility.cog.character.ability.passive.derusting import Passive_derusting
+
 # ability
 from utility.cog.character.ability.list._20_derusting import Derusting_20
 
@@ -40,4 +43,5 @@ class Character_047(Character):
 
         self.ki.maximum = 0
 
+        self.passive_start = [Passive_derusting]
         self.ability = [Derusting_20]
