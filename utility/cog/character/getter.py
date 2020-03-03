@@ -298,6 +298,11 @@ class Character_getter:
             from utility.cog.character.list.c046_bardockSsj import Character_046
 
             character = Character_046()
+        
+        if(character_id == 47):
+            from utility.cog.character.list.c047_pirate_robot import Character_047
+
+            character = Character_047()
                                     
         return(character)
     
