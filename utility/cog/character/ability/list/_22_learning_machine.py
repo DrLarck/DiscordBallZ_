@@ -26,8 +26,13 @@ class Learning_machine_22(Ability):
         Ability.__init__(self, client, ctx, caster, target, team_a, team_b)
 
         self.name = "Learning machine"
-        self.description = "This ability changes based on the **[Derusting]** stacks this unit has."
+        self.description = "This ability evolves based on the **[Derusting]** stacks this unit has."
         self.id = 22
+
+        self.need_target = True
+
+    async def set_tooltip(self):
+        self.tooltip = "This ability evolves based on the amount of [Derusting] stacks you have."
     
     async def use(self):
         """
