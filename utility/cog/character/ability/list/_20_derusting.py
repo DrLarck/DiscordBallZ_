@@ -32,6 +32,9 @@ class Derusting_20(Ability):
 
         self.need_target = False
     
+    async def set_tooltip(self):
+        self.tooltip = "Add a stack of **[Derusting]** to this unit. Set the posture to :shield:`Defending`."
+    
     async def use(self):
         """
         `coroutine`
