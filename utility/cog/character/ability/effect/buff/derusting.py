@@ -47,11 +47,11 @@ class Buff_derusting(Effect):
         await reference.init()
 
         # get the bonus
-        hp_bonus = (self.carrier.health.maximum * 0.05) * self.stack
-        physical_bonus = (self.carrier.damage.physical_max * 0.05) * self.stack
-        ki_bonus = (self.carrier.damage.ki_max * 0.05) * self.stack
-        armor_bonus = (self.carrier.defense.armor * 0.05) * self.stack
-        spirit_bonus = (self.carrier.defense.spirit * 0.05) * self.stack
+        hp_bonus = int((self.carrier.health.maximum * 0.05) * self.stack)
+        physical_bonus = int((self.carrier.damage.physical_max * 0.05) * self.stack)
+        ki_bonus = int((self.carrier.damage.ki_max * 0.05) * self.stack)
+        armor_bonus = int((self.carrier.defense.armor * 0.05) * self.stack)
+        spirit_bonus = int((self.carrier.defense.spirit * 0.05) * self.stack)
 
         # apply the bonus
         self.carrier.health.maximum += hp_bonus
