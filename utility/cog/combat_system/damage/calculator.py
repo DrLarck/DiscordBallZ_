@@ -5,7 +5,7 @@ Damage calculator object
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 03/03/20 (DrLarck)
 """
 
 # dependancies
@@ -97,7 +97,7 @@ class Damage_calculator():
             gonna_die = False  # check if the damages are going to kill the target
             
             if(total >= target.health.current):  # the target is going to die from the damages
-                gonna_die = true
+                gonna_die = True
             
             # inflict
             target.health.current -= total
