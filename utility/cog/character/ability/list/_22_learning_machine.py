@@ -47,17 +47,23 @@ class Learning_machine_22(Ability):
         derusting = await checker.get_buff(reference)
 
         if not derusting is None:
-            if(derusting.stack >= 13):
+            if(derusting.stack >= 8):
                 self.name = "Mechanical sequence"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to the target."
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.8):,}** - **{int(self.caster.damage.physical_max * 1.8):,}**:punch: to the target."
+                self.damage.physical = 180
+            
+            elif(derusting.stack >= 13):
+                self.name = "Rocket launcher"
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to **all opponents**."
                 self.damage.physical = 200
+                multi = True
             
             elif(derusting.stack >= 20):
-                self.name = "Rocket launcher"
+                self.name = "Machine gun"
                 self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2.5):,}** - **{int(self.caster.damage.physical_max * 2.5):,}**:punch: to **all opponents**."
                 self.damage.physical = 250
                 multi = True
-            
+
             elif(derusting.stack >= 30):
                 self.name = "Emergency destruction"
                 self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 4):,}** - **{int(self.caster.damage.physical_max * 4):,}**:punch: to **all opponents**."

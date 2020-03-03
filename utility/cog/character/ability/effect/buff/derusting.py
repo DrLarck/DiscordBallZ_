@@ -54,6 +54,7 @@ class Buff_derusting(Effect):
         spirit_bonus = int((self.carrier.defense.spirit * 0.05) * self.stack)
 
         # apply the bonus
+        self.carrier.health.current += hp_bonus
         self.carrier.health.maximum += hp_bonus
 
         self.carrier.damage.physical_max += physical_bonus
