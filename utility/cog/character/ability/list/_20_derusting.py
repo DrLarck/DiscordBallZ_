@@ -29,6 +29,8 @@ class Derusting_20(Ability):
         self.name = "Derusting"
         self.description = f"Add a stack of **[Derusting]** to this unit. Set the posture to :shield:`Defending`."
         self.id = 20
+
+        self.need_target = False
     
     async def use(self):
         """
