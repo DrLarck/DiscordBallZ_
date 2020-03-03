@@ -896,48 +896,30 @@ class Combat():
 
                     # normal move
                     else:
-                        if(player_move < 3):
-                            # sequence
-                            if(player_move == 0):
-                                self.move.index = 0
+                        self.move.index = player_move
+
+                        ability = await player_fighter.get_ability(
+                            self.client, self.ctx, player_fighter, player_fighter, 
+                            team_a, team_b, player_move
+                        )
+                        
+                        # check the cost
+                        if(player_fighter.ki.current >= ability.cost):
+                            if(ability.need_target):
                                 self.move.target = await self.get_target(
                                     player, team_a_, team_b_, order,
-                                    target_enemy = True
-                                )
+                                    target_ally = ability.target_ally,
+                                    target_enemy = ability.target_enemy,
+                                    ignore_defenders = ability.ignore_defenders
+                                ) 
 
                                 action_ok = True
                             
-                            else:
-                                self.move.index = player_move
-
+                            else:  # if don't need target just pass
                                 action_ok = True
-
-                        # abilities
+                        
                         else:
-                            self.move.index = player_move
-
-                            ability = await player_fighter.get_ability(
-                                self.client, self.ctx, player_fighter, player_fighter, 
-                                team_a, team_b, player_move - 3
-                            )
-                            
-                            # check the cost
-                            if(player_fighter.ki.current >= ability.cost):
-                                if(ability.need_target):
-                                    self.move.target = await self.get_target(
-                                        player, team_a_, team_b_, order,
-                                        target_ally = ability.target_ally,
-                                        target_enemy = ability.target_enemy,
-                                        ignore_defenders = ability.ignore_defenders
-                                    ) 
-
-                                    action_ok = True
-                                
-                                else:  # if don't need target just pass
-                                    action_ok = True
-                            
-                            else:
-                                await self.ctx.send("You do not have enough **Ki** to use this ability")
+                            await self.ctx.send("You do not have enough **Ki** to use this ability")
                         
                 else:  # cpu
                     self.move = await player.make_move(
