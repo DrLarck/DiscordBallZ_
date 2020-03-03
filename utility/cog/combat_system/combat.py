@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 03/03/20 (DrLarck)
 """
 
 # dependancies
@@ -1264,6 +1264,11 @@ class Combat():
                 await self.effects(self.team_a, self.leader_a, start = True)
                 await self.effects(self.team_b, self.leader_b, start = True)
                 
+                winner = await self.get_winner()
+
+                if(winner != None):
+                    return(winner)
+
                 # get the number of time a player will play this turn
                 play_time = await self.get_play_time(0)
 
@@ -1322,6 +1327,11 @@ class Combat():
 
                     await self.effects(self.team_a, self.leader_a, end = True)
                     await self.effects(self.team_b, self.leader_b, end = True)
+
+                    winner = await self.get_winner()
+
+                    if(winner != None):
+                        return(winner)
 
                     turn_end = True
             
