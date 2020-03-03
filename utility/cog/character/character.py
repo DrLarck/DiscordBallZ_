@@ -558,5 +558,7 @@ class Character:
             
             else:  # do not have enough ki to use an ability
                 move["move"] = 1
+        
+        print(move)
 
         return(move)

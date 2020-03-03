@@ -17,7 +17,10 @@ from utility.cog.character.ability.util.effect_checker import Effect_checker
 from utility.cog.character.ability.effect.buff.derusting import Buff_derusting
 
 # abilities
+from utility.cog.character.ability.list._20_derusting import Derusting_20
 from utility.cog.character.ability.list._21_mechanical_strike import Mechanical_strike_21
+from utility.cog.character.ability.list._23_mechanical_sword import Mechanical_sword_23
+from utility.cog.character.ability.list._22_learning_machine import Learning_machine_22
 
 class Passive_derusting(Effect):
     """
@@ -46,13 +49,15 @@ class Passive_derusting(Effect):
         if not derusting is None:
             # add ability based on the stacks
             if(derusting.stack < 2):  # only have derusting as ability
-                from utility.cog.character.ability.list._20_derusting import Derusting_20
                 self.carrier.ability = [Derusting_20]
             
             if(derusting.stack >= 2):  # add mechanical strike to the abilities
-                from utility.cog.character.ability.list._20_derusting import Derusting_20
-                from utility.cog.character.ability.list._21_mechanical_strike import Mechanical_strike_21
-
                 self.carrier.ability = [Derusting_20, Mechanical_strike_21]
+
+            if(derusting.stack >= 5):  # add mechanical sword to the abilities
+                self.carrier.ability = [Derusting_20, Mechanical_sword_23]
+            
+            if(derusting.stack >= 8):  # add learning machine
+                self.carrier.ability = [Derusting_20, Mechanical_sword_23, Learning_machine_22]
         
         return

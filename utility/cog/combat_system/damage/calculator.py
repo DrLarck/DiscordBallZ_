@@ -45,7 +45,7 @@ class Damage_calculator():
         """
 
         # init
-        display = f"__Move__ : {damage.icon}**{damage.name}**\n"
+        display = ""
         detail = ""
         detail_cpt = 0
         total = 0
