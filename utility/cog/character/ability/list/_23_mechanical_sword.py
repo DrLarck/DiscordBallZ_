@@ -33,7 +33,7 @@ class Mechanical_sword_23(Ability):
         self.damage.physical = 150
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.5)}** - **{int(self.caster.damage.physical_max * 1.5)}**:punch: to the target."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.5):,}** - **{int(self.caster.damage.physical_max * 1.5):,}**:punch: to the target."
     
     async def use(self):
         """

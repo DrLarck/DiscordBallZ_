@@ -49,23 +49,24 @@ class Learning_machine_22(Ability):
         if not derusting is None:
             if(derusting.stack >= 13):
                 self.name = "Mechanical sequence"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2)}** - **{int(self.caster.damage.physical_max * 2)}**:punch: to the target."
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to the target."
                 self.damage.physical = 200
             
             elif(derusting.stack >= 20):
                 self.name = "Rocket launcher"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2.5)}** - **{int(self.caster.damage.physical_max * 2.5)}**:punch: to **all opponents**."
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2.5):,}** - **{int(self.caster.damage.physical_max * 2.5):,}**:punch: to **all opponents**."
                 self.damage.physical = 250
                 multi = True
             
             elif(derusting.stack >= 30):
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 4)}** - **{int(self.caster.damage.physical_max * 4)}**:punch: to **all opponents**."
+                self.name = "Emergency destruction"
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 4):,}** - **{int(self.caster.damage.physical_max * 4):,}**:punch: to **all opponents**."
                 self.damage.physical = 400
                 multi = True
         
         else:
             self.name = "Mechanical sequence"
-            self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2)}** - **{int(self.caster.damage.physical_max * 2)}**:punch: to the target."
+            self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to the target."
             self.damage.physical = 200
             multi = False
         

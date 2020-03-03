@@ -22,7 +22,7 @@ class Mechanical_strike_21(Ability):
 
     def __init__(self, client, ctx, caster, target, team_a, team_b):
         Ability.__init__(self, client, ctx, caster, target, team_a, team_b)
-        
+
         self.name = "Mechanical strike"
         self.description = "Inflicts physical damage to the target."
         self.id = 21
@@ -33,7 +33,7 @@ class Mechanical_strike_21(Ability):
         self.damage.physical = 110
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.1)}** - **{int(self.caster.damage.physical_max * 1.1)}**:punch: to the target."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.1):,}** - **{int(self.caster.damage.physical_max * 1.1):,}**:punch: to the target."
     
     async def use(self):
         """
