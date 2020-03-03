@@ -58,19 +58,19 @@ class Learning_machine_22(Ability):
                 self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.8):,}** - **{int(self.caster.damage.physical_max * 1.8):,}**:punch: to the target."
                 self.damage.physical = 180
             
-            elif(derusting.stack >= 13):
+            if(derusting.stack >= 13):
                 self.name = "Rocket launcher"
                 self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to **all opponents**."
                 self.damage.physical = 200
                 multi = True
             
-            elif(derusting.stack >= 20):
+            if(derusting.stack >= 20):
                 self.name = "Machine gun"
                 self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2.5):,}** - **{int(self.caster.damage.physical_max * 2.5):,}**:punch: to **all opponents**."
                 self.damage.physical = 250
                 multi = True
 
-            elif(derusting.stack >= 30):
+            if(derusting.stack >= 30):
                 self.name = "Emergency destruction"
                 self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 4):,}** - **{int(self.caster.damage.physical_max * 4):,}**:punch: to **all opponents**."
                 self.damage.physical = 400
@@ -84,15 +84,15 @@ class Learning_machine_22(Ability):
         
         # inflict the damage
         damage = await self.get_damage()
-        display = f"__Move__ : `{self.name}`{self.icon}\n__Damage__ : \n"
+        display = f"__Move__ : `{self.name}`{self.icon}\n"
 
         if(multi):  # if AOE
             for enemy in self.team_b:
                 await asyncio.sleep(0)
 
                 damage_ = await damager.inflict_damage(self.caster, enemy, damage)
-
-                display += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} -**{damage_:,}**:punch:\n"
+            
+                display += f"{damage_} - {enemy.image.icon}**{enemy.info.name}**{enemy.type.icon}\n"
         
         else:
             damage_ = await damager.inflict_damage(self.caster, self.target, damage)
