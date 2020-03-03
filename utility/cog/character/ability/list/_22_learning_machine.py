@@ -30,6 +30,7 @@ class Learning_machine_22(Ability):
         self.id = 22
 
         self.need_target = True
+        self.target_enemy = True
 
     async def set_tooltip(self):
         self.tooltip = "This ability evolves based on the amount of **[Derusting]** stacks you have."

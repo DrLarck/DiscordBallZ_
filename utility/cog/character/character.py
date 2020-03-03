@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 03/03/20 (DrLarck)
 """
 
 # dependancies
@@ -535,7 +535,5 @@ class Character:
                 move["target"] = choice(targetable)
 
             move["move"] = ability_choice
-        
-        print(move)
 
         return(move)

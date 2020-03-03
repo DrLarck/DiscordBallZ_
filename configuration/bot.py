@@ -57,13 +57,22 @@ class Bot_config:
 
     # droprate
     droprate = {
-        "n" : 100,
-        "r" : 60,
+        "n" : 0,
+        "r" : 100,
         "sr" : 20,
         "ssr" : 5,
         "ur" : 1,
         "lr" : 0.1
     }
+
+    """
+    100
+    60
+    20
+    5
+    1
+    0.1
+    """
 
     # level per rarity
     rarity_level = {
