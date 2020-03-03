@@ -21,6 +21,8 @@ class Mechanical_strike_21(Ability):
     """
 
     def __init__(self, client, ctx, caster, target, team_a, team_b):
+        Ability.__init__(self, client, ctx, caster, target, team_a, team_b)
+        
         self.name = "Mechanical strike"
         self.description = "Inflicts physical damage to the target."
         self.id = 21
