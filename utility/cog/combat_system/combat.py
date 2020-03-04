@@ -823,6 +823,7 @@ class Combat():
                 ability_index += 1
         
         if not player.is_cpu:
+            await self.check_character(player_input, order)
             await self.ctx.send(
                 f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
             )

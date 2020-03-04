@@ -56,7 +56,7 @@ game_icon = {
         "emergency_destruction" : "<:emergency_destruction:684493294163853404>",
         "mechanical_strike" : "<:mechanical_strike:684493322286530561>",
         "mechanical_sword" : "<:mechanical_sword:684493576142585905>",
-        "machine_gun" : "<:machine_gun:684493309682516125>"
+        "machine_gun" : "<:machine_gun:684493309682516125>",
     },
 
     # effect
