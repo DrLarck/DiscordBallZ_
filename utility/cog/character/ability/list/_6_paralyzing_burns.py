@@ -5,7 +5,7 @@ Manages the paralyzing burns ability.
 
 Author : DrLarck
 
-Last update : 27/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies

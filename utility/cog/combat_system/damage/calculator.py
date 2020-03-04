@@ -45,7 +45,7 @@ class Damage_calculator():
         """
 
         # init
-        display = ""
+        display = "\n"
         detail = ""
         detail_cpt = 0
         total = 0

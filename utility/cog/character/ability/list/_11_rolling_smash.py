@@ -5,7 +5,7 @@ Manages the rolling smash ability.
 
 Author : DrLarck
 
-Last update : 28/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -81,7 +81,8 @@ class Rolling_smash_11(Ability):
         damage = await self.get_damage()
         
         # inflict the damage to the target
-        display = await damager.inflict_damage(self.caster, self.target, damage)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await damager.inflict_damage(self.caster, self.target, damage)
 
         # set the cooldown
         self.cooldown = 4

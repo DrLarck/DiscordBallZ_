@@ -5,7 +5,7 @@ Manages the Sequence ability
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -41,6 +41,8 @@ class Sequence_1(Ability):
     async def use(self):
         damager = Damage_calculator()
         damage = await self.get_damage()
+
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
 
         display = await damager.inflict_damage(self.caster, self.target, damage)
 

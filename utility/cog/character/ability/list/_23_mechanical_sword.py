@@ -46,6 +46,7 @@ class Mechanical_sword_23(Ability):
         damager = Damage_calculator()
         damage = await self.get_damage()
 
-        display = await damager.inflict_damage(self.caster, self.target, damage)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await damager.inflict_damage(self.caster, self.target, damage)
 
         return(display)

@@ -5,7 +5,7 @@ Manages the syphon ability
 
 Author : DrLarck
 
-Last update : 27/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -102,7 +102,8 @@ Heals you for an amount of **50 %** of the damage dealt."""
             pass
         
         # deal damage to the target
-        display = await damager.inflict_damage(self.caster, self.target, roll_damage)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await damager.inflict_damage(self.caster, self.target, roll_damage)
         
         # heal the caster
         # of 50 % of damage done
@@ -112,6 +113,6 @@ Heals you for an amount of **50 %** of the damage dealt."""
 
         # healing display
         if(healing > 0):
-            display += f"__Heal__ : +**{healing}** :hearts:\n"
+            display += f"\n__Heal__ : +**{healing}** :hearts:\n"
 
         return(display)
