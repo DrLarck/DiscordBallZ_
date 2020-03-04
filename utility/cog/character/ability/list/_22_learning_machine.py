@@ -5,7 +5,7 @@ Learning machine ability
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -32,9 +32,50 @@ class Learning_machine_22(Ability):
         self.need_target = True
         self.target_enemy = True
 
+        # private
+        self.multi = False
+
     async def set_tooltip(self):
         self.tooltip = "This ability evolves based on the amount of **[Derusting]** stacks you have."
     
+    async def init(self):
+        """
+        Changes the ability based on the caster's derusting stacks
+        """
+
+        # set the tooltip
+        await self.set_tooltip()
+        await self.get_damage()
+
+        # custom
+        checker = Effect_checker(self.caster)
+        reference = Buff_derusting(self.client, self.ctx, self.caster, self.team_a, self.team_b)
+
+        # check derusting
+        derusting = await checker.get_buff(reference)
+
+        if not derusting is None:            
+            if(derusting.stack >= 8):
+                self.name = "Rocket launcher"
+                self.icon = self.game_icon["ability"]["emergency_destruction"]
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to **all opponents**."
+                self.damage.physical = 200
+                self.multi = True
+            
+            if(derusting.stack >= 13):
+                self.name = "Machine gun"
+                self.icon = self.game_icon["ability"]["machine_gun"]
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2.5):,}** - **{int(self.caster.damage.physical_max * 2.5):,}**:punch: to **all opponents**."
+                self.damage.physical = 250
+                self.multi = True
+
+            if(derusting.stack >= 20):
+                self.name = "Emergency destruction"
+                self.icon = self.game_icon["ability"]["emergency_destruction"]
+                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 4):,}** - **{int(self.caster.damage.physical_max * 4):,}**:punch: to **all opponents**."
+                self.damage.physical = 400
+                self.multi = True
+
     async def use(self):
         """
         • 8 stacks : Mechanical sequence : Inflicts 180 % :punch: to the target (3 :hourglass: )
@@ -45,48 +86,12 @@ class Learning_machine_22(Ability):
 
         # init
         damager = Damage_calculator()
-        checker = Effect_checker(self.caster)
-        reference = Buff_derusting(self.client, self.ctx, self.caster, self.team_a, self.team_b)
-        multi = False
-
-        # check derusting
-        derusting = await checker.get_buff(reference)
-
-        if not derusting is None:
-            if(derusting.stack >= 8):
-                self.name = "Mechanical sequence"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.8):,}** - **{int(self.caster.damage.physical_max * 1.8):,}**:punch: to the target."
-                self.damage.physical = 180
-            
-            if(derusting.stack >= 13):
-                self.name = "Rocket launcher"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to **all opponents**."
-                self.damage.physical = 200
-                multi = True
-            
-            if(derusting.stack >= 20):
-                self.name = "Machine gun"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2.5):,}** - **{int(self.caster.damage.physical_max * 2.5):,}**:punch: to **all opponents**."
-                self.damage.physical = 250
-                multi = True
-
-            if(derusting.stack >= 30):
-                self.name = "Emergency destruction"
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 4):,}** - **{int(self.caster.damage.physical_max * 4):,}**:punch: to **all opponents**."
-                self.damage.physical = 400
-                multi = True
-        
-        else:
-            self.name = "Mechanical sequence"
-            self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to the target."
-            self.damage.physical = 200
-            multi = False
-        
+    
         # inflict the damage
         damage = await self.get_damage()
         display = f"__Move__ : `{self.name}`{self.icon}\n"
 
-        if(multi):  # if AOE
+        if(self.multi):  # if AOE
             for enemy in self.team_b:
                 await asyncio.sleep(0)
 

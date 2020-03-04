@@ -5,7 +5,7 @@ Derusting ability
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -29,6 +29,8 @@ class Derusting_20(Ability):
         self.name = "Derusting"
         self.description = f"Add a stack of **[Derusting]** to this unit. Set the posture to :shield:`Defending`."
         self.id = 20
+
+        self.icon = self.game_icon["ability"]["derusting"]
 
         self.need_target = False
     

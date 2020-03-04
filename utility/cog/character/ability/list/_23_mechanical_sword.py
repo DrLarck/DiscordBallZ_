@@ -5,7 +5,7 @@ Mechanical sword ability
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -26,6 +26,8 @@ class Mechanical_sword_23(Ability):
         self.name = "Mechanical sword"
         self.description = "Inflicts physical damage to the target."
         self.id = 23
+
+        self.icon = self.game_icon["ability"]["mechanical_sword"]
 
         self.need_target = True
         self.target_enemy = True

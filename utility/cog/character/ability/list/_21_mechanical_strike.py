@@ -5,7 +5,7 @@ Mechanical strike ability
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -26,6 +26,8 @@ class Mechanical_strike_21(Ability):
         self.name = "Mechanical strike"
         self.description = "Inflicts physical damage to the target."
         self.id = 21
+
+        self.icon = self.game_icon["ability"]["mechanical_strike"]
 
         self.need_target = True
         self.target_enemy = True

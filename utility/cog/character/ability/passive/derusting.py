@@ -5,7 +5,7 @@ Represents the Derusting passive
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -33,6 +33,8 @@ class Passive_derusting(Effect):
         self.name = "Derusting"
         self.description = "Each stack of **[Derusting]** grants this unit **+5 %** stats. New abilities are unlocked based on the number of active **[Derusting]** stacks on this unit."
 
+        self.icon = self.game_icon["effect"]["derusting_buff"]
+
     async def apply(self):
         """
         Each stack of [Derusting] grants this unit +5 % stats. New abilities are unlocked based on the number of active [Derusting] stacks on this unit.
@@ -59,5 +61,6 @@ class Passive_derusting(Effect):
             
             if(derusting.stack >= 8):  # add learning machine
                 self.carrier.ability = [Derusting_20, Mechanical_sword_23, Learning_machine_22]
+                await Learning_machine_22(self.client, self.ctx, self.carrier, None, self.team_a, self.team_b).init()
         
         return
