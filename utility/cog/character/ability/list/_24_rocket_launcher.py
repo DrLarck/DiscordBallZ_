@@ -27,10 +27,10 @@ class Rocket_launcher_23(Ability):
         self.icon = self.game_icon["ability"]["emergency_destruction"]
         self.id = 24
 
-        self.damage.physical = 80
+        self.damage.physical = 50
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 0.8):,}** - **{int(self.caster.damage.physical_max * 0.8):,}**:punch: to **all enemies**."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 0.5):,}** - **{int(self.caster.damage.physical_max * 0.5):,}**:punch: to **all enemies**."
     
     async def use(self):
         """

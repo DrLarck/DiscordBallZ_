@@ -53,14 +53,6 @@ class Learning_machine_22(Ability):
 
         # check derusting
         derusting = await checker.get_buff(reference)
-
-        if not derusting is None:            
-            if(derusting.stack >= 8):
-                self.name = "Rocket launcher"
-                self.icon = self.game_icon["ability"]["emergency_destruction"]
-                self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 2):,}** - **{int(self.caster.damage.physical_max * 2):,}**:punch: to **all opponents**."
-                self.damage.physical = 200
-                self.multi = True
             
             if(derusting.stack >= 13):
                 self.name = "Machine gun"
