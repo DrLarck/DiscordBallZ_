@@ -5,7 +5,7 @@ Manages all the summon tools.
 
 Authod : DrLarck
 
-Last update : 22/08/19 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -268,54 +268,59 @@ class Summoner:
                 pass
         
         # UR
-        draw = uniform(0, 100)
-        if(draw <= droprate["ur"]):
-            if(len(summon_list["ur"]) > 0):  # check if the list is empty
-                drawn_character = choice(summon_list["ur"])
-                drawn_character = await getter.get_character(drawn_character)
-            
-            else:
-                pass
+        if(drawn_character != None):
+            draw = uniform(0, 100)
+            if(draw <= droprate["ur"]):
+                if(len(summon_list["ur"]) > 0):  # check if the list is empty
+                    drawn_character = choice(summon_list["ur"])
+                    drawn_character = await getter.get_character(drawn_character)
+                
+                else:
+                    pass
         
         # SSR
-        draw = uniform(0, 100)
-        if(draw <= droprate["ssr"]):
-            if(len(summon_list["ssr"]) > 0):  # check if the list is empty
-                drawn_character = choice(summon_list["ssr"])
-                drawn_character = await getter.get_character(drawn_character)
-            
-            else:
-                pass
+        if(drawn_character != None):
+            draw = uniform(0, 100)
+            if(draw <= droprate["ssr"]):
+                if(len(summon_list["ssr"]) > 0):  # check if the list is empty
+                    drawn_character = choice(summon_list["ssr"])
+                    drawn_character = await getter.get_character(drawn_character)
+                
+                else:
+                    pass
         
         # SR
-        draw = uniform(0, 100)
-        if(draw <= droprate["sr"]):
-            if(len(summon_list["sr"]) > 0):  # check if the list is empty
-                drawn_character = choice(summon_list["sr"])
-                drawn_character = await getter.get_character(drawn_character)
-            
-            else:
-                pass
+        if(drawn_character != None):
+            draw = uniform(0, 100)
+            if(draw <= droprate["sr"]):
+                if(len(summon_list["sr"]) > 0):  # check if the list is empty
+                    drawn_character = choice(summon_list["sr"])
+                    drawn_character = await getter.get_character(drawn_character)
+                
+                else:
+                    pass
         
         # R
-        draw = uniform(0, 100)
-        if(draw <= droprate["r"]):
-            if(len(summon_list["r"]) > 0):  # check if the list is empty
-                drawn_character = choice(summon_list["r"])
-                drawn_character = await getter.get_character(drawn_character)
+        if(drawn_character != None):
+            draw = uniform(0, 100)
+            if(draw <= droprate["r"]):
+                if(len(summon_list["r"]) > 0):  # check if the list is empty
+                    drawn_character = choice(summon_list["r"])
+                    drawn_character = await getter.get_character(drawn_character)
+                
+                else:
+                    pass
             
-            else:
-                pass
-        
         # N
-        draw = uniform(0, 100)
-        if(draw <= droprate["n"]):
-            if(len(summon_list["n"]) > 0):  # check if the list is empty
-                drawn_character = choice(summon_list["n"])
-                drawn_character = await getter.get_character(drawn_character)
-            
-            else:
-                pass
+        if(drawn_character != None):
+            draw = uniform(0, 100)
+            if(draw <= droprate["n"]):
+                if(len(summon_list["n"]) > 0):  # check if the list is empty
+                    drawn_character = choice(summon_list["n"])
+                    drawn_character = await getter.get_character(drawn_character)
+                
+                else:
+                    pass
         
         # generate random characteristics
         char_type = randint(0, 4)
