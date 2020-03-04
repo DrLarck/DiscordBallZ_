@@ -26,7 +26,7 @@ class Buff_derusting(Effect):
         self.name = "Derusting"
         self.id = 15
 
-        self.icon = self.game_icon["effect"]["derusting"]
+        self.icon = self.game_icon["effect"]["derusting_buff"]
 
         self.is_permanent = True
     
