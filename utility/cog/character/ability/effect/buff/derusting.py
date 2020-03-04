@@ -5,7 +5,7 @@ Derusting buff
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -56,6 +56,8 @@ class Buff_derusting(Effect):
         # apply the bonus
         self.carrier.health.current += hp_bonus
         self.carrier.health.maximum += hp_bonus
+
+        await self.carrier.health.health_limit()
 
         self.carrier.damage.physical_max += physical_bonus
         self.carrier.damage.physical_min += physical_bonus
