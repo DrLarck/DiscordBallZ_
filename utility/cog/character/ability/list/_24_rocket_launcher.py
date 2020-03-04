@@ -47,6 +47,6 @@ class Rocket_launcher_23(Ability):
 
             damage_ = await damager.inflict_damage(self.caster, enemy, damage)
 
-            display += f"{enemy.image.icon}**{enemy.info.name}**{enemy.type.icon} - {damage_}\n"
+            display += f"{damage_} - {enemy.image.icon}**{enemy.info.name}**{enemy.type.icon}\n"
         
         return (display)
