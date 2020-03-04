@@ -44,6 +44,6 @@ class Sequence_1(Ability):
 
         display = f"__Move__ : {self.icon}`{self.name}`\n"
 
-        display = await damager.inflict_damage(self.caster, self.target, damage)
+        display += await damager.inflict_damage(self.caster, self.target, damage)
 
         return(display)

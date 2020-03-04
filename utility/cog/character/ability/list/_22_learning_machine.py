@@ -89,7 +89,7 @@ class Learning_machine_22(Ability):
     
         # inflict the damage
         damage = await self.get_damage()
-        display = f"__Move__ : `{self.name}`{self.icon}\n"
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
 
         if(self.multi):  # if AOE
             for enemy in self.team_b:
