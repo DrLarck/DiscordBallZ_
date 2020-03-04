@@ -5,7 +5,7 @@ Pirate robot character
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -20,7 +20,7 @@ from utility.cog.character.ability.passive.derusting import Passive_derusting
 # ability
 from utility.cog.character.ability.list._20_derusting import Derusting_20
 
-class Character_047(Character):
+class Character_005(Character):
     """
     Represents Pirate robot
     """
@@ -28,7 +28,7 @@ class Character_047(Character):
     def __init__(self):
         Character.__init__(self)
 
-        self.info.id = 47
+        self.info.id = 5
         self.info.name = "Pirate Robot"
         self.rarity.value = 1  # rare
 
