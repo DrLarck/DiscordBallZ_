@@ -33,6 +33,8 @@ class Character_005(Character):
         self.rarity.value = 1  # rare
 
         self.image.image = "https://i.imgur.com/jgseMqC.png"
+        self.image.icon = "<:PirateRobot:684784065483636756>"
+        self.image.thumb = "https://i.imgur.com/JwEHf59.png"
 
         self.health.maximum = 3000
 
