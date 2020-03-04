@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 03/03/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -468,7 +468,7 @@ class Character:
 
         move = {
             "move" : 0,
-            "target" : None
+            "target" : choice(team_b)
         }  # init to defend
 
         # turn 1 manager
