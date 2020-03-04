@@ -36,9 +36,9 @@ class Character_005(Character):
         self.image.icon = "<:PirateRobot:684784065483636756>"
         self.image.thumb = "https://i.imgur.com/JwEHf59.png"
 
-        self.health.maximum = 3000
+        self.health.maximum = 2000
 
-        self.damage.physical_max = 600
+        self.damage.physical_max = 400
         
         self.defense.armor = 500
         self.defense.spirit = 420
