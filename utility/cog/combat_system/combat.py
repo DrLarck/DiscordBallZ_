@@ -823,7 +823,7 @@ class Combat():
                 ability_index += 1
         
         if not player.is_cpu:
-            await self.check_character(player_input, order)
+            await self.check_character(player_input, order, character = player_fighter)
             await self.ctx.send(
                 f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
             )
@@ -1080,7 +1080,7 @@ class Combat():
 
         return(play_time)
     
-    async def check_character(self, index, order):
+    async def check_character(self, index, order, character = None):
         """
         `coroutine`
 
@@ -1105,7 +1105,9 @@ class Combat():
         else:
             color = 0xff0000
         
-        character = characters[index - 1]
+        if character is None:  # if the character instance has not been passed
+            character = characters[index - 1]
+
         reference = await getter.get_character(character.info.id)
 
         # init ref character
