@@ -25,7 +25,7 @@ class Rocket_launcher_23(Ability):
 
         self.name = "Rocket launcher"
         self.icon = self.game_icon["ability"]["emergency_destruction"]
-        self.id = 23
+        self.id = 24
 
         self.damage.physical = 80
     

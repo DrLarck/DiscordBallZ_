@@ -20,7 +20,7 @@ from utility.cog.character.ability.effect.buff.derusting import Buff_derusting
 from utility.cog.character.ability.list._20_derusting import Derusting_20
 from utility.cog.character.ability.list._21_mechanical_strike import Mechanical_strike_21
 from utility.cog.character.ability.list._23_mechanical_sword import Mechanical_sword_23
-from utility.cog.character.ability.list._22_learning_machine import Learning_machine_22
+from utility.cog.character.ability.list._24_rocket_launcher import Rocket_launcher_23
 
 class Passive_derusting(Effect):
     """
@@ -59,8 +59,7 @@ class Passive_derusting(Effect):
             if(derusting.stack >= 5):  # add mechanical sword to the abilities
                 self.carrier.ability = [Derusting_20, Mechanical_sword_23]
             
-            if(derusting.stack >= 8):  # add learning machine
-                self.carrier.ability = [Derusting_20, Mechanical_sword_23, Learning_machine_22]
-                await Learning_machine_22(self.client, self.ctx, self.carrier, None, self.team_a, self.team_b).init()
+            if(derusting.stack >= 8):  # add Rocket launcher
+                self.carrier.ability = [Derusting_20, Mechanical_sword_23, Rocket_launcher_23]
         
         return
