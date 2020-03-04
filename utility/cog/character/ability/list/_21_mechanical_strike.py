@@ -32,10 +32,10 @@ class Mechanical_strike_21(Ability):
         self.need_target = True
         self.target_enemy = True
 
-        self.damage.physical = 110
+        self.damage.physical = 105
     
     async def set_tooltip(self):
-        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.1):,}** - **{int(self.caster.damage.physical_max * 1.1):,}**:punch: to the target."
+        self.tooltip = f"Inflicts **{int(self.caster.damage.physical_min * 1.05):,}** - **{int(self.caster.damage.physical_max * 1.05):,}**:punch: to the target."
     
     async def use(self):
         """
