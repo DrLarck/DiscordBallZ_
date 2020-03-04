@@ -268,7 +268,7 @@ class Summoner:
                 pass
         
         # UR
-        if(drawn_character != None):
+        if drawn_character is None:
             draw = uniform(0, 100)
             if(draw <= droprate["ur"]):
                 if(len(summon_list["ur"]) > 0):  # check if the list is empty
@@ -279,7 +279,7 @@ class Summoner:
                     pass
         
         # SSR
-        if(drawn_character != None):
+        if drawn_character is None:
             draw = uniform(0, 100)
             if(draw <= droprate["ssr"]):
                 if(len(summon_list["ssr"]) > 0):  # check if the list is empty
@@ -290,7 +290,7 @@ class Summoner:
                     pass
         
         # SR
-        if(drawn_character != None):
+        if drawn_character is None:
             draw = uniform(0, 100)
             if(draw <= droprate["sr"]):
                 if(len(summon_list["sr"]) > 0):  # check if the list is empty
@@ -301,7 +301,7 @@ class Summoner:
                     pass
         
         # R
-        if(drawn_character != None):
+        if drawn_character is None:
             draw = uniform(0, 100)
             if(draw <= droprate["r"]):
                 if(len(summon_list["r"]) > 0):  # check if the list is empty
@@ -312,7 +312,7 @@ class Summoner:
                     pass
             
         # N
-        if(drawn_character != None):
+        if drawn_character is None:
             draw = uniform(0, 100)
             if(draw <= droprate["n"]):
                 if(len(summon_list["n"]) > 0):  # check if the list is empty
