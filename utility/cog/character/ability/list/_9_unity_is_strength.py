@@ -5,7 +5,7 @@ Manages the Unity is Strength ability.
 
 Author : DrLarck
 
-Last update : 27/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -105,6 +105,7 @@ Moreover, **your team** stacks up **__Acid__** **2** time faster on the **enemy 
         display["icon"] = self.icon
         display["ki"] = True
 
-        display = await move.effect_move(display)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await move.effect_move(display)
 
         return(display)

@@ -5,7 +5,7 @@ Ki blast
 
 Author : DrLarck
 
-Last update : 29/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -59,6 +59,7 @@ class Ki_blast_17(Ability):
         damage = await self.get_damage()
 
         # inflict damage
-        display = await damager.inflict_damage(self.caster, self.target, damage)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await damager.inflict_damage(self.caster, self.target, damage)
 
         return(display)

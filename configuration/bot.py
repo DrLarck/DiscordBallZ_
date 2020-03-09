@@ -5,7 +5,7 @@ Here is the basic configuration of the bot.
 
 Author : DrLarck
 
-Last update : 01/03/2020 (DrLarck)
+Last update : 03/03/2020 (DrLarck)
 """
 
 # dependancies

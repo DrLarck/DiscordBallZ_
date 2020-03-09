@@ -5,7 +5,7 @@ Every character classes inherit from the :class:`Character()` defined below.
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -468,7 +468,7 @@ class Character:
 
         move = {
             "move" : 0,
-            "target" : None
+            "target" : choice(team_b)
         }  # init to defend
 
         # turn 1 manager
@@ -512,51 +512,28 @@ class Character:
                 else:
                     break
         
-        # decide if launch an ability or use an other move
-        if(len(usable_ability) > 0):  # if the character has an ability
-            random_move = randint(1, 4)
-        
-        else:  # else if the character doesn't have any ability
-            random_move = randint(0, 2)
+        if(len(usable_ability) > 0):
+            # pick a random ability in the usuable abilities list
+            # pick a random ability
+            ability_choice = 0  # init to 0, 0 is the ability 1 (index 0)
+            random_ability = randint(0, len(usable_ability) - 1)
 
-        if(random_move < 3):  # do not use an ability
-            move["move"] = random_move
+            # get the ability object with the random obtained index.
+            ability = usable_ability[random_ability]
 
-            if(move["move"] == 0):  # if sequence
-                # find the targetable targets
-                targetable_a, targetable_b = await team_displayer.get_targetable("sequence")
+            ability_choice += random_ability  # add random choice to ability (4) to define which ability has been used
+
+            # get targetable
+            if(ability.need_target):
+                targetable_a, targetable_b = await team_displayer.get_targetable(
+                    "ability",
+                    ability = ability
+                )
+
                 targetable = targetable_a + targetable_b
 
-                # pick a random target
                 move["target"] = choice(targetable)
-        
-        else:  # wants to use an ability
-            # if the character has enough ki to use any ability
-            if(len(usable_ability) > 0):
-                # pick a random ability in the usuable abilities list
-                # pick a random ability
-                ability_choice = 0  # init to 0, 0 is the ability 1 (index 0)
-                random_ability = randint(0, len(usable_ability) - 1)
 
-                # get the ability object with the random obtained index.
-                ability = usable_ability[random_ability]
-
-                ability_choice += random_ability  # add random choice to ability (4) to define which ability has been used
-
-                # get targetable
-                if(ability.need_target):
-                    targetable_a, targetable_b = await team_displayer.get_targetable(
-                        "ability",
-                        ability = ability
-                    )
-
-                    targetable = targetable_a + targetable_b
-
-                    move["target"] = choice(targetable)
-
-                move["move"] = ability_choice
-            
-            else:  # do not have enough ki to use an ability
-                move["move"] = 1
+            move["move"] = ability_choice
 
         return(move)

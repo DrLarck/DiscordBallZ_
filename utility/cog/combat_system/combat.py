@@ -5,7 +5,7 @@ Combat object
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 03/03/20 (DrLarck)
 """
 
 # dependancies
@@ -823,6 +823,7 @@ class Combat():
                 ability_index += 1
         
         if not player.is_cpu:
+            await self.check_character(player_input, order, character = player_fighter)
             await self.ctx.send(
                 f"Please select an action for {player_fighter.image.icon}**{player_fighter.info.name}** *({player_fighter.ki.current}:fire:)* :\n{fighter_action}"
             )
@@ -896,48 +897,30 @@ class Combat():
 
                     # normal move
                     else:
-                        if(player_move < 3):
-                            # sequence
-                            if(player_move == 0):
-                                self.move.index = 0
+                        self.move.index = player_move
+
+                        ability = await player_fighter.get_ability(
+                            self.client, self.ctx, player_fighter, player_fighter, 
+                            team_a, team_b, player_move
+                        )
+                        
+                        # check the cost
+                        if(player_fighter.ki.current >= ability.cost):
+                            if(ability.need_target):
                                 self.move.target = await self.get_target(
                                     player, team_a_, team_b_, order,
-                                    target_enemy = True
-                                )
+                                    target_ally = ability.target_ally,
+                                    target_enemy = ability.target_enemy,
+                                    ignore_defenders = ability.ignore_defenders
+                                ) 
 
                                 action_ok = True
                             
-                            else:
-                                self.move.index = player_move
-
+                            else:  # if don't need target just pass
                                 action_ok = True
-
-                        # abilities
+                        
                         else:
-                            self.move.index = player_move
-
-                            ability = await player_fighter.get_ability(
-                                self.client, self.ctx, player_fighter, player_fighter, 
-                                team_a, team_b, player_move - 3
-                            )
-                            
-                            # check the cost
-                            if(player_fighter.ki.current >= ability.cost):
-                                if(ability.need_target):
-                                    self.move.target = await self.get_target(
-                                        player, team_a_, team_b_, order,
-                                        target_ally = ability.target_ally,
-                                        target_enemy = ability.target_enemy,
-                                        ignore_defenders = ability.ignore_defenders
-                                    ) 
-
-                                    action_ok = True
-                                
-                                else:  # if don't need target just pass
-                                    action_ok = True
-                            
-                            else:
-                                await self.ctx.send("You do not have enough **Ki** to use this ability")
+                            await self.ctx.send("You do not have enough **Ki** to use this ability")
                         
                 else:  # cpu
                     self.move = await player.make_move(
@@ -1097,7 +1080,7 @@ class Combat():
 
         return(play_time)
     
-    async def check_character(self, index, order):
+    async def check_character(self, index, order, character = None):
         """
         `coroutine`
 
@@ -1122,7 +1105,9 @@ class Combat():
         else:
             color = 0xff0000
         
-        character = characters[index - 1]
+        if character is None:  # if the character instance has not been passed
+            character = characters[index - 1]
+
         reference = await getter.get_character(character.info.id)
 
         # init ref character
@@ -1282,6 +1267,11 @@ class Combat():
                 await self.effects(self.team_a, self.leader_a, start = True)
                 await self.effects(self.team_b, self.leader_b, start = True)
                 
+                winner = await self.get_winner()
+
+                if(winner != None):
+                    return(winner)
+
                 # get the number of time a player will play this turn
                 play_time = await self.get_play_time(0)
 
@@ -1340,6 +1330,11 @@ class Combat():
 
                     await self.effects(self.team_a, self.leader_a, end = True)
                     await self.effects(self.team_b, self.leader_b, end = True)
+
+                    winner = await self.get_winner()
+
+                    if(winner != None):
+                        return(winner)
 
                     turn_end = True
             

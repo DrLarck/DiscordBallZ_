@@ -5,7 +5,7 @@ Spiritual final canon ability
 
 Author : DrLarck
 
-Last update : 29/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -62,7 +62,8 @@ class Spiritual_final_canon_18(Ability):
         damage = await self.get_damage()
 
         # inflict damage
-        display = await damager.inflict_damage(self.caster, self.target, damage)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await damager.inflict_damage(self.caster, self.target, damage)
 
         # roll stun
         stun_roll = random.randint(0, 100)
@@ -86,6 +87,6 @@ class Spiritual_final_canon_18(Ability):
 
                 await self.target.posture.change_posture("stunned")
 
-            display += "__Special__ : The target is **stunned** for 1 turn"
+            display += "\n__Special__ : The target is **stunned** for 1 turn"
 
         return(display)

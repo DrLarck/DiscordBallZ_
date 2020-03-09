@@ -5,7 +5,7 @@ Manages the icons.
 
 Author : DrLarck
 
-Last update : 18/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 game_icon = {
@@ -51,7 +51,12 @@ game_icon = {
         "spiritual_final_canon" : "<:spiritual_final_canon:679296250373472263>",
         "saiyan_spirit" : "<:saiyan_spirit:679296249765167126>",
         "powered_shell" : "<:powered_shield:679340597064105985>",
-        "eraser_canon" : "<:eraser_canon:679347992284626969>"
+        "eraser_canon" : "<:eraser_canon:679347992284626969>",
+        "derusting" : "<:derusting:684492959017861205>",
+        "emergency_destruction" : "<:emergency_destruction:684493294163853404>",
+        "mechanical_strike" : "<:mechanical_strike:684493322286530561>",
+        "mechanical_sword" : "<:mechanical_sword:684493576142585905>",
+        "machine_gun" : "<:machine_gun:684493309682516125>",
     },
 
     # effect
@@ -67,6 +72,7 @@ game_icon = {
         "red_saibaiman_leader" : "<:red_saibaiman_leader:635060244027932672>",
         "saiyan_spirit_buff" : "<:saiyan_spirit_buff:679306154244833290>",
         "bardock_ssj_courage" : "<:courage_buff:679296236783927306>",
-        "powered_shell_buff" : "<:powered_shield_bonus:679340600486526997>"
+        "powered_shell_buff" : "<:powered_shield_bonus:679340600486526997>",
+        "derusting_buff" : "<:derusting_buff:684493273355911265>"
     }
 }

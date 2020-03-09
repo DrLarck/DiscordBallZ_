@@ -5,7 +5,7 @@ Summon command
 
 Author : DrLarck
 
-Last update : 12/01/2020 (DrLarck)
+Last update : 04/03/2020 (DrLarck)
 """
 
 # dependancies
@@ -33,8 +33,7 @@ class Cmd_summon(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.cost = {
-            "basic" : 10
-            # set to intended value for actual gameplay
+            "basic" : 5
         }
     
     @commands.check(Basic_checker().is_game_ready)

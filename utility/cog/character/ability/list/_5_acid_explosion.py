@@ -5,7 +5,7 @@ Manages the Acid Explosion ability.
 
 Author : DrLarck
 
-Last update : 25/02/20 (DrLarck)
+Last update : 04/03/20 (DrLarck)
 """
 
 # dependancies
@@ -142,6 +142,7 @@ Applies the **__Acid explosion__** malus to the **main target** which will reduc
             self.target.malus.append(explosion_ref)
         
         # display
-        display = await damager.inflict_damage(self.caster, self.target, damage)
+        display = f"__Move__ : {self.icon}`{self.name}`\n"
+        display += await damager.inflict_damage(self.caster, self.target, damage)
 
         return(display)
